@@ -1,0 +1,1664 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CHEAP | Quality Every Day, Affordable Always</title>
+    <meta name="description" content="Direct-sourced quality watches and everyday accessories. Enjoy our automatic 10% multi-buy discount on orders of two or more items!">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- SheetJS for Excel (.xlsx) Export -->
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("f_j9xjJoRgsrmsdda");
+        })();
+    </script>
+
+    <!-- Tailwind Custom Theme Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cheap: {
+                            bg: '#111111',
+                            card: '#18181b',
+                            blue: '#0070f3',
+                            blueDark: '#005bb5',
+                            yellow: '#ffcc00',
+                            yellowDark: '#e6b800',
+                            green: '#00ff66',
+                            border: '#27272a',
+                            borderLight: '#3f3f46'
+                        }
+                    },
+                    fontFamily: {
+                        body: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-cheap-bg text-zinc-100 font-body antialiased selection:bg-cheap-yellow selection:text-black overflow-x-hidden">
+
+    <!-- Top Announcement Bar -->
+    <div id="announcement-banner" class="bg-zinc-950 border-b border-cheap-border text-cheap-green text-[11px] sm:text-xs font-semibold py-2 px-3 text-center tracking-wider">
+        <span>⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON ORDERS OVER R600 • 10% AUTOMATIC MULTI-BUY DISCOUNT</span>
+    </div>
+
+    <!-- Header / Navigation -->
+    <header class="sticky top-0 z-40 bg-cheap-bg/90 backdrop-blur-md border-b border-cheap-border transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 bg-cheap-blue rounded-xl flex items-center justify-center font-black text-white text-xl tracking-tighter shadow-md">C</div>
+                <div>
+                    <span class="text-xl font-black tracking-wider text-cheap-blue">CH</span><span class="text-xl font-black tracking-wider text-cheap-yellow">E</span><span class="text-xl font-black tracking-wider text-cheap-blue">AP</span>
+                    <span class="block text-[10px] text-cheap-green font-semibold tracking-wide uppercase">Quality Every Day, Affordable Always</span>
+                </div>
+            </a>
+
+            <!-- Nav Links -->
+            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium text-zinc-400">
+                <a href="#catalog" onclick="filterProducts('all')" class="hover:text-white transition-colors">Catalog</a>
+                <a href="#deals" class="hover:text-white transition-colors">10% Multi-Buy Offer</a>
+                <a href="#faq" class="hover:text-white transition-colors">Info & FAQ</a>
+            </nav>
+
+            <!-- User Auth & Cart Actions -->
+            <div class="flex items-center space-x-3">
+                <div id="auth-nav-container">
+                    <button type="button" onclick="openAuthModal()" class="bg-zinc-900 border border-cheap-border hover:border-cheap-yellow px-3 sm:px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center space-x-2 transition-all shadow-sm cursor-pointer">
+                        <i class="fa-solid fa-user text-cheap-yellow"></i> <span id="auth-btn-text">Sign In</span>
+                    </button>
+                </div>
+                <!-- Management Dashboard Button -->
+                <div id="admin-nav-container" class="hidden">
+                    <button type="button" onclick="openAdminModal(event)" class="bg-cheap-blue text-white hover:bg-cheap-blueDark px-3 sm:px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center space-x-2 transition-all shadow-sm cursor-pointer">
+                        <i class="fa-solid fa-shield-halved text-cheap-yellow"></i> <span>Management</span>
+                    </button>
+                </div>
+                <button type="button" onclick="toggleCartDrawer()" class="relative bg-zinc-900 border border-cheap-border hover:border-cheap-yellow px-4 py-2 rounded-xl flex items-center space-x-2 text-xs font-bold uppercase tracking-wider transition-all shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-shopping-bag text-cheap-yellow"></i> <span class="hidden sm:inline">Cart</span>
+                    <span id="cart-badge" class="absolute -top-2 -right-2 bg-cheap-yellow text-black text-xs font-black w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center shadow">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden py-16 sm:py-20 lg:py-28 border-b border-cheap-border">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,112,243,0.12),transparent_50%)]"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center space-x-2 bg-zinc-900 border border-cheap-border px-3.5 py-1.5 rounded-full text-xs font-semibold text-cheap-green shadow-sm">
+                    <span class="w-2 h-2 rounded-full bg-cheap-green animate-pulse"></span>
+                    <span>DIRECT-SOURCED VALUE & PREMIUM STOCK</span>
+                </div>
+                <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white uppercase leading-tight">
+                    QUALITY EVERY DAY, <span class="text-transparent bg-clip-text bg-gradient-to-r from-cheap-blue via-cheap-yellow to-cheap-green">AFFORDABLE ALWAYS.</span>
+                </h1>
+                <p class="text-zinc-400 text-sm sm:text-lg max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                    Explore our curated collection of watches and accessories. Take advantage of our automatic 10% multi-buy discount when grabbing two or more items!
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-2">
+                    <a href="#catalog" onclick="filterProducts('all')" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-8 py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg shadow-cheap-blue/20 flex items-center justify-center space-x-2 cursor-pointer">
+                        <span>Shop Live Stock</span> <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                    <a href="#deals" class="bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white px-8 py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center cursor-pointer">
+                        View Multi-Buy Deal
+                    </a>
+                </div>
+            </div>
+
+            <!-- Dynamic Best Seller Highlight Card -->
+            <div class="lg:col-span-5" id="hero-best-seller-container"></div>
+        </div>
+    </section>
+
+    <!-- Category Filter Bar -->
+    <section class="py-8 bg-zinc-950/60 border-b border-cheap-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-cheap-green">Shop By Category</span>
+                <i class="fa-solid fa-filter text-cheap-blue text-xs"></i>
+            </div>
+            <div id="sidebar-category-filters" class="flex flex-wrap gap-2.5">
+                <button type="button" onclick="filterProducts('all')" class="cat-btn active bg-cheap-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border border-cheap-blue cursor-pointer">
+                    All Products
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Catalog Grid Section -->
+    <section id="catalog" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+        <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-cheap-border pb-6 mb-10 gap-4">
+            <div>
+                <span class="text-xs font-bold tracking-widest text-cheap-green uppercase mb-1 block">Live Inventory</span>
+                <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-white uppercase">Featured Watches & Accessories</h2>
+            </div>
+            <div class="text-xs text-zinc-400 font-semibold bg-zinc-900 border border-cheap-border px-3 py-1.5 rounded-lg w-max">
+                ⚡ Automatic 10% Off on 2+ Items
+            </div>
+        </div>
+
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            <div class="col-span-full text-center py-12 text-zinc-500">
+                <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cheap-blue"></i>
+                <p>Loading live catalog from Firebase database...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Multi-Buy Promotion Banner -->
+    <section id="deals" class="py-16 bg-gradient-to-r from-cheap-blue/10 via-zinc-900 to-cheap-yellow/10 border-t border-b border-cheap-border">
+        <div class="max-w-5xl mx-auto px-4 text-center space-y-4">
+            <span class="text-xs font-bold tracking-widest text-cheap-yellow uppercase block">Special Multi-Buy Offer</span>
+            <h3 class="text-3xl sm:text-4xl font-black text-white uppercase">Get 10% Off When You Buy 2 or More!</h3>
+            <p class="text-zinc-400 max-w-2xl mx-auto text-xs sm:text-sm font-medium leading-relaxed">
+                Shopping for gifts or grabbing a second piece? Enjoy an automatic 10% multi-buy discount applied instantly at checkout when purchasing multiple items.
+            </p>
+            <div class="pt-2">
+                <a href="#catalog" onclick="filterProducts('all')" class="inline-block bg-cheap-yellow hover:bg-cheap-yellowDark text-black font-black px-8 py-3.5 rounded-xl uppercase tracking-wider text-xs sm:text-sm transition-all shadow-lg cursor-pointer">
+                    Claim Offer Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-16 sm:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <span class="text-xs font-bold tracking-widest text-cheap-green uppercase block mb-1">Quick Answers</span>
+            <h3 class="text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">Frequently Asked Questions</h3>
+        </div>
+        <div class="space-y-4">
+            <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
+                <h4 class="font-bold text-white mb-2 text-sm sm:text-base">How does shipping and delivery work?</h4>
+                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">All orders are securely packaged and dispatched promptly via reliable nationwide courier services. Tracked delivery details are provided upon dispatch.</p>
+            </div>
+            <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
+                <h4 class="font-bold text-white mb-2 text-sm sm:text-base">Does the multi-buy discount apply automatically?</h4>
+                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Yes! When you add 2 or more items to your cart, our system automatically calculates and applies a 10% discount to your items subtotal.</p>
+            </div>
+            <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
+                <h4 class="font-bold text-white mb-2 text-sm sm:text-base">What payment methods do you accept?</h4>
+                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">We accept secure online card & instant EFT payments via PayFast, as well as Direct Bank Transfers (EFT).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-14 sm:py-16 bg-zinc-950 border-t border-cheap-border text-center">
+        <div class="max-w-4xl mx-auto px-4 space-y-4">
+            <span class="text-xs font-bold uppercase tracking-widest text-cheap-blue">Join The Club</span>
+            <h2 class="font-black text-2xl sm:text-3xl uppercase text-white">Stay Updated On New Stock</h2>
+            <p class="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto font-medium">
+                Subscribe to receive notifications when fresh watch drops, accessory arrivals, and special promotions go live.
+            </p>
+            <form onsubmit="handleNewsletterSubmit(event)" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2">
+                <input type="email" id="newsletter-email" placeholder="Enter your email address" required class="flex-1 bg-zinc-900 border border-cheap-border text-white placeholder-zinc-500 px-4 py-3 rounded-xl text-xs focus:outline-none focus:border-cheap-yellow">
+                <button type="submit" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-cheap-bg border-t border-cheap-border py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 border-b border-cheap-border pb-10">
+            <div class="space-y-3 md:col-span-2">
+                <div class="flex items-center space-x-3">
+                    <div class="w-8 h-8 bg-cheap-blue rounded-lg flex items-center justify-center font-black text-white text-base">C</div>
+                    <span class="text-lg font-black tracking-wider text-white">CHEAP</span>
+                </div>
+                <p class="text-zinc-400 text-xs max-w-sm leading-relaxed">
+                    Quality Every Day, Affordable Always. Premier destination for direct-sourced watches, EDC accessories, and lifestyle hardware.
+                </p>
+                <div class="text-[11px] text-zinc-600">
+                    © 2026 CHEAP (Pty) Ltd. All rights reserved.
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs uppercase tracking-widest text-cheap-yellow mb-3">Store Policies</h4>
+                <ul class="space-y-2 text-xs text-zinc-400">
+                    <li><button type="button" onclick="openPolicyModal('terms')" class="hover:text-white transition-colors cursor-pointer">Terms & Conditions</button></li>
+                    <li><button type="button" onclick="openPolicyModal('shipping')" class="hover:text-white transition-colors cursor-pointer">Shipping Policy</button></li>
+                    <li><button type="button" onclick="openPolicyModal('refund')" class="hover:text-white transition-colors cursor-pointer">Refund Policy</button></li>
+                    <li><button type="button" onclick="openPolicyModal('popia')" class="hover:text-white transition-colors cursor-pointer">POPIA Policy</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-xs uppercase tracking-widest text-cheap-yellow mb-3">Customer Support</h4>
+                <ul class="space-y-2 text-xs text-zinc-400">
+                    <li><span>Gauteng, South Africa</span></li>
+                    <li><a href="https://wa.me/27718701626" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors underline">071 870 1626</a></li>
+                    <li><a href="mailto:cheapcheapza@gmail.com" class="hover:text-white transition-colors underline">cheapcheapza@gmail.com</a></li>
+                    <li><span>Nationwide Courier Delivery</span></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Slide-over Drawer -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 overflow-hidden hidden">
+        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm transition-opacity" onclick="toggleCartDrawer()"></div>
+        <div class="absolute inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-zinc-900 border-l border-cheap-border flex flex-col justify-between shadow-2xl">
+                <div class="p-5 sm:p-6 bg-zinc-950 border-b border-cheap-border flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <i class="fa-solid fa-shopping-bag text-cheap-yellow text-lg"></i>
+                        <h3 class="font-black text-base uppercase text-white">Your Shopping Cart</h3>
+                    </div>
+                    <button type="button" onclick="toggleCartDrawer()" class="text-zinc-400 hover:text-white p-2 cursor-pointer">
+                        <i class="fa-solid fa-xmark text-xl"></i>
+                    </button>
+                </div>
+
+                <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 sm:p-6 space-y-4"></div>
+
+                <div class="p-5 sm:p-6 bg-zinc-950 border-t border-cheap-border space-y-3">
+                    <div id="discount-banner" class="hidden bg-cheap-yellow/10 border border-cheap-yellow/30 p-2.5 rounded-xl text-xs text-cheap-yellow font-bold text-center">
+                        🎉 10% Multi-Buy Discount Applied!
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-zinc-400">
+                        <span>Items Subtotal:</span>
+                        <span id="cart-subtotal" class="font-bold text-white text-sm">R0.00</span>
+                    </div>
+                    <div id="discount-row" class="hidden flex items-center justify-between text-xs text-cheap-yellow">
+                        <span>Multi-Buy Discount (10%):</span>
+                        <span id="cart-discount" class="font-bold">-R0.00</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-zinc-400">
+                        <span>Shipping (Nationwide):</span>
+                        <span id="cart-shipping" class="font-bold text-cheap-green">R100.00</span>
+                    </div>
+                    <div class="border-t border-cheap-border pt-3 flex items-center justify-between">
+                        <span class="font-bold text-sm text-white">Total:</span>
+                        <span id="cart-total" class="font-black text-xl text-cheap-yellow">R0.00</span>
+                    </div>
+                    <button type="button" onclick="openCheckoutModal()" class="w-full bg-cheap-yellow hover:bg-cheap-yellowDark text-black py-3.5 rounded-xl font-black text-xs uppercase tracking-wider transition-colors shadow-lg cursor-pointer">
+                        Proceed to Checkout →
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Detail Modal -->
+    <div id="product-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeProductModal()"></div>
+        <div class="bg-cheap-card rounded-2xl max-w-5xl w-full border border-cheap-border relative z-10 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 items-center my-auto max-h-[92vh] overflow-y-auto">
+            <div class="lg:col-span-7 p-6 sm:p-10 bg-zinc-950 flex flex-col justify-center items-center border-b lg:border-b-0 lg:border-r border-cheap-border h-full min-h-[350px]">
+                <div class="rounded-xl overflow-hidden h-[280px] sm:h-[380px] w-full flex items-center justify-center bg-zinc-900 border border-cheap-border p-4 mb-4">
+                    <img id="modal-main-img" src="" alt="Product Image" class="max-h-[260px] sm:max-h-[340px] w-auto max-w-full object-contain mx-auto rounded-lg">
+                </div>
+                <div id="modal-thumbnails" class="flex flex-wrap gap-2 justify-center"></div>
+            </div>
+            <div class="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between h-full relative space-y-4">
+                <button type="button" onclick="closeProductModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white p-2 text-xl cursor-pointer">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="space-y-3">
+                    <span id="modal-cat" class="text-xs font-mono text-cheap-blue uppercase tracking-widest font-bold block">Category</span>
+                    <h3 id="modal-title" class="font-black text-xl sm:text-2xl text-white uppercase leading-tight"></h3>
+                    <div class="flex items-baseline space-x-2">
+                        <span class="font-black text-2xl sm:text-3xl text-cheap-yellow" id="modal-price"></span>
+                        <span class="text-xs text-zinc-400 font-medium">(Includes VAT)</span>
+                    </div>
+                    <p id="modal-desc" class="text-zinc-400 text-xs sm:text-sm leading-relaxed"></p>
+                    <div id="modal-variants-section" class="space-y-2 pt-2">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-white">Select Option:</label>
+                        <div id="modal-variants-container" class="flex flex-wrap gap-2"></div>
+                    </div>
+                    <div id="modal-extra-fields" class="space-y-2 text-xs text-zinc-300 bg-zinc-900 p-4 rounded-xl border border-cheap-border leading-relaxed whitespace-pre-line"></div>
+                </div>
+                <div class="pt-4 border-t border-cheap-border flex items-center space-x-3">
+                    <button type="button" onclick="addModalItemToCart()" class="flex-1 bg-cheap-blue hover:bg-cheap-blueDark text-white py-3.5 px-6 rounded-xl font-black text-xs tracking-widest uppercase transition-colors shadow-lg flex items-center justify-center space-x-2 cursor-pointer">
+                        <i class="fa-solid fa-basket-shopping"></i> <span>Add to Cart</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
+        <div class="bg-cheap-card rounded-2xl max-w-xl w-full border border-cheap-border relative z-10 p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-6 border-b border-cheap-border pb-4">
+                <h3 class="font-black text-lg uppercase text-white">Secure Checkout</h3>
+                <button type="button" onclick="closeCheckoutModal()" class="text-zinc-400 hover:text-white cursor-pointer p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form id="checkout-form" onsubmit="submitOrder(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Full Name</label>
+                        <input type="text" id="order-name" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Phone Number</label>
+                        <input type="tel" id="order-phone" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Email Address</label>
+                    <input type="email" id="order-email" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Delivery Address (Street, City, Postal Code)</label>
+                    <textarea id="order-address" rows="3" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white"></textarea>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Payment Method</label>
+                    <select id="order-payment" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                        <option value="PayFast Secure Card / EFT">PayFast Secure Gateway (Card, Instant EFT, SnapScan)</option>
+                        <option value="Direct EFT Bank Transfer">Direct Bank Transfer (EFT)</option>
+                    </select>
+                </div>
+                <button type="submit" class="w-full bg-cheap-yellow hover:bg-cheap-yellowDark text-black py-3.5 rounded-xl font-black text-xs tracking-wider uppercase transition-colors shadow-lg mt-2 cursor-pointer">
+                    Proceed to Order & Pay →
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hidden PayFast Submission Form -->
+    <form id="payfast-form" action="https://www.payfast.co.za/eng/process" method="POST" class="hidden">
+        <input type="hidden" name="merchant_id" value="36329663">
+        <input type="hidden" name="merchant_key" value="gcgfoxnc6io4n">
+        <input type="hidden" name="return_url" id="pf-return" value="">
+        <input type="hidden" name="cancel_url" id="pf-cancel" value="">
+        <input type="hidden" name="notify_url" id="pf-notify" value="">
+        <input type="hidden" name="name_first" id="pf-name">
+        <input type="hidden" name="email_address" id="pf-email">
+        <input type="hidden" name="m_payment_id" id="pf-m-id">
+        <input type="hidden" name="amount" id="pf-amount">
+        <input type="hidden" name="item_name" id="pf-item">
+    </form>
+
+    <!-- PayFast Payment Status Modal -->
+    <div id="payfast-status-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closePayFastStatusModal()"></div>
+        <div class="bg-cheap-card rounded-2xl max-w-md w-full border border-cheap-border relative z-10 p-6 text-center space-y-4">
+            <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center" id="payfast-status-icon-wrap">
+                <i id="payfast-status-icon" class="fa-solid fa-check text-2xl"></i>
+            </div>
+            <h3 id="payfast-status-title" class="font-black text-lg uppercase text-white">Payment Submitted</h3>
+            <p id="payfast-status-message" class="text-xs sm:text-sm text-zinc-400 leading-relaxed"></p>
+            <button type="button" onclick="closePayFastStatusModal()" class="w-full bg-cheap-blue hover:bg-cheap-blueDark text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">
+                Continue Shopping
+            </button>
+        </div>
+    </div>
+
+    <!-- Direct EFT Banking Details Success Modal -->
+    <div id="eft-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeEftModal()"></div>
+        <div class="bg-cheap-card rounded-2xl max-w-lg w-full border border-cheap-border relative z-10 p-6 sm:p-8 space-y-5">
+            <div class="flex items-center justify-between border-b border-cheap-border pb-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-building-columns text-cheap-yellow text-xl"></i>
+                    <h3 class="font-black text-lg uppercase text-white">Direct EFT Banking Details</h3>
+                </div>
+                <button type="button" onclick="closeEftModal()" class="text-zinc-400 hover:text-white cursor-pointer p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+                Your order has been successfully placed! Please make your payment using the banking details below:
+            </p>
+
+            <div class="bg-zinc-950 p-5 rounded-xl border border-cheap-border space-y-2.5 text-xs sm:text-sm">
+                <div class="flex justify-between border-b border-zinc-800 pb-2">
+                    <span class="text-zinc-400">Bank:</span>
+                    <span class="font-bold text-white">Capitec Business</span>
+                </div>
+                <div class="flex justify-between border-b border-zinc-800 pb-2">
+                    <span class="text-zinc-400">Account Name:</span>
+                    <span class="font-bold text-white">CHEAP Store</span>
+                </div>
+                <div class="flex justify-between border-b border-zinc-800 pb-2">
+                    <span class="text-zinc-400">Account Number:</span>
+                    <span class="font-mono font-bold text-white">1055613013</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-zinc-400">Reference:</span>
+                    <span class="font-bold text-cheap-yellow">Your Name & Order ID</span>
+                </div>
+            </div>
+
+            <div class="bg-cheap-blue/10 border border-cheap-blue/30 p-4 rounded-xl text-xs text-zinc-300 space-y-1">
+                <p class="font-bold flex items-center space-x-1.5 text-cheap-blue"><i class="fa-solid fa-envelope"></i> <span>Send Proof of Payment (POP):</span></p>
+                <p>Please email your POP to <a href="mailto:cheapcheapza@gmail.com" class="font-bold underline text-white">cheapcheapza@gmail.com</a> to expedite order dispatch.</p>
+            </div>
+
+            <div class="pt-2">
+                <button type="button" onclick="closeEftModal()" class="w-full bg-cheap-blue hover:bg-cheap-blueDark text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">
+                    Understood & Return to Store
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Policy Modal Viewer -->
+    <div id="policy-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closePolicyModal()"></div>
+        <div class="bg-cheap-card rounded-2xl max-w-3xl w-full border border-cheap-border relative z-10 p-6 sm:p-10 shadow-2xl max-h-[92vh] overflow-y-auto space-y-6">
+            <div class="flex items-center justify-between border-b border-cheap-border pb-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-zinc-900 border border-cheap-border rounded-xl flex items-center justify-center text-cheap-yellow">
+                        <i class="fa-solid fa-file-shield text-base"></i>
+                    </div>
+                    <h3 id="policy-modal-title" class="font-black text-xl uppercase text-white">Policy Title</h3>
+                </div>
+                <button type="button" onclick="closePolicyModal()" class="text-zinc-400 hover:text-white cursor-pointer p-2 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div id="policy-modal-content" class="space-y-4 text-xs sm:text-sm text-zinc-300 leading-relaxed"></div>
+
+            <div class="pt-4 border-t border-cheap-border flex justify-end">
+                <button type="button" onclick="closePolicyModal()" class="bg-zinc-800 hover:bg-zinc-700 text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">
+                    Close Window
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeAuthModal()"></div>
+        <div class="bg-cheap-card rounded-2xl max-w-md w-full border border-cheap-border relative z-10 p-6 sm:p-8 shadow-2xl">
+            <div class="flex items-center justify-between mb-6 border-b border-cheap-border pb-4">
+                <div class="flex items-center space-x-2">
+                    <i class="fa-solid fa-user text-cheap-yellow text-lg"></i>
+                    <h3 class="font-black text-lg uppercase text-white" id="auth-modal-title">Customer Sign In</h3>
+                </div>
+                <button type="button" onclick="closeAuthModal()" class="text-zinc-400 hover:text-white cursor-pointer p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+
+            <!-- Unauthenticated View -->
+            <div id="auth-unauthenticated-view" class="space-y-4">
+                <div class="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-cheap-border">
+                    <button type="button" onclick="switchAuthTab('login')" id="tab-login-btn" class="flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider bg-cheap-blue text-white transition-all cursor-pointer">Sign In</button>
+                    <button type="button" onclick="switchAuthTab('register')" id="tab-register-btn" class="flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider text-zinc-400 transition-all cursor-pointer">Register</button>
+                </div>
+
+                <form id="login-form" onsubmit="handleDirectLogin(event)" class="space-y-3 pt-2">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Email Address</label>
+                        <input type="email" id="login-email" required placeholder="your.email@example.com" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Password</label>
+                        <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                    </div>
+                    <button type="submit" class="w-full bg-cheap-blue hover:bg-cheap-blueDark text-white py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-md mt-2 cursor-pointer">
+                        Sign In →
+                    </button>
+                </form>
+
+                <form id="register-form" onsubmit="handleDirectRegister(event)" class="space-y-3 pt-2 hidden">
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Full Name & Surname</label>
+                        <input type="text" id="reg-name" required placeholder="John Doe" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Email Address</label>
+                        <input type="email" id="reg-email" required placeholder="your.email@example.com" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Password (min 6 chars)</label>
+                        <input type="password" id="reg-password" required minlength="6" placeholder="••••••••" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Cell Number</label>
+                        <input type="tel" id="reg-phone" required placeholder="082 123 4567" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Delivery Address</label>
+                        <textarea id="reg-address" rows="2" required placeholder="Street, City, Postal Code" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-cheap-blue hover:bg-cheap-blueDark text-white py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-md mt-2 cursor-pointer">
+                        Create Account & Sign In →
+                    </button>
+                </form>
+            </div>
+
+            <!-- Authenticated Profile View -->
+            <div id="auth-authenticated-view" class="space-y-4 hidden">
+                <div class="bg-zinc-950 p-4 rounded-xl border border-cheap-border text-center space-y-1">
+                    <div id="user-display-email" class="font-bold text-xs text-white"></div>
+                    <span class="text-[10px] bg-emerald-950 text-emerald-400 font-bold px-2.5 py-0.5 rounded-full uppercase border border-emerald-800">Active Session</span>
+                </div>
+                <button type="button" onclick="signOutCustomer()" class="w-full bg-red-950/80 hover:bg-red-900 border border-red-800 text-red-200 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer">
+                    Sign Out
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Management Portal Modal -->
+    <div id="admin-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeAdminModal()"></div>
+        <div class="bg-cheap-card rounded-2xl max-w-6xl w-full border border-cheap-border relative z-10 p-4 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
+
+            <div class="bg-zinc-950 p-6 rounded-2xl mb-6 border border-cheap-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+                <div>
+                    <div class="inline-flex items-center space-x-2 bg-cheap-blue text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2 shadow">
+                        <i class="fa-solid fa-lock text-[9px]"></i> <span>Secure Management Portal • cheapcheapza@gmail.com</span>
+                    </div>
+                    <h2 class="font-black text-xl sm:text-2xl uppercase text-white">CHEAP Store Management Dashboard</h2>
+                    <p class="text-zinc-400 text-xs mt-1">Manage product catalog, customer accounts, announcement banner, and orders.</p>
+                </div>
+                <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                    <button type="button" onclick="closeAdminModal()" class="flex-1 md:flex-none bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase transition-all cursor-pointer">
+                        Return to Store
+                    </button>
+                    <button type="button" onclick="openNewProductModal()" class="flex-1 md:flex-none bg-cheap-yellow hover:bg-cheap-yellowDark text-black px-4 py-2.5 rounded-xl font-bold text-xs uppercase transition-all shadow cursor-pointer">
+                        + Add Product
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Stats -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+                <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Total Products</span>
+                        <i class="fa-solid fa-box-open text-cheap-blue text-lg"></i>
+                    </div>
+                    <div id="stat-total-products" class="font-black text-2xl sm:text-3xl text-white mb-1">0</div>
+                    <span class="text-[11px] text-zinc-500 block">Active catalog items</span>
+                </div>
+                <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Customers</span>
+                        <i class="fa-solid fa-users text-cheap-blue text-lg"></i>
+                    </div>
+                    <div id="stat-total-customers" class="font-black text-2xl sm:text-3xl text-white mb-1">0</div>
+                    <span class="text-[11px] text-zinc-500 block">Registered profiles</span>
+                </div>
+                <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Total Orders</span>
+                        <i class="fa-solid fa-receipt text-cheap-blue text-lg"></i>
+                    </div>
+                    <div id="stat-total-orders" class="font-black text-2xl sm:text-3xl text-white mb-1">0</div>
+                    <span class="text-[11px] text-zinc-500 block">Recorded sales</span>
+                </div>
+                <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Gross Revenue</span>
+                        <span class="font-black text-cheap-yellow text-lg">R</span>
+                    </div>
+                    <div id="stat-total-revenue" class="font-black text-xl sm:text-2xl text-cheap-yellow mb-1">R0.00</div>
+                    <span class="text-[11px] text-zinc-500 block">Total sales volume</span>
+                </div>
+            </div>
+
+            <!-- Admin Tabs -->
+            <div class="flex flex-wrap gap-2 mb-6 border-b border-cheap-border pb-4">
+                <button type="button" onclick="switchAdminTab('products')" id="admin-tab-prod" class="bg-cheap-blue text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
+                    <i class="fa-solid fa-boxes-stacked"></i> <span>Catalog (<span id="prod-count-badge">0</span>)</span>
+                </button>
+                <button type="button" onclick="switchAdminTab('customers')" id="admin-tab-cust" class="bg-zinc-900 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
+                    <i class="fa-solid fa-users"></i> <span>Customers (<span id="cust-count-badge">0</span>)</span>
+                </button>
+                <button type="button" onclick="switchAdminTab('settings')" id="admin-tab-set" class="bg-zinc-900 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
+                    <i class="fa-solid fa-gear"></i> <span>Site Banner</span>
+                </button>
+                <button type="button" onclick="switchAdminTab('orders')" id="admin-tab-ord" class="bg-zinc-900 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
+                    <i class="fa-solid fa-clipboard-list"></i> <span>Orders (<span id="ord-count-badge">0</span>)</span>
+                </button>
+            </div>
+
+            <!-- Products Panel -->
+            <div id="admin-panel-products" class="space-y-4">
+                <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                        <h4 class="font-bold text-base uppercase text-white">Stock Database</h4>
+                        <input type="text" id="admin-search" oninput="filterAdminProducts(this.value)" placeholder="Search products..." class="bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2 text-xs w-full sm:w-64 focus:outline-none focus:border-cheap-yellow text-white">
+                    </div>
+                    <div class="overflow-x-auto border border-cheap-border rounded-xl">
+                        <table class="w-full text-left border-collapse text-xs min-w-[650px]">
+                            <thead>
+                                <tr class="bg-zinc-900 border-b border-cheap-border text-[10px] uppercase tracking-wider text-zinc-400">
+                                    <th class="p-3">Product</th>
+                                    <th class="p-3">Category</th>
+                                    <th class="p-3">Price</th>
+                                    <th class="p-3">Stock</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-product-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Customer Panel -->
+            <div id="admin-panel-customers" class="space-y-4 hidden">
+                <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border space-y-4">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                        <div>
+                            <h4 class="font-bold text-base uppercase text-white">Registered Customer Accounts</h4>
+                            <p class="text-xs text-zinc-400 mt-0.5">Download account database as an Excel (.xlsx) spreadsheet.</p>
+                        </div>
+                        <button type="button" onclick="exportCustomersToExcel()" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase transition-all flex items-center space-x-2 cursor-pointer">
+                            <i class="fa-solid fa-file-excel"></i> <span>Export Excel</span>
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto border border-cheap-border rounded-xl">
+                        <table class="w-full text-left border-collapse text-xs min-w-[650px]">
+                            <thead>
+                                <tr class="bg-zinc-900 border-b border-cheap-border text-[10px] uppercase tracking-wider text-zinc-400">
+                                    <th class="p-3">Name</th>
+                                    <th class="p-3">Email</th>
+                                    <th class="p-3">Cell</th>
+                                    <th class="p-3">Address</th>
+                                    <th class="p-3">Joined</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-customer-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Panel -->
+            <div id="admin-panel-settings" class="space-y-4 hidden">
+                <div class="bg-zinc-950 p-6 rounded-2xl border border-cheap-border space-y-4">
+                    <h4 class="font-bold text-base uppercase text-white">Announcement Banner Text</h4>
+                    <form onsubmit="saveAnnouncementBanner(event)" class="space-y-3">
+                        <textarea id="admin-banner-text" rows="2" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON ORDERS OVER R600 • 10% AUTOMATIC MULTI-BUY DISCOUNT</textarea>
+                        <button type="submit" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer">
+                            Save Live Banner →
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Orders Panel -->
+            <div id="admin-panel-orders" class="space-y-4 hidden">
+                <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border">
+                    <h4 class="font-bold text-base uppercase mb-4 text-white">Order Transactions</h4>
+                    <div class="overflow-x-auto border border-cheap-border rounded-xl">
+                        <table class="w-full text-left border-collapse text-xs min-w-[850px]">
+                            <thead>
+                                <tr class="bg-zinc-900 border-b border-cheap-border text-[10px] uppercase tracking-wider text-zinc-400">
+                                    <th class="p-3">Order ID</th>
+                                    <th class="p-3">Customer</th>
+                                    <th class="p-3">Contact</th>
+                                    <th class="p-3">Items</th>
+                                    <th class="p-3">Payment</th>
+                                    <th class="p-3">Total</th>
+                                    <th class="p-3">Status</th>
+                                    <th class="p-3 text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="admin-order-table-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Product Form Modal (Add / Edit) -->
+    <div id="product-form-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-3 sm:p-4">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeProductFormModal()"></div>
+        <div class="bg-cheap-card rounded-2xl max-w-2xl w-full border border-cheap-border relative z-10 p-5 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
+            <form id="product-action-form" onsubmit="handleProductSubmit(event)" class="space-y-4">
+                <input type="hidden" id="prod-edit-id">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input type="text" id="prod-name" placeholder="Product Name" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">
+                    <input type="number" step="0.01" id="prod-price" placeholder="Price in ZAR (e.g. 349.00)" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input type="text" id="prod-cat" placeholder="Category (Wristwear, Accessories)" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">
+                    <input type="text" id="prod-img" placeholder="Image URL(s)" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div class="flex items-center space-x-3 bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3">
+                        <input type="checkbox" id="prod-visible" checked class="w-4 h-4 text-cheap-blue rounded border-cheap-border focus:ring-cheap-blue cursor-pointer">
+                        <label for="prod-visible" class="text-xs font-semibold text-zinc-200 cursor-pointer">Visible in Catalog</label>
+                    </div>
+                    <div class="flex items-center space-x-3 bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3">
+                        <input type="checkbox" id="prod-bestseller" class="w-4 h-4 text-cheap-yellow rounded border-cheap-border focus:ring-cheap-yellow cursor-pointer">
+                        <label for="prod-bestseller" class="text-xs font-bold text-cheap-yellow cursor-pointer">★ Highlight in Hero</label>
+                    </div>
+                </div>
+                <div>
+                    <input type="text" id="prod-variants" placeholder="Variants format: Name:+Price:ImageURL" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Key Features / Specs</label>
+                    <textarea id="prod-extra-1" rows="2" placeholder="Bullet points or key specs..." class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow"></textarea>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Product Description</label>
+                    <textarea id="prod-desc" rows="3" placeholder="Description of the item..." class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow"></textarea>
+                </div>
+                <div class="flex items-center space-x-3 pt-2">
+                    <button type="button" onclick="closeProductFormModal()" class="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">Cancel</button>
+                    <button type="submit" class="flex-1 bg-cheap-blue hover:bg-cheap-blueDark text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">Save Product</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase Firestore & Auth Modules Script -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+        // FIREBASE CONFIGURATION FOR CHEAP STORE
+        const firebaseConfig = {
+            apiKey: "AIzaSyBuoszwB4GfOHIM4Zwt7qP_V-V2-Cd2qxY",
+            authDomain: "cheap-store-za.firebaseapp.com",
+            projectId: "cheap-store-za",
+            storageBucket: "cheap-store-za.firebasestorage.app",
+            messagingSenderId: "554894926192",
+            appId: "1:554894926192:web:95c0154f893db660b46fb5",
+            measurementId: "G-H5TCY5XG0E"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        // OFFICIAL CHEAP ADMIN EMAIL
+        const ADMIN_EMAIL = "cheapcheapza@gmail.com";
+
+        let products = [];
+        let orders = [];
+        let customers = [];
+        let cart = [];
+        let currentFilter = 'all';
+        let selectedProduct = null;
+        let selectedVariant = null;
+        let currentCustomer = null;
+
+        // ---------- XSS ESCAPE UTILITY ----------
+        function esc(str) {
+            if (str === null || str === undefined) return '';
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        // ---------- CART PERSISTENCE (localStorage) ----------
+        const CART_STORAGE_KEY = 'cheap_cart';
+
+        function saveCartToStorage() {
+            try { localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart)); } catch (e) {}
+        }
+
+        function loadCartFromStorage() {
+            try {
+                const stored = localStorage.getItem(CART_STORAGE_KEY);
+                if (stored) cart = JSON.parse(stored) || [];
+            } catch (e) { cart = []; }
+        }
+
+        // ---------- POLICY CONTENT DATA ----------
+        const policiesData = {
+            terms: {
+                title: "Terms & Conditions",
+                content: `
+                    <p class="font-bold text-white mb-1">CHEAP Store | Quality Every Day, Affordable Always</p>
+                    <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
+                    <div class="space-y-3">
+                        <p><strong>1. Acceptance:</strong> By accessing and completing orders on CHEAP, you agree to these Terms & Conditions.</p>
+                        <p><strong>2. Pricing & VAT:</strong> All prices displayed on our store are quoted in South African Rands (ZAR) and include VAT. Multi-buy discounts automatically apply when purchasing 2 or more eligible items.</p>
+                        <p><strong>3. Orders & Payments:</strong> Orders are processed upon confirmed receipt of payment via PayFast or direct bank transfer (EFT).</p>
+                    </div>
+                `
+            },
+            shipping: {
+                title: "Shipping Policy",
+                content: `
+                    <p class="font-bold text-white mb-1">CHEAP Store | Quality Every Day, Affordable Always</p>
+                    <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
+                    <div class="space-y-3">
+                        <p><strong>1. Order Processing:</strong> Orders are packaged and dispatched within 1 to 2 business days after payment verification.</p>
+                        <p><strong>2. Rates & Free Delivery:</strong> Standard door-to-door nationwide courier shipping is R100.00. Free shipping applies to orders over R600.00.</p>
+                        <p><strong>3. Delivery Timelines:</strong> Courier delivery typically takes 2 to 4 business days nationwide across South Africa.</p>
+                    </div>
+                `
+            },
+            refund: {
+                title: "Refund Policy",
+                content: `
+                    <p class="font-bold text-white mb-1">CHEAP Store | Quality Every Day, Affordable Always</p>
+                    <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
+                    <div class="space-y-3">
+                        <p><strong>1. Returns:</strong> Unused products in original packaging may be returned within 7 days of receipt.</p>
+                        <p><strong>2. Inspection & Refund:</strong> Approved returns will be refunded to your original payment method within 5-7 business days.</p>
+                    </div>
+                `
+            },
+            popia: {
+                title: "POPIA Policy",
+                content: `
+                    <p class="font-bold text-white mb-1">CHEAP Store | Quality Every Day, Affordable Always</p>
+                    <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
+                    <div class="space-y-3">
+                        <p>We process your personal details strictly for fulfilling orders and logistics delivery in compliance with POPIA.</p>
+                    </div>
+                `
+            }
+        };
+
+        const defaultProducts = [
+            {
+                id: "cheap-chrono-1",
+                name: "Classic Minimalist Chrono Watch",
+                category: "Wristwear",
+                price: 349.00,
+                stock: 25,
+                visible: true,
+                isBestSeller: true,
+                image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800",
+                description: "Sleek daily wear timepiece featuring a durable alloy bezel, comfortable strap, and clean dial layout.",
+                extra1: "• Premium quartz motion core\n• Water resistant daily build\n• Scratch resistant mineral glass"
+            },
+            {
+                id: "cheap-[#0070f3]-2",
+                name: "Sport Tactical Resin Watch",
+                category: "Wristwear",
+                price: 349.00,
+                stock: 30,
+                visible: true,
+                isBestSeller: false,
+                image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&q=80&w=800",
+                description: "Rugged build, clear digital display, water-resistant construction built for active everyday use.",
+                extra1: "• Backlight LED display\n• Dual timezone & stopwatch\n• Reinforced shock-proof casing"
+            },
+            {
+                id: "cheap-[#ffcc00]-3",
+                name: "Executive Steel Strap Set",
+                category: "Accessories",
+                price: 349.00,
+                stock: 20,
+                visible: true,
+                isBestSeller: false,
+                image: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80&w=800",
+                description: "Polished stainless steel finish with secure clasp mechanism. Perfect companion accessory.",
+                extra1: "• Solid stainless steel links\n• Quick-release spring pins\n• Universal lug width compatibility"
+            }
+        ];
+
+        async function initDatabase() {
+            loadCartFromStorage();
+            updateCartUI();
+
+            try {
+                const bannerDoc = await getDoc(doc(db, "settings", "announcement_cheap"));
+                if (bannerDoc.exists() && bannerDoc.data().text) {
+                    const text = bannerDoc.data().text;
+                    document.getElementById("announcement-banner").innerHTML = `<span>${esc(text)}</span>`;
+                    document.getElementById("admin-banner-text").value = text;
+                }
+            } catch (err) {}
+
+            onSnapshot(collection(db, "cheap_products"), (snapshot) => {
+                products = [];
+                snapshot.forEach((docSnap) => {
+                    products.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                if (products.length === 0) products = defaultProducts;
+                products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+                renderProducts();
+                renderSidebarCategories();
+                renderHeroBestSeller();
+                if (currentCustomer && currentCustomer.isAdmin) renderAdminDashboard();
+            }, (error) => {
+                products = defaultProducts;
+                products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+                renderProducts();
+                renderSidebarCategories();
+                renderHeroBestSeller();
+            });
+
+            onAuthStateChanged(auth, async (user) => {
+                if (registering) return;
+                if (!user) {
+                    currentCustomer = null;
+                    stopAdminListeners();
+                    updateAuthNavUI();
+                    return;
+                }
+                let profile = null;
+                try {
+                    const snap = await getDoc(doc(db, "customers", user.uid));
+                    if (snap.exists()) profile = snap.data();
+                } catch (err) {}
+                setCurrentCustomer(user, profile);
+            });
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const status = urlParams.get('status');
+            const pfOrderId = urlParams.get('order_id');
+            if (status === 'success' && pfOrderId) {
+                showPayFastReturnMessage('success', pfOrderId);
+            } else if (status === 'cancel') {
+                showPayFastReturnMessage('cancel');
+            }
+        }
+
+        let registering = false;
+        let unsubCustomers = null;
+        let unsubOrders = null;
+
+        function setCurrentCustomer(user, profile) {
+            currentCustomer = {
+                uid: user.uid,
+                email: user.email,
+                name: (profile && profile.name) || '',
+                phone: (profile && profile.phone) || '',
+                address: (profile && profile.address) || '',
+                isAdmin: (user.email || '').toLowerCase() === ADMIN_EMAIL.toLowerCase()
+            };
+            updateAuthNavUI();
+            if (currentCustomer.isAdmin) startAdminListeners(); else stopAdminListeners();
+        }
+
+        function startAdminListeners() {
+            if (!unsubCustomers) {
+                unsubCustomers = onSnapshot(collection(db, "customers"), (snapshot) => {
+                    customers = [];
+                    snapshot.forEach((d) => customers.push({ id: d.id, ...d.data() }));
+                    if (currentCustomer && currentCustomer.isAdmin) renderAdminDashboard();
+                });
+            }
+            if (!unsubOrders) {
+                unsubOrders = onSnapshot(collection(db, "cheap_orders"), (snapshot) => {
+                    orders = [];
+                    snapshot.forEach((d) => orders.push({ id: d.id, ...d.data() }));
+                    if (currentCustomer && currentCustomer.isAdmin) renderAdminDashboard();
+                });
+            }
+        }
+
+        function stopAdminListeners() {
+            if (unsubCustomers) { unsubCustomers(); unsubCustomers = null; }
+            if (unsubOrders) { unsubOrders(); unsubOrders = null; }
+            customers = [];
+            orders = [];
+        }
+
+        function showPayFastReturnMessage(type, orderId) {
+            const modal = document.getElementById('payfast-status-modal');
+            const titleEl = document.getElementById('payfast-status-title');
+            const msgEl = document.getElementById('payfast-status-message');
+            const iconWrap = document.getElementById('payfast-status-icon-wrap');
+            const iconEl = document.getElementById('payfast-status-icon');
+
+            if (type === 'success') {
+                iconWrap.className = 'w-14 h-14 mx-auto rounded-full flex items-center justify-center bg-emerald-950 text-emerald-400 border border-emerald-800';
+                iconEl.className = 'fa-solid fa-circle-check text-2xl';
+                titleEl.textContent = 'Payment Submitted Successfully';
+                msgEl.innerHTML = `Thank you! Your payment has been submitted. Your order <strong>#${esc(orderId.substring(0, 8))}</strong> is being processed by PayFast.`;
+            } else {
+                iconWrap.className = 'w-14 h-14 mx-auto rounded-full flex items-center justify-center bg-red-950 text-red-400 border border-red-800';
+                iconEl.className = 'fa-solid fa-circle-xmark text-2xl';
+                titleEl.textContent = 'Payment Cancelled';
+                msgEl.textContent = 'Your payment was cancelled. Your cart items are still saved if you would like to try again.';
+            }
+            modal.classList.remove('hidden');
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+
+        window.closePayFastStatusModal = function() {
+            document.getElementById('payfast-status-modal').classList.add('hidden');
+        }
+
+        window.openPolicyModal = function(policyKey) {
+            const policy = policiesData[policyKey];
+            if (!policy) return;
+            document.getElementById("policy-modal-title").textContent = policy.title;
+            document.getElementById("policy-modal-content").innerHTML = policy.content;
+            document.getElementById("policy-modal").classList.remove("hidden");
+        }
+
+        window.closePolicyModal = function() {
+            document.getElementById("policy-modal").classList.add("hidden");
+        }
+
+        window.openEftModal = function() { document.getElementById("eft-modal").classList.remove("hidden"); }
+        window.closeEftModal = function() { document.getElementById("eft-modal").classList.add("hidden"); }
+
+        window.openAuthModal = function() {
+            document.getElementById("auth-modal").classList.remove("hidden");
+            if (currentCustomer) {
+                document.getElementById("auth-unauthenticated-view").classList.add("hidden");
+                document.getElementById("auth-authenticated-view").classList.remove("hidden");
+                document.getElementById("user-display-email").textContent = currentCustomer.email;
+            } else {
+                document.getElementById("auth-unauthenticated-view").classList.remove("hidden");
+                document.getElementById("auth-authenticated-view").classList.add("hidden");
+            }
+        }
+
+        window.closeAuthModal = function() { document.getElementById("auth-modal").classList.add("hidden"); }
+
+        window.switchAuthTab = function(tab) {
+            const loginBtn = document.getElementById("tab-login-btn");
+            const regBtn = document.getElementById("tab-register-btn");
+            const loginForm = document.getElementById("login-form");
+            const regForm = document.getElementById("register-form");
+            const modalTitle = document.getElementById("auth-modal-title");
+
+            if (tab === 'login') {
+                loginBtn.className = "flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider bg-cheap-blue text-white transition-all cursor-pointer";
+                regBtn.className = "flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider text-zinc-400 transition-all cursor-pointer";
+                loginForm.classList.remove("hidden");
+                regForm.classList.add("hidden");
+                modalTitle.textContent = "Customer Sign In";
+            } else {
+                regBtn.className = "flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider bg-cheap-blue text-white transition-all cursor-pointer";
+                loginBtn.className = "flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider text-zinc-400 transition-all cursor-pointer";
+                regForm.classList.remove("hidden");
+                loginForm.classList.add("hidden");
+                modalTitle.textContent = "Create Account";
+            }
+        }
+
+        window.handleDirectLogin = async function(e) {
+            e.preventDefault();
+            const email = document.getElementById("login-email").value.trim().toLowerCase();
+            const password = document.getElementById("login-password").value;
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                document.getElementById("login-form").reset();
+                closeAuthModal();
+            } catch (err) {
+                alert("Sign in failed: " + (err.message || "Invalid credentials"));
+            }
+        }
+
+        window.handleDirectRegister = async function(e) {
+            e.preventDefault();
+            const name = document.getElementById("reg-name").value.trim();
+            const email = document.getElementById("reg-email").value.trim().toLowerCase();
+            const password = document.getElementById("reg-password").value;
+            const phone = document.getElementById("reg-phone").value.trim();
+            const address = document.getElementById("reg-address").value.trim();
+
+            registering = true;
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, password);
+                const profile = { name, email, phone, address, joinedDate: new Date().toISOString().split('T')[0] };
+                await setDoc(doc(db, "customers", cred.user.uid), profile);
+                setCurrentCustomer(cred.user, profile);
+                document.getElementById("register-form").reset();
+                closeAuthModal();
+            } catch (err) {
+                alert("Registration failed: " + (err.message || "Please try again."));
+            } finally {
+                registering = false;
+            }
+        }
+
+        window.signOutCustomer = async function() {
+            try { await signOut(auth); } catch (err) {}
+            closeAuthModal();
+            closeAdminModal();
+        }
+
+        window.updateAuthNavUI = function() {
+            const btnText = document.getElementById("auth-btn-text");
+            const adminContainer = document.getElementById("admin-nav-container");
+
+            if (currentCustomer) {
+                const shortName = currentCustomer.name ? currentCustomer.name.split(' ')[0] : currentCustomer.email.split('@')[0];
+                btnText.textContent = shortName;
+                if (currentCustomer.isAdmin) adminContainer.classList.remove("hidden"); else adminContainer.classList.add("hidden");
+            } else {
+                btnText.textContent = "Sign In";
+                adminContainer.classList.add("hidden");
+            }
+        }
+
+        window.exportCustomersToExcel = function() {
+            if (!currentCustomer || !currentCustomer.isAdmin) return;
+            if (customers.length === 0) { alert("No customer accounts recorded yet."); return; }
+            const exportData = customers.map((c, index) => ({
+                "No.": index + 1,
+                "Name & Surname": c.name || "N/A",
+                "Email Address": c.email || "N/A",
+                "Cell Number": c.phone || "N/A",
+                "Delivery Address": c.address || "N/A",
+                "Joined Date": c.joinedDate || "N/A"
+            }));
+            const worksheet = XLSX.utils.json_to_sheet(exportData);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Customers");
+            XLSX.writeFile(workbook, "CHEAP_Store_Customers.xlsx");
+        }
+
+        window.renderSidebarCategories = function() {
+            const container = document.getElementById("sidebar-category-filters");
+            if (!container) return;
+            const categoriesSet = new Set();
+            products.forEach(p => { if (p.category) categoriesSet.add(p.category.trim()); });
+            const categories = Array.from(categoriesSet).sort();
+
+            let html = `<button type="button" onclick="filterProducts('all')" class="cat-btn ${currentFilter === 'all' ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer">All Products</button>`;
+            categories.forEach(cat => {
+                const isActive = currentFilter.toLowerCase() === cat.toLowerCase();
+                const safeCat = cat.replace(/'/g, "\\'");
+                html += `<button type="button" onclick="filterProducts('${safeCat}')" class="cat-btn ${isActive ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer">${esc(cat)}</button>`;
+            });
+            container.innerHTML = html;
+        }
+
+        window.renderHeroBestSeller = function() {
+            const container = document.getElementById("hero-best-seller-container");
+            if (!container) return;
+            let bestSeller = products.find(p => p.isBestSeller === true) || products[0];
+            if (!bestSeller) { container.innerHTML = ""; return; }
+            let primaryImg = bestSeller.image || '';
+            if (primaryImg.includes(',')) primaryImg = primaryImg.split(',')[0].trim();
+            const safeId = bestSeller.id.replace(/'/g, "\\'");
+
+            container.innerHTML = `
+                <div class="bg-zinc-900/90 border border-cheap-border rounded-2xl p-6 sm:p-8 shadow-2xl relative">
+                    <div class="absolute -top-3 right-6 bg-cheap-yellow text-black font-black text-[10px] uppercase px-3 py-1 rounded-full shadow">Featured Deal</div>
+                    <div class="rounded-xl overflow-hidden mb-5 h-48 sm:h-56 border border-cheap-border bg-zinc-950 flex items-center justify-center cursor-pointer" onclick="openProductModal('${safeId}')">
+                        <img src="${esc(primaryImg)}" alt="${esc(bestSeller.name)}" class="w-full h-full object-cover">
+                    </div>
+                    <span class="text-xs uppercase tracking-widest text-cheap-blue font-bold block mb-1">${esc(bestSeller.category)}</span>
+                    <h3 class="font-black text-xl text-white mb-2 cursor-pointer hover:text-cheap-yellow" onclick="openProductModal('${safeId}')">${esc(bestSeller.name)}</h3>
+                    <p class="text-zinc-400 text-xs sm:text-sm mb-5 line-clamp-2">${esc(bestSeller.description || '')}</p>
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-zinc-500 line-through block">R${(parseFloat(bestSeller.price) * 1.2).toFixed(2)}</span>
+                            <span class="font-black text-2xl text-cheap-yellow">R${parseFloat(bestSeller.price).toFixed(2)}</span>
+                        </div>
+                        <button type="button" onclick="addToCart('${safeId}')" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer">Add to Cart</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        window.renderProducts = function() {
+            const grid = document.getElementById("product-grid");
+            const visibleProducts = products.filter(p => p.visible !== false);
+            const filtered = currentFilter === 'all' ? visibleProducts : visibleProducts.filter(p => p.category.toLowerCase() === currentFilter.toLowerCase());
+
+            filtered.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-zinc-500"><p>No products found in this category.</p></div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(p => {
+                let primaryImg = p.image || '';
+                if (primaryImg.includes(',')) primaryImg = primaryImg.split(',')[0].trim();
+                const safeId = p.id.replace(/'/g, "\\'");
+                return `
+                    <div class="bg-zinc-900/50 border border-cheap-border rounded-2xl p-6 flex flex-col justify-between hover:border-zinc-700 transition-all group">
+                        <div>
+                            <div class="aspect-w-16 aspect-h-9 bg-zinc-950 rounded-xl mb-5 overflow-hidden flex items-center justify-center cursor-pointer relative" onclick="openProductModal('${safeId}')">
+                                <img src="${esc(primaryImg)}" alt="${esc(p.name)}" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
+                                <span class="absolute top-3 left-3 bg-black/80 text-cheap-green text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-md border border-cheap-border">${esc(p.category)}</span>
+                            </div>
+                            <h3 class="text-xl font-black text-white mb-2 line-clamp-1 cursor-pointer hover:text-cheap-yellow" onclick="openProductModal('${safeId}')">${esc(p.name)}</h3>
+                            <p class="text-sm text-zinc-400 mb-6 line-clamp-2">${esc(p.description)}</p>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-cheap-border mt-auto">
+                            <div>
+                                <span class="text-xs text-zinc-500 block">Price</span>
+                                <span class="text-xl font-black text-white">R${parseFloat(p.price).toFixed(2)}</span>
+                            </div>
+                            <button type="button" onclick="addToCart('${safeId}')" class="bg-zinc-800 hover:bg-cheap-blue text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors cursor-pointer">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.filterProducts = function(cat) {
+            currentFilter = cat;
+            renderSidebarCategories();
+            renderProducts();
+        }
+
+        window.addToCart = function(id) {
+            const prod = products.find(p => p.id === id);
+            if (!prod) return;
+            let variantName = "Standard";
+            let priceMod = 0;
+            let primaryImg = prod.image || '';
+            if (primaryImg.includes(',')) primaryImg = primaryImg.split(',')[0].trim();
+
+            cart.push({ ...prod, id: prod.id, image: primaryImg, finalPrice: parseFloat(prod.price) + priceMod, selectedOption: variantName, qty: 1 });
+            saveCartToStorage();
+            updateCartUI();
+            toggleCartDrawer();
+        }
+
+        window.updateCartUI = function() {
+            const badge = document.getElementById("cart-badge");
+            const container = document.getElementById("cart-items-container");
+            const subtotalEl = document.getElementById("cart-subtotal");
+            const discountRow = document.getElementById("discount-row");
+            const discountEl = document.getElementById("cart-discount");
+            const discountBanner = document.getElementById("discount-banner");
+            const shippingEl = document.getElementById("cart-shipping");
+            const totalEl = document.getElementById("cart-total");
+
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            badge.textContent = totalCount;
+
+            if (cart.length === 0) {
+                container.innerHTML = `<div class="text-center py-12 text-zinc-500"><i class="fa-solid fa-basket-shopping text-4xl mb-3 text-zinc-700"></i><p class="text-sm">Your cart is currently empty.</p></div>`;
+                subtotalEl.textContent = "R0.00";
+                shippingEl.textContent = "R100.00";
+                totalEl.textContent = "R0.00";
+                discountBanner.classList.add("hidden");
+                discountRow.classList.add("hidden");
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => `
+                <div class="flex items-center space-x-3 bg-zinc-950 p-3 rounded-xl border border-cheap-border">
+                    <img src="${esc(item.image)}" class="w-14 h-14 object-cover rounded-lg border border-cheap-border">
+                    <div class="flex-1">
+                        <h4 class="font-bold text-xs text-white line-clamp-1">${esc(item.name)}</h4>
+                        <span class="text-xs text-cheap-yellow font-bold mt-0.5 block">R${parseFloat(item.finalPrice).toFixed(2)}</span>
+                        <div class="flex items-center space-x-2 mt-1">
+                            <button type="button" onclick="updateCartItemQty(${index}, -1)" class="w-5 h-5 bg-zinc-900 border border-cheap-border rounded flex items-center justify-center text-xs text-white cursor-pointer">-</button>
+                            <span class="text-xs font-bold text-white">${item.qty}</span>
+                            <button type="button" onclick="updateCartItemQty(${index}, 1)" class="w-5 h-5 bg-zinc-900 border border-cheap-border rounded flex items-center justify-center text-xs text-white cursor-pointer">+</button>
+                        </div>
+                    </div>
+                    <button type="button" onclick="removeFromCart(${index})" class="text-zinc-500 hover:text-red-400 p-2 cursor-pointer"><i class="fa-solid fa-trash text-sm"></i></button>
+                </div>
+            `).join('');
+
+            const subtotal = cart.reduce((sum, item) => sum + (item.finalPrice * item.qty), 0);
+
+            // MULTI-BUY 10% DISCOUNT LOGIC
+            let discount = 0;
+            if (totalCount >= 2) {
+                discount = subtotal * 0.10;
+                discountEl.textContent = `-R${discount.toFixed(2)}`;
+                discountBanner.classList.remove("hidden");
+                discountRow.classList.remove("hidden");
+            } else {
+                discountBanner.classList.add("hidden");
+                discountRow.classList.add("hidden");
+            }
+
+            const discountedSubtotal = subtotal - discount;
+            const shipping = discountedSubtotal >= 600 ? 0 : 100;
+            shippingEl.textContent = shipping === 0 ? "FREE (Orders R600+)" : "R100.00";
+            shippingEl.className = shipping === 0 ? "font-bold text-cheap-green" : "font-bold text-zinc-300";
+
+            subtotalEl.textContent = `R${subtotal.toFixed(2)}`;
+            totalEl.textContent = `R${(discountedSubtotal + shipping).toFixed(2)}`;
+        }
+
+        window.updateCartItemQty = function(index, delta) {
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) cart.splice(index, 1);
+            saveCartToStorage();
+            updateCartUI();
+        }
+
+        window.removeFromCart = function(index) {
+            cart.splice(index, 1);
+            saveCartToStorage();
+            updateCartUI();
+        }
+
+        window.toggleCartDrawer = function() {
+            document.getElementById("cart-drawer").classList.toggle("hidden");
+        }
+
+        window.openProductModal = function(id) {
+            selectedProduct = products.find(p => p.id === id);
+            if (!selectedProduct) return;
+            let imgRaw = selectedProduct.image || '';
+            let imageList = imgRaw.includes(',') ? imgRaw.split(',').map(s => s.trim()).filter(Boolean) : [imgRaw].filter(Boolean);
+
+            document.getElementById("modal-main-img").src = imageList[0] || '';
+            document.getElementById("modal-cat").textContent = selectedProduct.category;
+            document.getElementById("modal-title").textContent = selectedProduct.name;
+            document.getElementById("modal-desc").textContent = selectedProduct.description || "";
+            document.getElementById("modal-price").textContent = `R${parseFloat(selectedProduct.price).toFixed(2)}`;
+
+            const extraContainer = document.getElementById("modal-extra-fields");
+            if (selectedProduct.extra1 && selectedProduct.extra1.trim() !== "") {
+                extraContainer.textContent = selectedProduct.extra1;
+                extraContainer.style.display = "block";
+            } else {
+                extraContainer.style.display = "none";
+            }
+            document.getElementById("product-modal").classList.remove("hidden");
+        }
+
+        window.closeProductModal = function() {
+            document.getElementById("product-modal").classList.add("hidden");
+        }
+
+        window.addModalItemToCart = function() {
+            if (!selectedProduct) return;
+            addToCart(selectedProduct.id);
+            closeProductModal();
+        }
+
+        window.openCheckoutModal = function() {
+            if (cart.length === 0) { alert("Your cart is empty!"); return; }
+            if (!currentCustomer) {
+                alert("Please sign in first to place your order.");
+                openAuthModal();
+                return;
+            }
+
+            document.getElementById("order-name").value = currentCustomer.name || '';
+            document.getElementById("order-phone").value = currentCustomer.phone || '';
+            document.getElementById("order-email").value = currentCustomer.email || '';
+            document.getElementById("order-address").value = currentCustomer.address || '';
+            toggleCartDrawer();
+            document.getElementById("checkout-modal").classList.remove("hidden");
+        }
+
+        window.closeCheckoutModal = function() {
+            document.getElementById("checkout-modal").classList.add("hidden");
+        }
+
+        window.submitOrder = async function(e) {
+            e.preventDefault();
+            const name = document.getElementById("order-name").value;
+            const phone = document.getElementById("order-phone").value;
+            const email = document.getElementById("order-email").value;
+            const address = document.getElementById("order-address").value;
+            const paymentMethod = document.getElementById("order-payment").value;
+
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.finalPrice * item.qty), 0);
+            const discount = totalCount >= 2 ? subtotal * 0.10 : 0;
+            const discountedSubtotal = subtotal - discount;
+            const shipping = discountedSubtotal >= 600 ? 0 : 100;
+            const total = discountedSubtotal + shipping;
+
+            const isPayFast = paymentMethod.includes("PayFast");
+
+            const orderData = {
+                uid: currentCustomer ? currentCustomer.uid : null,
+                name, phone, email, address, payment: paymentMethod,
+                items: cart.map(item => ({
+                    id: item.id,
+                    name: item.name,
+                    finalPrice: item.finalPrice,
+                    qty: item.qty
+                })),
+                subtotal, discount, total,
+                status: "Pending Payment",
+                createdAt: new Date().toISOString()
+            };
+
+            try {
+                const docRef = await addDoc(collection(db, "cheap_orders"), orderData);
+                const orderId = docRef.id;
+
+                if (!isPayFast) {
+                    cart = [];
+                    saveCartToStorage();
+                    updateCartUI();
+                    closeCheckoutModal();
+                    document.getElementById("checkout-form").reset();
+                    openEftModal();
+                } else {
+                    const siteUrl = window.location.href.split('?')[0];
+                    document.getElementById("pf-return").value = siteUrl + "?status=success&order_id=" + orderId;
+                    document.getElementById("pf-cancel").value = siteUrl + "?status=cancel";
+                    document.getElementById("pf-notify").value = "https://us-central1-cheap-store-za.cloudfunctions.net/payfastITN";
+                    document.getElementById("pf-name").value = name;
+                    document.getElementById("pf-email").value = email;
+                    document.getElementById("pf-m-id").value = orderId;
+                    document.getElementById("pf-amount").value = total.toFixed(2);
+                    document.getElementById("pf-item").value = `CHEAP Order #${orderId.substring(0, 8)}`;
+                    document.getElementById("payfast-form").submit();
+                }
+            } catch (err) {
+                alert("Order error: " + (err.message || "Please try again."));
+            }
+        }
+
+        window.handleNewsletterSubmit = async function(e) {
+            e.preventDefault();
+            alert("Thank you for subscribing to CHEAP updates!");
+            e.target.reset();
+        }
+
+        window.saveAnnouncementBanner = async function(e) {
+            e.preventDefault();
+            const text = document.getElementById("admin-banner-text").value;
+            try {
+                await setDoc(doc(db, "settings", "announcement_cheap"), { text }, { merge: true });
+                document.getElementById("announcement-banner").innerHTML = `<span>${esc(text)}</span>`;
+                alert("Banner updated!");
+            } catch (err) { alert("Banner update failed"); }
+        }
+
+        window.openAdminModal = function(e) {
+            if (e) e.preventDefault();
+            if (!currentCustomer || !currentCustomer.isAdmin) { alert("Unauthorized."); return; }
+            document.getElementById("admin-modal").classList.remove("hidden");
+            renderAdminDashboard();
+        }
+
+        window.closeAdminModal = function() { document.getElementById("admin-modal").classList.add("hidden"); }
+
+        window.switchAdminTab = function(tab) {
+            const tabs = ['prod', 'cust', 'set', 'ord'];
+            tabs.forEach(t => {
+                document.getElementById(`admin-tab-${t}`).className = "bg-zinc-900 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer";
+            });
+            ['products', 'customers', 'settings', 'orders'].forEach(p => document.getElementById(`admin-panel-${p}`).classList.add("hidden"));
+
+            const activeTabMap = { products: 'prod', customers: 'cust', settings: 'set', orders: 'ord' };
+            document.getElementById(`admin-tab-${activeTabMap[tab]}`).className = "bg-cheap-blue text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer";
+            document.getElementById(`admin-panel-${tab}`).classList.remove("hidden");
+        }
+
+        window.renderAdminDashboard = function(filteredList = products) {
+            if (!currentCustomer || !currentCustomer.isAdmin) return;
+            document.getElementById("stat-total-products").textContent = products.length;
+            document.getElementById("stat-total-customers").textContent = customers.length;
+            document.getElementById("stat-total-orders").textContent = orders.length;
+
+            const totalRevenue = orders.reduce((sum, o) => sum + (o.total || 0), 0);
+            document.getElementById("stat-total-revenue").textContent = `R${totalRevenue.toFixed(2)}`;
+
+            document.getElementById("prod-count-badge").textContent = products.length;
+            document.getElementById("cust-count-badge").textContent = customers.length;
+            document.getElementById("ord-count-badge").textContent = orders.length;
+
+            renderAdminProductsTable(filteredList);
+            renderAdminCustomersTable();
+            renderAdminOrdersTable();
+        }
+
+        window.renderAdminProductsTable = function(list) {
+            const tbody = document.getElementById("admin-product-table-body");
+            if (!tbody) return;
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-zinc-500">No products found.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = list.map(p => {
+                let primaryImg = p.image || '';
+                if (primaryImg.includes(',')) primaryImg = primaryImg.split(',')[0].trim();
+                const safeId = p.id.replace(/'/g, "\\'");
+                return `
+                    <tr class="border-b border-cheap-border/50 hover:bg-zinc-900">
+                        <td class="p-3 flex items-center space-x-3">
+                            <img src="${esc(primaryImg)}" class="w-8 h-8 object-cover rounded border">
+                            <span class="font-bold text-white text-xs">${esc(p.name)}</span>
+                        </td>
+                        <td class="p-3 text-cheap-blue font-bold text-xs uppercase">${esc(p.category)}</td>
+                        <td class="p-3 font-bold text-cheap-yellow">R${parseFloat(p.price).toFixed(2)}</td>
+                        <td class="p-3 font-bold text-white">${p.stock ?? 20}u</td>
+                        <td class="p-3"><span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">In Stock</span></td>
+                        <td class="p-3 text-right space-x-1">
+                            <button type="button" onclick="openEditProductModal('${safeId}')" class="bg-cheap-blue text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Edit</button>
+                            <button type="button" onclick="deleteProduct('${safeId}')" class="bg-red-900 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Del</button>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        window.renderAdminCustomersTable = function() {
+            const tbody = document.getElementById("admin-customer-table-body");
+            if (!tbody) return;
+            if (customers.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-zinc-500">No customer accounts registered yet.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = customers.map(c => `
+                <tr class="border-b border-cheap-border/50">
+                    <td class="p-3 font-bold text-white">${esc(c.name || 'N/A')}</td>
+                    <td class="p-3 font-mono text-zinc-400">${esc(c.email)}</td>
+                    <td class="p-3">${esc(c.phone || 'N/A')}</td>
+                    <td class="p-3 text-zinc-400">${esc(c.address || 'N/A')}</td>
+                    <td class="p-3 font-mono text-zinc-500">${esc(c.joinedDate || 'N/A')}</td>
+                    <td class="p-3 text-right">
+                        <button type="button" onclick="deleteCustomer('${c.id}')" class="bg-red-900 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Del</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        window.deleteCustomer = async function(id) {
+            if (!confirm("Delete customer account?")) return;
+            try { await deleteDoc(doc(db, "customers", id)); } catch (err) {}
+        }
+
+        window.filterAdminProducts = function(query) {
+            const q = query.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+            renderAdminProductsTable(filtered);
+        }
+
+        window.openNewProductModal = function() {
+            document.getElementById("prod-edit-id").value = "";
+            document.getElementById("product-action-form").reset();
+            document.getElementById("prod-visible").checked = true;
+            document.getElementById("product-form-modal").classList.remove("hidden");
+        }
+
+        window.openEditProductModal = function(id) {
+            const p = products.find(prod => prod.id === id);
+            if (!p) return;
+            document.getElementById("prod-edit-id").value = p.id;
+            document.getElementById("prod-name").value = p.name;
+            document.getElementById("prod-price").value = p.price;
+            document.getElementById("prod-cat").value = p.category;
+            document.getElementById("prod-img").value = p.image;
+            document.getElementById("prod-visible").checked = p.visible !== false;
+            document.getElementById("prod-bestseller").checked = p.isBestSeller === true;
+            document.getElementById("prod-extra-1").value = p.extra1 || "";
+            document.getElementById("prod-desc").value = p.description || "";
+            document.getElementById("admin-modal").classList.add("hidden");
+            document.getElementById("product-form-modal").classList.remove("hidden");
+        }
+
+        window.closeProductFormModal = function() {
+            document.getElementById("product-form-modal").classList.add("hidden");
+            document.getElementById("admin-modal").classList.remove("hidden");
+        }
+
+        window.handleProductSubmit = async function(e) {
+            e.preventDefault();
+            const id = document.getElementById("prod-edit-id").value;
+            const data = {
+                name: document.getElementById("prod-name").value,
+                price: parseFloat(document.getElementById("prod-price").value),
+                category: document.getElementById("prod-cat").value,
+                image: document.getElementById("prod-img").value,
+                visible: document.getElementById("prod-visible").checked,
+                isBestSeller: document.getElementById("prod-bestseller").checked,
+                extra1: document.getElementById("prod-extra-1").value,
+                description: document.getElementById("prod-desc").value,
+                stock: id ? (products.find(p => p.id === id)?.stock ?? 20) : 20
+            };
+
+            try {
+                if (id) await updateDoc(doc(db, "cheap_products", id), data);
+                else await addDoc(collection(db, "cheap_products"), data);
+                closeProductFormModal();
+            } catch (err) { alert("Failed to save product."); }
+        }
+
+        window.deleteProduct = async function(id) {
+            if (!confirm("Delete product?")) return;
+            try { await deleteDoc(doc(db, "cheap_products", id)); } catch (err) {}
+        }
+
+        window.renderAdminOrdersTable = function() {
+            const tbody = document.getElementById("admin-order-table-body");
+            if (!tbody) return;
+            if (orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-zinc-500">No orders recorded yet.</td></tr>`;
+                return;
+            }
+            tbody.innerHTML = orders.map(o => `
+                <tr class="border-b border-cheap-border/50">
+                    <td class="p-3 font-mono font-bold text-white">#${esc(o.id.substring(0, 8))}</td>
+                    <td class="p-3 font-bold text-white">${esc(o.name)}</td>
+                    <td class="p-3 text-zinc-400">${esc(o.phone)}<br>${esc(o.email)}</td>
+                    <td class="p-3 text-zinc-300">${(o.items || []).map(i => `${i.qty}x ${esc(i.name)}`).join(', ')}</td>
+                    <td class="p-3 text-cheap-blue font-bold">${esc(o.payment || 'EFT')}</td>
+                    <td class="p-3 font-bold text-cheap-yellow">R${parseFloat(o.total).toFixed(2)}</td>
+                    <td class="p-3"><span class="bg-amber-950 text-amber-400 border border-amber-800 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">${esc(o.status || 'Pending')}</span></td>
+                    <td class="p-3 text-right">
+                        <button type="button" onclick="deleteOrder('${o.id}')" class="bg-red-900 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Del</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        window.deleteOrder = async function(id) {
+            if (!confirm("Delete order?")) return;
+            try { await deleteDoc(doc(db, "cheap_orders", id)); } catch (err) {}
+        }
+
+        initDatabase();
+    </script>
+</body>
+</html>
