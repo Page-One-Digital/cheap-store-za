@@ -777,7 +777,7 @@
     <!-- Firebase Firestore & Auth Modules Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, getDocs, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, getDocs, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
         // FIREBASE CONFIGURATION FOR CHEAP STORE
@@ -939,7 +939,9 @@
                 }
             } catch (err) {}
 
-            onSnapshot(collection(db, "cheap_products"), (snapshot) => {
+            // Fetch product catalog ONCE from Firestore (Replaces real-time onSnapshot listener)
+            try {
+                const snapshot = await getDocs(collection(db, "cheap_products"));
                 products = [];
                 snapshot.forEach((docSnap) => {
                     products.push({ id: docSnap.id, ...docSnap.data() });
@@ -949,13 +951,13 @@
                 renderProducts();
                 renderSidebarCategories();
                 renderHeroBestSeller();
-            }, (error) => {
+            } catch (error) {
                 products = defaultProducts;
                 products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
                 renderProducts();
                 renderSidebarCategories();
                 renderHeroBestSeller();
-            });
+            }
 
             onAuthStateChanged(auth, async (user) => {
                 if (!user) {
