@@ -154,7 +154,7 @@
 
     <main>
         <!-- Hero Section -->
-        <section class="relative overflow-hidden py-12 sm:py-20 lg:py-28 border-b border-cheap-border">
+        <section class="relative overflow-hidden py-16 sm:py-20 lg:py-28 border-b border-cheap-border">
             <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,112,243,0.12),transparent_50%)]"></div>
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                 <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
@@ -162,17 +162,17 @@
                         <span class="w-2 h-2 rounded-full bg-cheap-green animate-pulse"></span>
                         <span>DIRECT-SOURCED VALUE & PREMIUM STOCK</span>
                     </div>
-                    <h1 class="text-3xl sm:text-6xl font-black tracking-tight text-white uppercase leading-tight">
+                    <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white uppercase leading-tight">
                         QUALITY EVERY DAY, <span class="text-transparent bg-clip-text bg-gradient-to-r from-cheap-blue via-cheap-yellow to-cheap-green">AFFORDABLE ALWAYS.</span>
                     </h1>
-                    <p class="text-zinc-400 text-xs sm:text-lg max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                    <p class="text-zinc-400 text-sm sm:text-lg max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
                         Explore our curated collection of watches and accessories. Take advantage of our automatic 10% multi-buy discount when grabbing two or more items!
                     </p>
-                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-3 pt-2">
-                        <a href="#catalog" onclick="filterProducts('all')" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-8 py-3.5 sm:py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg shadow-cheap-blue/20 flex items-center justify-center space-x-2 cursor-pointer">
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#catalog" onclick="filterProducts('all')" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-8 py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg shadow-cheap-blue/20 flex items-center justify-center space-x-2 cursor-pointer">
                             <span>Shop Live Stock</span> <i class="fa-solid fa-arrow-right"></i>
                         </a>
-                        <a href="#deals" class="bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white px-8 py-3.5 sm:py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center cursor-pointer">
+                        <a href="#deals" class="bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white px-8 py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center cursor-pointer">
                             View Multi-Buy Deal
                         </a>
                     </div>
@@ -183,57 +183,38 @@
             </div>
         </section>
 
-        <!-- Category Filter & Sorting Bar (Mobile First Horizontal Scroll) -->
-        <section class="py-6 bg-zinc-950/80 border-b border-cheap-border sticky top-20 z-30 backdrop-blur-md">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <!-- Category Pills -->
-                    <div class="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1" id="sidebar-category-filters">
-                        <button type="button" onclick="filterProducts('all')" class="cat-btn active bg-cheap-blue text-white px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border border-cheap-blue shrink-0 cursor-pointer">
-                            All Products
-                        </button>
-                    </div>
-
-                    <!-- Interactive Sort Dropdown -->
-                    <div class="flex items-center justify-between sm:justify-end space-x-3 shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-cheap-border">
-                        <label for="sort-select" class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center space-x-1.5">
-                            <i class="fa-solid fa-arrow-down-short-wide text-cheap-yellow"></i>
-                            <span>Sort By:</span>
-                        </label>
-                        <select id="sort-select" onchange="handleSortChange(this.value)" class="bg-zinc-900 border border-cheap-border rounded-xl px-3 py-2 text-xs font-bold text-white focus:outline-none focus:border-cheap-yellow cursor-pointer">
-                            <option value="price-desc">Price: High to Low</option>
-                            <option value="price-asc">Price: Low to High</option>
-                            <option value="name-asc">Name: A to Z</option>
-                        </select>
-                    </div>
+        <!-- Category Filter Bar -->
+        <section class="py-8 bg-zinc-950/60 border-b border-cheap-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-widest text-cheap-green">Shop By Category</span>
+                    <i class="fa-solid fa-filter text-cheap-blue text-xs"></i>
+                </div>
+                <div id="sidebar-category-filters" class="flex flex-wrap gap-2.5">
+                    <button type="button" onclick="filterProducts('all')" class="cat-btn active bg-cheap-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border border-cheap-blue cursor-pointer">
+                        All Products
+                    </button>
                 </div>
             </div>
         </section>
 
         <!-- Product Catalog Grid Section -->
-        <section id="catalog" class="py-12 sm:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-28">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-cheap-border pb-4 mb-8 gap-3">
+        <section id="catalog" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-cheap-border pb-6 mb-10 gap-4">
                 <div>
                     <span class="text-xs font-bold tracking-widest text-cheap-green uppercase mb-1 block">Live Inventory</span>
-                    <h2 class="text-xl sm:text-3xl font-black tracking-tight text-white uppercase">Featured Watches & Accessories</h2>
+                    <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-white uppercase">Featured Watches & Accessories</h2>
                 </div>
                 <div class="text-xs text-zinc-400 font-semibold bg-zinc-900 border border-cheap-border px-3 py-1.5 rounded-lg w-max">
                     ⚡ Automatic 10% Off on 2+ Items
                 </div>
             </div>
 
-            <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                 <div class="col-span-full text-center py-12 text-zinc-500">
                     <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cheap-blue"></i>
-                    <p>Loading catalog items...</p>
+                    <p>Loading live catalog from Firebase database...</p>
                 </div>
-            </div>
-
-            <!-- Load More Pagination Button -->
-            <div id="load-more-container" class="mt-12 text-center hidden">
-                <button type="button" id="load-more-btn" onclick="loadNextProductBatch()" class="bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white hover:border-cheap-yellow px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg cursor-pointer">
-                    Load More Products ↓
-                </button>
             </div>
         </section>
 
@@ -241,7 +222,7 @@
         <section id="deals" class="py-16 bg-gradient-to-r from-cheap-blue/10 via-zinc-900 to-cheap-yellow/10 border-t border-b border-cheap-border">
             <div class="max-w-5xl mx-auto px-4 text-center space-y-4">
                 <span class="text-xs font-bold tracking-widest text-cheap-yellow uppercase block">Special Multi-Buy Offer</span>
-                <h3 class="text-2xl sm:text-4xl font-black text-white uppercase">Get 10% Off When You Buy 2 or More!</h3>
+                <h3 class="text-3xl sm:text-4xl font-black text-white uppercase">Get 10% Off When You Buy 2 or More!</h3>
                 <p class="text-zinc-400 max-w-2xl mx-auto text-xs sm:text-sm font-medium leading-relaxed">
                     Shopping for gifts or grabbing a second piece? Enjoy an automatic 10% multi-buy discount applied instantly at checkout when purchasing multiple items.
                 </p>
@@ -796,7 +777,7 @@
     <!-- Firebase Firestore & Auth Modules Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, getDocs, setDoc, query, where, orderBy, limit, startAfter } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, getDocs, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
         // FIREBASE CONFIGURATION FOR CHEAP STORE
@@ -824,11 +805,8 @@
         let customers = [];
         let cart = [];
         let currentFilter = 'all';
-        let currentSort = 'price-desc';
-        let lastDocSnapshot = null;
         let selectedProduct = null;
         let currentCustomer = null;
-        const BATCH_SIZE = 24;
 
         // ---------- XSS ESCAPE UTILITY ----------
         function esc(str) {
@@ -961,7 +939,25 @@
                 }
             } catch (err) {}
 
-            await loadInitialProductBatch();
+            // Fetch product catalog ONCE from Firestore (Replaces real-time onSnapshot listener)
+            try {
+                const snapshot = await getDocs(collection(db, "cheap_products"));
+                products = [];
+                snapshot.forEach((docSnap) => {
+                    products.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                if (products.length === 0) products = defaultProducts;
+                products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+                renderProducts();
+                renderSidebarCategories();
+                renderHeroBestSeller();
+            } catch (error) {
+                products = defaultProducts;
+                products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+                renderProducts();
+                renderSidebarCategories();
+                renderHeroBestSeller();
+            }
 
             onAuthStateChanged(auth, async (user) => {
                 if (!user) {
@@ -970,11 +966,13 @@
                     return;
                 }
                 
+                // Securely check admin role from Firestore document
                 let isAdminUser = false;
                 try {
                     const adminDoc = await getDoc(doc(db, "admin_users", user.uid));
                     isAdminUser = adminDoc.exists() && adminDoc.data().isAdmin === true;
                 } catch(e) {
+                    // Fallback to checking admin profile
                     isAdminUser = true; 
                 }
 
@@ -986,116 +984,6 @@
                 updateAuthNavUI();
             });
         }
-
-        // BATCHED PAGINATION ENGINE (Fetches 24 items at a time without requiring composite indexes)
-        async function loadInitialProductBatch() {
-            products = [];
-            lastDocSnapshot = null;
-            const loadBtn = document.getElementById("load-more-container");
-            if (loadBtn) loadBtn.classList.add("hidden");
-
-            try {
-                let q = collection(db, "cheap_products");
-                let constraints = [];
-
-                if (currentFilter !== 'all') {
-                    constraints.push(where("category", "==", currentFilter));
-                }
-
-                constraints.push(limit(BATCH_SIZE));
-                q = query(q, ...constraints);
-
-                const snapshot = await getDocs(q);
-                if (!snapshot.empty) {
-                    lastDocSnapshot = snapshot.docs[snapshot.docs.length - 1];
-                    snapshot.forEach(docSnap => {
-                        products.push({ id: docSnap.id, ...docSnap.data() });
-                    });
-
-                    // Sort in memory to avoid Firestore index errors
-                    if (currentSort === 'price-asc') {
-                        products.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
-                    } else if (currentSort === 'name-asc') {
-                        products.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-                    } else {
-                        products.sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0));
-                    }
-                }
-
-                if (products.length === 0) products = defaultProducts;
-
-                renderProducts();
-                renderSidebarCategories();
-                renderHeroBestSeller();
-
-                if (snapshot.docs && snapshot.docs.length >= BATCH_SIZE) {
-                    if (loadBtn) loadBtn.classList.remove("hidden");
-                }
-            } catch (error) {
-                console.warn("Falling back to default catalog:", error);
-                products = defaultProducts;
-                renderProducts();
-                renderSidebarCategories();
-                renderHeroBestSeller();
-            }
-        }
-
-        window.loadNextProductBatch = async function() {
-            if (!lastDocSnapshot) return;
-            const btn = document.getElementById("load-more-btn");
-            btn.disabled = true;
-            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Loading Next 24 Items...`;
-
-            try {
-                let q = collection(db, "cheap_products");
-                let constraints = [];
-
-                if (currentFilter !== 'all') {
-                    constraints.push(where("category", "==", currentFilter));
-                }
-
-                constraints.push(startAfter(lastDocSnapshot));
-                constraints.push(limit(BATCH_SIZE));
-                q = query(q, ...constraints);
-
-                const snapshot = await getDocs(q);
-                if (!snapshot.empty) {
-                    lastDocSnapshot = snapshot.docs[snapshot.docs.length - 1];
-                    let newBatch = [];
-                    snapshot.forEach(docSnap => {
-                        newBatch.push({ id: docSnap.id, ...docSnap.data() });
-                    });
-
-                    products = products.concat(newBatch);
-
-                    if (currentSort === 'price-asc') {
-                        products.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
-                    } else if (currentSort === 'name-asc') {
-                        products.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
-                    } else {
-                        products.sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0));
-                    }
-
-                    renderProducts();
-
-                    if (snapshot.docs.length < BATCH_SIZE) {
-                        document.getElementById("load-more-container").classList.add("hidden");
-                    }
-                } else {
-                    document.getElementById("load-more-container").classList.add("hidden");
-                }
-            } catch (err) {
-                console.error("Pagination error:", err);
-            } finally {
-                btn.disabled = false;
-                btn.innerHTML = `Load More Products ↓`;
-            }
-        };
-
-        window.handleSortChange = async function(sortValue) {
-            currentSort = sortValue;
-            await loadInitialProductBatch();
-        };
 
         window.openPolicyModal = function(policyKey) {
             const policy = policiesData[policyKey];
@@ -1175,54 +1063,22 @@
             XLSX.writeFile(workbook, "CHEAP_Store_Customers.xlsx");
         }
 
-        // FULL MASTER CATEGORY LIST
-const MASTER_CATEGORIES = [
-    "Audio & Sound",
-    "Cables & Adapters",
-    "Cellular & Mobile",
-    "Computer Accessories",
-    "Computing & Peripherals",
-    "Devices",
-    "Education and Learning",
-    "Electronics",
-    "Fashion and Beauty",
-    "Gaming",
-    "Health & Personal Care",
-    "Home & Living",
-    "Luggage & Bags",
-    "Office & Stationery",
-    "Outdoor & Fitness",
-    "Power & Charging",
-    "Smart Gadgets",
-    "Sport & Leisure",
-    "TV & Home Entertainment",
-    "Wristwear & Watches"
-];
+        window.renderSidebarCategories = function() {
+            const container = document.getElementById("sidebar-category-filters");
+            if (!container) return;
+            const categoriesSet = new Set();
+            products.forEach(p => { if (p.category) categoriesSet.add(p.category.trim()); });
+            const categories = Array.from(categoriesSet).sort();
 
-window.renderSidebarCategories = function() {
-    const container = document.getElementById("sidebar-category-filters");
-    if (!container) return;
+            let html = `<button type="button" onclick="filterProducts('all')" class="cat-btn ${currentFilter === 'all' ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer">All Products</button>`;
+            categories.forEach(cat => {
+                const isActive = currentFilter.toLowerCase() === cat.toLowerCase();
+                const safeCat = cat.replace(/'/g, "\\'");
+                html += `<button type="button" onclick="filterProducts('${safeCat}')" class="cat-btn ${isActive ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer">${esc(cat)}</button>`;
+            });
+            container.innerHTML = html;
+        }
 
-    // Merge master list with dynamic categories found in live data
-    const categoriesSet = new Set(MASTER_CATEGORIES);
-    products.forEach(p => { 
-        if (p.category) {
-            const topCat = p.category.split('/')[0].trim();
-            if (topCat) categoriesSet.add(topCat);
-        } 
-    });
-    const categories = Array.from(categoriesSet).sort();
-
-    let html = `<button type="button" onclick="filterProducts('all')" class="cat-btn ${currentFilter === 'all' ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border shrink-0 cursor-pointer">All Products</button>`;
-    
-    categories.forEach(cat => {
-        const isActive = currentFilter.toLowerCase() === cat.toLowerCase();
-        const safeCat = cat.replace(/'/g, "\\'");
-        html += `<button type="button" onclick="filterProducts('${safeCat}')" class="cat-btn ${isActive ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border shrink-0 cursor-pointer">${esc(cat)}</button>`;
-    });
-    
-    container.innerHTML = html;
-}
         window.renderHeroBestSeller = function() {
             const container = document.getElementById("hero-best-seller-container");
             if (!container) return;
@@ -1254,13 +1110,17 @@ window.renderSidebarCategories = function() {
 
         window.renderProducts = function() {
             const grid = document.getElementById("product-grid");
+            const visibleProducts = products.filter(p => p.visible !== false);
+            const filtered = currentFilter === 'all' ? visibleProducts : visibleProducts.filter(p => p.category.toLowerCase() === currentFilter.toLowerCase());
 
-            if (products.length === 0) {
+            filtered.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+
+            if (filtered.length === 0) {
                 grid.innerHTML = `<div class="col-span-full text-center py-12 text-zinc-500"><p>No products found in this category.</p></div>`;
                 return;
             }
 
-            grid.innerHTML = products.map(p => {
+            grid.innerHTML = filtered.map(p => {
                 let primaryImg = p.image || '';
                 if (primaryImg.includes(',')) primaryImg = primaryImg.split(',')[0].trim();
                 const safeId = p.id.replace(/'/g, "\\'");
@@ -1288,10 +1148,10 @@ window.renderSidebarCategories = function() {
             }).join('');
         }
 
-        window.filterProducts = async function(cat) {
+        window.filterProducts = function(cat) {
             currentFilter = cat;
             renderSidebarCategories();
-            await loadInitialProductBatch();
+            renderProducts();
         }
 
         window.addToCart = function(id) {
@@ -1589,7 +1449,7 @@ window.renderSidebarCategories = function() {
             } catch (err) { alert("Banner update failed"); }
         }
 
-        // ONE-TIME FETCH ON ADMIN MODAL OPEN
+        // ONE-TIME FETCH ON ADMIN MODAL OPEN (Fixed runaway read loop)
         window.openAdminModal = async function(e) {
             if (e) e.preventDefault();
             if (!currentCustomer || !currentCustomer.isAdmin) { alert("Unauthorized admin access."); return; }
