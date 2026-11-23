@@ -199,8 +199,8 @@
                 <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Yes! When you add 2 or more items to your cart, our system automatically calculates and applies a 10% discount to your items subtotal.</p>
             </div>
             <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
-                <h4 class="font-bold text-white mb-2 text-sm sm:text-base">What payment methods do you accept?</h4>
-                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">We accept secure online card & instant EFT payments via PayFast, as well as Direct Bank Transfers (EFT).</p>
+                <h4 class="font-bold text-white mb-2 text-sm sm:text-base">How do I make a payment?</h4>
+                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Once you place an order request, we confirm stock availability and send an official invoice with payment and banking details directly to your email.</p>
             </div>
         </div>
     </section>
@@ -296,43 +296,46 @@
                         <span id="cart-total" class="font-black text-xl text-cheap-yellow">R0.00</span>
                     </div>
                     <button type="button" onclick="openCheckoutModal()" class="w-full bg-cheap-yellow hover:bg-cheap-yellowDark text-black py-3.5 rounded-xl font-black text-xs uppercase tracking-wider transition-colors shadow-lg cursor-pointer">
-                        Proceed to Checkout →
+                        Request Invoice & Reserve Stock →
                     </button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Product Detail Modal -->
-    <div id="product-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-3 sm:p-4">
-        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeProductModal()"></div>
-        <div class="bg-cheap-card rounded-2xl max-w-5xl w-full border border-cheap-border relative z-10 overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 items-center my-auto max-h-[92vh] overflow-y-auto">
-            <div class="lg:col-span-7 p-6 sm:p-10 bg-zinc-950 flex flex-col justify-center items-center border-b lg:border-b-0 lg:border-r border-cheap-border h-full min-h-[350px]">
-                <div class="rounded-xl overflow-hidden h-[280px] sm:h-[380px] w-full flex items-center justify-center bg-zinc-900 border border-cheap-border p-4 mb-4">
-                    <img id="modal-main-img" src="" alt="Product Image" class="max-h-[260px] sm:max-h-[340px] w-auto max-w-full object-contain mx-auto rounded-lg">
+    <!-- Product Detail Modal (Mobile-First & Desktop Split View) -->
+    <div id="product-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-3 sm:p-6">
+        <div class="fixed inset-0 bg-black/85 backdrop-blur-md" onclick="closeProductModal()"></div>
+        <div class="bg-zinc-900 rounded-2xl max-w-5xl w-full border border-cheap-border relative z-10 overflow-hidden shadow-2xl flex flex-col md:flex-row my-auto max-h-[90vh]">
+            <button type="button" onclick="closeProductModal()" class="absolute top-3 right-3 z-30 bg-zinc-950/80 hover:bg-zinc-800 text-zinc-400 hover:text-white w-9 h-9 rounded-full flex items-center justify-center border border-zinc-700 transition-colors cursor-pointer">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div class="md:w-1/2 p-4 sm:p-6 bg-zinc-950 flex flex-col justify-center items-center border-b md:border-b-0 md:border-r border-cheap-border shrink-0">
+                <div class="rounded-xl overflow-hidden h-64 sm:h-80 w-full flex items-center justify-center bg-zinc-900 border border-cheap-border p-4 mb-3">
+                    <img id="modal-main-img" src="" alt="Product Image" class="max-h-full max-w-full object-contain mx-auto rounded-lg">
                 </div>
-                <div id="modal-thumbnails" class="flex flex-wrap gap-2 justify-center"></div>
+                <div id="modal-thumbnails" class="flex flex-wrap gap-2 justify-center max-h-24 overflow-y-auto w-full p-1"></div>
             </div>
-            <div class="lg:col-span-5 p-6 sm:p-8 flex flex-col justify-between h-full relative space-y-4">
-                <button type="button" onclick="closeProductModal()" class="absolute top-4 right-4 text-zinc-400 hover:text-white p-2 text-xl cursor-pointer">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
-                <div class="space-y-3">
-                    <span id="modal-cat" class="text-xs font-mono text-cheap-blue uppercase tracking-widest font-bold block">Category</span>
-                    <h3 id="modal-title" class="font-black text-xl sm:text-2xl text-white uppercase leading-tight"></h3>
-                    <div class="flex items-baseline space-x-2">
+            <div class="md:w-1/2 p-5 sm:p-7 flex flex-col justify-between overflow-y-auto max-h-[60vh] md:max-h-none space-y-4">
+                <div class="space-y-4">
+                    <div class="flex items-center justify-between pr-8">
+                        <span id="modal-cat" class="text-[11px] font-bold text-cheap-blue uppercase tracking-widest bg-cheap-blue/10 px-2.5 py-1 rounded-md border border-cheap-blue/20">Category</span>
+                        <span id="modal-brand" class="text-xs font-semibold text-zinc-400"></span>
+                    </div>
+                    <h3 id="modal-title" class="font-black text-xl sm:text-2xl text-white uppercase leading-snug"></h3>
+                    <div class="flex items-baseline space-x-2 pt-1 border-b border-cheap-border pb-3">
                         <span class="font-black text-2xl sm:text-3xl text-cheap-yellow" id="modal-price"></span>
-                        <span class="text-xs text-zinc-400 font-medium">(Includes VAT)</span>
+                        <span id="modal-rrp-container" class="text-xs text-zinc-500 line-through hidden"></span>
+                        <span class="text-[11px] text-zinc-400 font-medium">(Includes VAT)</span>
                     </div>
-                    <p id="modal-desc" class="text-zinc-400 text-xs sm:text-sm leading-relaxed"></p>
-                    <div id="modal-variants-section" class="space-y-2 pt-2">
-                        <label class="block text-xs font-bold uppercase tracking-wider text-white">Select Option:</label>
-                        <div id="modal-variants-container" class="flex flex-wrap gap-2"></div>
+                    <div id="modal-extra-fields" class="text-xs text-zinc-300 bg-zinc-950 p-3.5 rounded-xl border border-cheap-border leading-relaxed font-mono whitespace-pre-line hidden"></div>
+                    <div class="space-y-2">
+                        <h4 class="text-xs font-bold uppercase tracking-wider text-zinc-400">Description</h4>
+                        <div id="modal-desc" class="text-zinc-300 text-xs sm:text-sm leading-relaxed max-h-48 overflow-y-auto pr-2 space-y-2 font-sans whitespace-pre-line"></div>
                     </div>
-                    <div id="modal-extra-fields" class="space-y-2 text-xs text-zinc-300 bg-zinc-900 p-4 rounded-xl border border-cheap-border leading-relaxed whitespace-pre-line"></div>
                 </div>
-                <div class="pt-4 border-t border-cheap-border flex items-center space-x-3">
-                    <button type="button" onclick="addModalItemToCart()" class="flex-1 bg-cheap-blue hover:bg-cheap-blueDark text-white py-3.5 px-6 rounded-xl font-black text-xs tracking-widest uppercase transition-colors shadow-lg flex items-center justify-center space-x-2 cursor-pointer">
+                <div class="pt-4 border-t border-cheap-border shrink-0">
+                    <button type="button" onclick="addModalItemToCart()" class="w-full bg-cheap-blue hover:bg-cheap-blueDark text-white py-3.5 px-6 rounded-xl font-black text-xs sm:text-sm tracking-wider uppercase transition-all shadow-lg flex items-center justify-center space-x-2 cursor-pointer active:scale-95">
                         <i class="fa-solid fa-basket-shopping"></i> <span>Add to Cart</span>
                     </button>
                 </div>
@@ -345,7 +348,7 @@
         <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
         <div class="bg-cheap-card rounded-2xl max-w-xl w-full border border-cheap-border relative z-10 p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-6 border-b border-cheap-border pb-4">
-                <h3 class="font-black text-lg uppercase text-white">Secure Checkout</h3>
+                <h3 class="font-black text-lg uppercase text-white">Order & Invoice Request</h3>
                 <button type="button" onclick="closeCheckoutModal()" class="text-zinc-400 hover:text-white cursor-pointer p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <form id="checkout-form" onsubmit="submitOrder(event)" class="space-y-4">
@@ -367,92 +370,56 @@
                     <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Delivery Address (Street, City, Postal Code)</label>
                     <textarea id="order-address" rows="3" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white"></textarea>
                 </div>
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Payment Method</label>
-                    <select id="order-payment" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
-                        <option value="PayFast Secure Card / EFT">PayFast Secure Gateway (Card, Instant EFT, SnapScan)</option>
-                        <option value="Direct EFT Bank Transfer">Direct Bank Transfer (EFT)</option>
-                    </select>
+                <div class="bg-zinc-950 p-4 rounded-xl border border-cheap-border text-xs text-zinc-400 space-y-1">
+                    <p class="font-bold text-cheap-yellow uppercase flex items-center space-x-1.5"><i class="fa-solid fa-circle-info"></i> <span>Order Process:</span></p>
+                    <p>Submitting this form reserves your items and sends an order request to our team. We will verify live stock levels and email you an official invoice with payment instructions.</p>
                 </div>
                 <button type="submit" class="w-full bg-cheap-yellow hover:bg-cheap-yellowDark text-black py-3.5 rounded-xl font-black text-xs tracking-wider uppercase transition-colors shadow-lg mt-2 cursor-pointer">
-                    Proceed to Order & Pay →
+                    Submit Order Request →
                 </button>
             </form>
         </div>
     </div>
 
-    <!-- Hidden PayFast Submission Form -->
-    <form id="payfast-form" action="https://www.payfast.co.za/eng/process" method="POST" class="hidden">
-        <input type="hidden" name="merchant_id" value="36329663">
-        <input type="hidden" name="merchant_key" value="gcgfoxnc6io4n">
-        <input type="hidden" name="return_url" id="pf-return" value="">
-        <input type="hidden" name="cancel_url" id="pf-cancel" value="">
-        <input type="hidden" name="notify_url" id="pf-notify" value="">
-        <input type="hidden" name="name_first" id="pf-name">
-        <input type="hidden" name="email_address" id="pf-email">
-        <input type="hidden" name="m_payment_id" id="pf-m-id">
-        <input type="hidden" name="amount" id="pf-amount">
-        <input type="hidden" name="item_name" id="pf-item">
-    </form>
-
-    <!-- PayFast Payment Status Modal -->
-    <div id="payfast-status-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
-        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closePayFastStatusModal()"></div>
-        <div class="bg-cheap-card rounded-2xl max-w-md w-full border border-cheap-border relative z-10 p-6 text-center space-y-4">
-            <div class="w-14 h-14 mx-auto rounded-full flex items-center justify-center" id="payfast-status-icon-wrap">
-                <i id="payfast-status-icon" class="fa-solid fa-check text-2xl"></i>
-            </div>
-            <h3 id="payfast-status-title" class="font-black text-lg uppercase text-white">Payment Submitted</h3>
-            <p id="payfast-status-message" class="text-xs sm:text-sm text-zinc-400 leading-relaxed"></p>
-            <button type="button" onclick="closePayFastStatusModal()" class="w-full bg-cheap-blue hover:bg-cheap-blueDark text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">
-                Continue Shopping
-            </button>
-        </div>
-    </div>
-
-    <!-- Direct EFT Banking Details Success Modal -->
+    <!-- Order Request Submitted Modal -->
     <div id="eft-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
         <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeEftModal()"></div>
         <div class="bg-cheap-card rounded-2xl max-w-lg w-full border border-cheap-border relative z-10 p-6 sm:p-8 space-y-5">
             <div class="flex items-center justify-between border-b border-cheap-border pb-4">
                 <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-building-columns text-cheap-yellow text-xl"></i>
-                    <h3 class="font-black text-lg uppercase text-white">Direct EFT Banking Details</h3>
+                    <i class="fa-solid fa-circle-check text-cheap-green text-xl"></i>
+                    <h3 class="font-black text-lg uppercase text-white">Order Request Received</h3>
                 </div>
                 <button type="button" onclick="closeEftModal()" class="text-zinc-400 hover:text-white cursor-pointer p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
 
-            <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
-                Your order has been successfully placed! Please make your payment using the banking details below:
+            <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                Thank you! Your order request has been successfully recorded. 
             </p>
 
             <div class="bg-zinc-950 p-5 rounded-xl border border-cheap-border space-y-2.5 text-xs sm:text-sm">
                 <div class="flex justify-between border-b border-zinc-800 pb-2">
-                    <span class="text-zinc-400">Bank:</span>
-                    <span class="font-bold text-white">Capitec Business</span>
+                    <span class="text-zinc-400">Order Reference:</span>
+                    <span id="modal-order-ref" class="font-mono font-bold text-cheap-yellow">#CHEAP-ORDER</span>
                 </div>
                 <div class="flex justify-between border-b border-zinc-800 pb-2">
-                    <span class="text-zinc-400">Account Name:</span>
-                    <span class="font-bold text-white">CHEAP Store</span>
-                </div>
-                <div class="flex justify-between border-b border-zinc-800 pb-2">
-                    <span class="text-zinc-400">Account Number:</span>
-                    <span class="font-mono font-bold text-white">1055613013</span>
+                    <span class="text-zinc-400">Next Step:</span>
+                    <span class="font-bold text-white">Stock Verification & Invoicing</span>
                 </div>
                 <div class="flex justify-between">
-                    <span class="text-zinc-400">Reference:</span>
-                    <span class="font-bold text-cheap-yellow">Your Name & Order ID</span>
+                    <span class="text-zinc-400">Contact Email:</span>
+                    <span class="font-bold text-white">cheapcheapza@gmail.com</span>
                 </div>
             </div>
 
             <div class="bg-cheap-blue/10 border border-cheap-blue/30 p-4 rounded-xl text-xs text-zinc-300 space-y-1">
-                <p class="font-bold flex items-center space-x-1.5 text-cheap-blue"><i class="fa-solid fa-envelope"></i> <span>Send Proof of Payment (POP):</span></p>
-                <p>Please email your POP to <a href="mailto:cheapcheapza@gmail.com" class="font-bold underline text-white">cheapcheapza@gmail.com</a> to expedite order dispatch.</p>
+                <p class="font-bold flex items-center space-x-1.5 text-cheap-blue"><i class="fa-solid fa-envelope"></i> <span>What Happens Next?</span></p>
+                <p>We will review your order items and send an official invoice with confirmed payment/banking details directly to your email address.</p>
             </div>
 
             <div class="pt-2">
                 <button type="button" onclick="closeEftModal()" class="w-full bg-cheap-blue hover:bg-cheap-blueDark text-white py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer">
-                    Understood & Return to Store
+                    Return to Store
                 </button>
             </div>
         </div>
@@ -602,7 +569,7 @@
                         <i class="fa-solid fa-receipt text-cheap-blue text-lg"></i>
                     </div>
                     <div id="stat-total-orders" class="font-black text-2xl sm:text-3xl text-white mb-1">0</div>
-                    <span class="text-[11px] text-zinc-500 block">Recorded sales</span>
+                    <span class="text-[11px] text-zinc-500 block">Recorded requests</span>
                 </div>
                 <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
                     <div class="flex items-center justify-between mb-2">
@@ -701,7 +668,7 @@
             <!-- Orders Panel -->
             <div id="admin-panel-orders" class="space-y-4 hidden">
                 <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border">
-                    <h4 class="font-bold text-base uppercase mb-4 text-white">Order Transactions</h4>
+                    <h4 class="font-bold text-base uppercase mb-4 text-white">Order Requests</h4>
                     <div class="overflow-x-auto border border-cheap-border rounded-xl">
                         <table class="w-full text-left border-collapse text-xs min-w-[850px]">
                             <thead>
@@ -834,9 +801,9 @@
                     <p class="font-bold text-white mb-1">CHEAP Store | Quality Every Day, Affordable Always</p>
                     <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
                     <div class="space-y-3">
-                        <p><strong>1. Acceptance:</strong> By accessing and completing orders on CHEAP, you agree to these Terms & Conditions.</p>
+                        <p><strong>1. Acceptance:</strong> By accessing and requesting orders on CHEAP, you agree to these Terms & Conditions.</p>
                         <p><strong>2. Pricing & VAT:</strong> All prices displayed on our store are quoted in South African Rands (ZAR) and include VAT. Multi-buy discounts automatically apply when purchasing 2 or more eligible items.</p>
-                        <p><strong>3. Orders & Payments:</strong> Orders are processed upon confirmed receipt of payment via PayFast or direct bank transfer (EFT).</p>
+                        <p><strong>3. Orders & Invoicing:</strong> Order submissions reserve items pending stock confirmation. An official invoice with verified payment details will be issued via email before payment.</p>
                     </div>
                 `
             },
@@ -846,7 +813,7 @@
                     <p class="font-bold text-white mb-1">CHEAP Store | Quality Every Day, Affordable Always</p>
                     <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
                     <div class="space-y-3">
-                        <p><strong>1. Order Processing:</strong> Orders are packaged and dispatched within 1 to 2 business days after payment verification.</p>
+                        <p><strong>1. Order Processing:</strong> Orders are packaged and dispatched within 1 to 2 business days after invoice payment verification.</p>
                         <p><strong>2. Rates & Free Delivery:</strong> Standard door-to-door nationwide courier shipping is R100.00. Free shipping applies to orders over R600.00.</p>
                         <p><strong>3. Delivery Timelines:</strong> Courier delivery typically takes 2 to 4 business days nationwide across South Africa.</p>
                     </div>
@@ -859,7 +826,7 @@
                     <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
                     <div class="space-y-3">
                         <p><strong>1. Returns:</strong> Unused products in original packaging may be returned within 7 days of receipt.</p>
-                        <p><strong>2. Inspection & Refund:</strong> Approved returns will be refunded to your original payment method within 5-7 business days.</p>
+                        <p><strong>2. Inspection & Refund:</strong> Approved returns will be processed within 5-7 business days upon receipt.</p>
                     </div>
                 `
             },
@@ -961,15 +928,6 @@
                 } catch (err) {}
                 setCurrentCustomer(user, profile);
             });
-
-            const urlParams = new URLSearchParams(window.location.search);
-            const status = urlParams.get('status');
-            const pfOrderId = urlParams.get('order_id');
-            if (status === 'success' && pfOrderId) {
-                showPayFastReturnMessage('success', pfOrderId);
-            } else if (status === 'cancel') {
-                showPayFastReturnMessage('cancel');
-            }
         }
 
         let registering = false;
@@ -1011,32 +969,6 @@
             if (unsubOrders) { unsubOrders(); unsubOrders = null; }
             customers = [];
             orders = [];
-        }
-
-        function showPayFastReturnMessage(type, orderId) {
-            const modal = document.getElementById('payfast-status-modal');
-            const titleEl = document.getElementById('payfast-status-title');
-            const msgEl = document.getElementById('payfast-status-message');
-            const iconWrap = document.getElementById('payfast-status-icon-wrap');
-            const iconEl = document.getElementById('payfast-status-icon');
-
-            if (type === 'success') {
-                iconWrap.className = 'w-14 h-14 mx-auto rounded-full flex items-center justify-center bg-emerald-950 text-emerald-400 border border-emerald-800';
-                iconEl.className = 'fa-solid fa-circle-check text-2xl';
-                titleEl.textContent = 'Payment Submitted Successfully';
-                msgEl.innerHTML = `Thank you! Your payment has been submitted. Your order <strong>#${esc(orderId.substring(0, 8))}</strong> is being processed by PayFast.`;
-            } else {
-                iconWrap.className = 'w-14 h-14 mx-auto rounded-full flex items-center justify-center bg-red-950 text-red-400 border border-red-800';
-                iconEl.className = 'fa-solid fa-circle-xmark text-2xl';
-                titleEl.textContent = 'Payment Cancelled';
-                msgEl.textContent = 'Your payment was cancelled. Your cart items are still saved if you would like to try again.';
-            }
-            modal.classList.remove('hidden');
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-
-        window.closePayFastStatusModal = function() {
-            document.getElementById('payfast-status-modal').classList.add('hidden');
         }
 
         window.openPolicyModal = function(policyKey) {
@@ -1350,22 +1282,56 @@
         window.openProductModal = function(id) {
             selectedProduct = products.find(p => p.id === id);
             if (!selectedProduct) return;
+
             let imgRaw = selectedProduct.image || '';
             let imageList = imgRaw.includes(',') ? imgRaw.split(',').map(s => s.trim()).filter(Boolean) : [imgRaw].filter(Boolean);
 
-            document.getElementById("modal-main-img").src = imageList[0] || '';
-            document.getElementById("modal-cat").textContent = selectedProduct.category;
+            const mainImgEl = document.getElementById("modal-main-img");
+            mainImgEl.src = imageList[0] || 'https://via.placeholder.com/400?text=No+Image';
+
+            const thumbContainer = document.getElementById("modal-thumbnails");
+            thumbContainer.innerHTML = '';
+            if (imageList.length > 1) {
+                imageList.forEach((url, idx) => {
+                    const thumb = document.createElement("img");
+                    thumb.src = url;
+                    thumb.className = `w-12 h-12 object-cover rounded-lg border cursor-pointer transition-all ${idx === 0 ? 'border-cheap-yellow scale-105' : 'border-cheap-border opacity-70 hover:opacity-100'}`;
+                    thumb.onclick = function() {
+                        mainImgEl.src = url;
+                        Array.from(thumbContainer.children).forEach(c => c.className = "w-12 h-12 object-cover rounded-lg border border-cheap-border opacity-70 cursor-pointer");
+                        thumb.className = "w-12 h-12 object-cover rounded-lg border border-cheap-yellow opacity-100 scale-105 cursor-pointer";
+                    };
+                    thumbContainer.appendChild(thumb);
+                });
+            }
+
+            document.getElementById("modal-cat").textContent = selectedProduct.category || 'General';
+            document.getElementById("modal-brand").textContent = selectedProduct.brand ? `Brand: ${selectedProduct.brand}` : '';
             document.getElementById("modal-title").textContent = selectedProduct.name;
-            document.getElementById("modal-desc").textContent = selectedProduct.description || "";
             document.getElementById("modal-price").textContent = `R${parseFloat(selectedProduct.price).toFixed(2)}`;
+
+            let rawDesc = selectedProduct.description || "No description available for this item.";
+            let formattedDesc = rawDesc.replace(/Feature Highlights:/g, '\n\n• Feature Highlights:\n')
+                                      .replace(/Technical Specifications:/g, '\n\n• Technical Specifications:\n')
+                                      .replace(/\. /g, '.\n');
+            document.getElementById("modal-desc").textContent = formattedDesc;
+
+            const rrpEl = document.getElementById("modal-rrp-container");
+            if (selectedProduct.priceRRP && parseFloat(selectedProduct.priceRRP) > parseFloat(selectedProduct.price)) {
+                rrpEl.textContent = `R${parseFloat(selectedProduct.priceRRP).toFixed(2)}`;
+                rrpEl.classList.remove("hidden");
+            } else {
+                rrpEl.classList.add("hidden");
+            }
 
             const extraContainer = document.getElementById("modal-extra-fields");
             if (selectedProduct.extra1 && selectedProduct.extra1.trim() !== "") {
                 extraContainer.textContent = selectedProduct.extra1;
-                extraContainer.style.display = "block";
+                extraContainer.classList.remove("hidden");
             } else {
-                extraContainer.style.display = "none";
+                extraContainer.classList.add("hidden");
             }
+
             document.getElementById("product-modal").classList.remove("hidden");
         }
 
@@ -1382,7 +1348,7 @@
         window.openCheckoutModal = function() {
             if (cart.length === 0) { alert("Your cart is empty!"); return; }
             if (!currentCustomer) {
-                alert("Please sign in first to place your order.");
+                alert("Please sign in first to submit your order request.");
                 openAuthModal();
                 return;
             }
@@ -1405,7 +1371,6 @@
             const phone = document.getElementById("order-phone").value;
             const email = document.getElementById("order-email").value;
             const address = document.getElementById("order-address").value;
-            const paymentMethod = document.getElementById("order-payment").value;
 
             const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
             const subtotal = cart.reduce((sum, item) => sum + (item.finalPrice * item.qty), 0);
@@ -1414,11 +1379,10 @@
             const shipping = discountedSubtotal >= 600 ? 0 : 100;
             const total = discountedSubtotal + shipping;
 
-            const isPayFast = paymentMethod.includes("PayFast");
-
             const orderData = {
                 uid: currentCustomer ? currentCustomer.uid : null,
-                name, phone, email, address, payment: paymentMethod,
+                name, phone, email, address,
+                payment: "EFT (Pending Invoice)",
                 items: cart.map(item => ({
                     id: item.id,
                     name: item.name,
@@ -1426,7 +1390,7 @@
                     qty: item.qty
                 })),
                 subtotal, discount, total,
-                status: "Pending Payment",
+                status: "Pending Stock & Invoice",
                 createdAt: new Date().toISOString()
             };
 
@@ -1434,25 +1398,14 @@
                 const docRef = await addDoc(collection(db, "cheap_orders"), orderData);
                 const orderId = docRef.id;
 
-                if (!isPayFast) {
-                    cart = [];
-                    saveCartToStorage();
-                    updateCartUI();
-                    closeCheckoutModal();
-                    document.getElementById("checkout-form").reset();
-                    openEftModal();
-                } else {
-                    const siteUrl = window.location.href.split('?')[0];
-                    document.getElementById("pf-return").value = siteUrl + "?status=success&order_id=" + orderId;
-                    document.getElementById("pf-cancel").value = siteUrl + "?status=cancel";
-                    document.getElementById("pf-notify").value = "https://us-central1-cheap-store-za.cloudfunctions.net/payfastITN";
-                    document.getElementById("pf-name").value = name;
-                    document.getElementById("pf-email").value = email;
-                    document.getElementById("pf-m-id").value = orderId;
-                    document.getElementById("pf-amount").value = total.toFixed(2);
-                    document.getElementById("pf-item").value = `CHEAP Order #${orderId.substring(0, 8)}`;
-                    document.getElementById("payfast-form").submit();
-                }
+                cart = [];
+                saveCartToStorage();
+                updateCartUI();
+                closeCheckoutModal();
+                document.getElementById("checkout-form").reset();
+                
+                document.getElementById("modal-order-ref").textContent = `#CHEAP-${orderId.substring(0, 8).toUpperCase()}`;
+                openEftModal();
             } catch (err) {
                 alert("Order error: " + (err.message || "Please try again."));
             }
@@ -1655,7 +1608,7 @@
 
         window.deleteOrder = async function(id) {
             if (!confirm("Delete order?")) return;
-            try { await deleteDoc(doc(db, "cheap_orders", id)); } catch (err) {}
+            try { await deleteDoc(doc(db, "cheap_orders"), id); } catch (err) {}
         }
 
         initDatabase();
