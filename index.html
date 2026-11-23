@@ -187,8 +187,16 @@
         <!-- Main Shop Section (Desktop Sidebar Layout / Mobile Dropdown) -->
         <section id="catalog" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
             
-            <!-- Mobile Filter Controls (Visible only on small screens) -->
+            <!-- Mobile Filter & Search Controls (Visible only on small screens) -->
             <div class="md:hidden bg-zinc-900 border border-cheap-border rounded-2xl p-4 mb-8 space-y-3 shadow-lg">
+                <!-- Mobile Search Field -->
+                <div>
+                    <label for="catalog-search-mobile" class="block text-[10px] font-bold uppercase tracking-wider text-cheap-yellow mb-1">Search Products</label>
+                    <div class="relative">
+                        <input type="text" id="catalog-search-mobile" oninput="handleSearchInput(this.value)" placeholder="Search items (e.g. Kingsons)..." class="w-full bg-zinc-950 border border-cheap-border rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-white placeholder-zinc-500 focus:outline-none focus:border-cheap-yellow">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-zinc-500 text-xs"></i>
+                    </div>
+                </div>
                 <div class="grid grid-cols-2 gap-3">
                     <div>
                         <label for="mobile-category-select" class="block text-[10px] font-bold uppercase tracking-wider text-cheap-green mb-1">Category</label>
@@ -211,6 +219,16 @@
                 
                 <!-- Desktop Left Sidebar Navigation (Hidden on mobile) -->
                 <aside class="hidden md:block w-64 shrink-0 sticky top-28 bg-zinc-950 border border-cheap-border rounded-2xl p-5 shadow-xl max-h-[calc(100vh-8rem)] overflow-y-auto no-scrollbar">
+                    
+                    <!-- Desktop Search Bar -->
+                    <div class="mb-5 pb-4 border-b border-cheap-border">
+                        <label for="catalog-search-desktop" class="block text-[10px] font-bold uppercase tracking-wider text-cheap-yellow mb-1">Search Products</label>
+                        <div class="relative">
+                            <input type="text" id="catalog-search-desktop" oninput="handleSearchInput(this.value)" placeholder="Search items (e.g. Kingsons)..." class="w-full bg-zinc-900 border border-cheap-border rounded-xl pl-9 pr-3 py-2 text-xs font-medium text-white placeholder-zinc-500 focus:outline-none focus:border-cheap-yellow">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-zinc-500 text-xs"></i>
+                        </div>
+                    </div>
+
                     <div class="flex items-center justify-between pb-3 mb-4 border-b border-cheap-border">
                         <span class="text-xs font-black uppercase tracking-widest text-cheap-green">Categories</span>
                         <i class="fa-solid fa-list-ul text-zinc-500 text-xs"></i>
@@ -855,6 +873,7 @@
         let customers = [];
         let cart = [];
         let currentFilter = 'all';
+        let searchQuery = '';
         let currentSort = 'price-desc';
         let currentPageBatch = 1;
         const BATCH_SIZE = 36;
@@ -1007,6 +1026,7 @@
                         image: data.image || data.imageUrl || '',
                         description: data.description || '',
                         extra1: data.extra1 || '',
+                        brand: data.brand || '',
                         ...data
                     });
                 });
@@ -1045,6 +1065,18 @@
                 };
                 updateAuthNavUI();
             });
+        }
+
+        window.handleSearchInput = function(val) {
+            searchQuery = val.trim().toLowerCase();
+            currentPageBatch = 1;
+
+            const dEl = document.getElementById("catalog-search-desktop");
+            const mEl = document.getElementById("catalog-search-mobile");
+            if (dEl && dEl.value !== val) dEl.value = val;
+            if (mEl && mEl.value !== val) mEl.value = val;
+
+            renderProducts();
         }
 
         window.handleSortChange = function(sortValue) {
@@ -1210,7 +1242,21 @@
             const grid = document.getElementById("product-grid");
             const loadMoreContainer = document.getElementById("load-more-container");
             const visibleProducts = products.filter(p => p.visible !== false);
-            let filtered = currentFilter === 'all' ? visibleProducts : visibleProducts.filter(p => (p.category || '').toLowerCase() === currentFilter.toLowerCase());
+
+            let filtered = currentFilter === 'all' 
+                ? visibleProducts 
+                : visibleProducts.filter(p => (p.category || '').toLowerCase() === currentFilter.toLowerCase());
+
+            // Keyword Search Filter
+            if (searchQuery !== '') {
+                filtered = filtered.filter(p => {
+                    const nameMatch = (p.name || '').toLowerCase().includes(searchQuery);
+                    const catMatch = (p.category || '').toLowerCase().includes(searchQuery);
+                    const brandMatch = (p.brand || '').toLowerCase().includes(searchQuery);
+                    const descMatch = (p.description || '').toLowerCase().includes(searchQuery);
+                    return nameMatch || catMatch || brandMatch || descMatch;
+                });
+            }
 
             // Sorting logic
             if (currentSort === 'price-asc') {
@@ -1222,7 +1268,7 @@
             }
 
             if (filtered.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-12 text-zinc-500"><p>No products found in this category.</p></div>`;
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-zinc-500"><i class="fa-solid fa-magnifying-glass text-3xl mb-3 text-zinc-700"></i><p class="text-sm font-medium">No matching items found.</p></div>`;
                 if (loadMoreContainer) loadMoreContainer.classList.add("hidden");
                 return;
             }
@@ -1770,7 +1816,7 @@
         window.deleteOrder = async function(id) {
             if (!confirm("Delete order?")) return;
             try { 
-                await deleteDoc(doc(db, "cheap_orders"), orderData); 
+                await deleteDoc(doc(db, "cheap_orders", id)); 
                 orders = orders.filter(o => o.id !== id);
                 renderAdminDashboard();
             } catch (err) {}
