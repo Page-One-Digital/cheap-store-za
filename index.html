@@ -32,7 +32,7 @@
           "@id": "https://cheap-store.co.za/#store",
           "name": "CHEAP Store",
           "url": "https://cheap-store.co.za",
-          "deion": "Direct-sourced quality watches and everyday EDC accessories in South Africa.",
+          "description": "Direct-sourced quality watches and everyday EDC accessories in South Africa.",
           "telephone": "+27686362665",
           "email": "cheapcheapza@gmail.com",
           "priceRange": "ZAR",
@@ -55,7 +55,7 @@
     </script>
 
     <!-- Tailwind CSS CDN -->
-    < src="https://cdn.tailwindcss.com"></>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +66,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- SheetJS for Excel (.xlsx) Export -->
-    < src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -987,8 +987,8 @@
             });
         }
 
-        // BATCHED PAGINATION ENGINE (Fetches 24 items at a time)
-async function loadInitialProductBatch() {
+        // BATCHED PAGINATION ENGINE (Fetches 24 items at a time without requiring composite indexes)
+        async function loadInitialProductBatch() {
             products = [];
             lastDocSnapshot = null;
             const loadBtn = document.getElementById("load-more-container");
