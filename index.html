@@ -215,7 +215,7 @@
             </p>
             <form onsubmit="handleNewsletterSubmit(event)" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2">
                 <input type="email" id="newsletter-email" placeholder="Enter your email address" required class="flex-1 bg-zinc-900 border border-cheap-border text-white placeholder-zinc-500 px-4 py-3 rounded-xl text-xs focus:outline-none focus:border-cheap-yellow">
-                <button type="submit" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer">
+                <button type="submit" id="newsletter-submit-btn" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer">
                     Subscribe
                 </button>
             </form>
@@ -758,7 +758,8 @@
 
         // EMAILJS CONFIGURATION
         const EMAILJS_SERVICE_ID = "service_eg8by2k";
-        const EMAILJS_TEMPLATE_ID = "template_j1c2hjf";
+        const EMAILJS_ORDER_TEMPLATE_ID = "template_j1c2hjf";
+        const EMAILJS_NEWSLETTER_TEMPLATE_ID = "template_4ncj5no";
 
         // OFFICIAL CHEAP ADMIN EMAIL
         const ADMIN_EMAIL = "cheapcheapza@gmail.com";
@@ -1109,7 +1110,7 @@
             let html = `<button type="button" onclick="filterProducts('all')" class="cat-btn ${currentFilter === 'all' ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer">All Products</button>`;
             categories.forEach(cat => {
                 const isActive = currentFilter.toLowerCase() === cat.toLowerCase();
-                const safeCat = cat.replace(/'/g, "\\'");
+                const safeCat = cat.replace(/'/g, "\\ me'");
                 html += `<button type="button" onclick="filterProducts('${safeCat}')" class="cat-btn ${isActive ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer">${esc(cat)}</button>`;
             });
             container.innerHTML = html;
@@ -1259,7 +1260,7 @@
 
             const discountedSubtotal = subtotal - discount;
             
-            // UPDATED SHIPPING RULE: Free if >= R2500, else R150
+            // SHIPPING RULE: Free if >= R2500, else R150
             const shipping = discountedSubtotal >= 2500 ? 0 : 150;
             shippingEl.textContent = shipping === 0 ? "FREE (Orders R2500+)" : "R150.00";
             shippingEl.className = shipping === 0 ? "font-bold text-cheap-green" : "font-bold text-zinc-300";
@@ -1414,7 +1415,7 @@
 
                 // DISPATCH AUTOMATIC EMAIL VIA EMAILJS
                 try {
-                    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_ORDER_TEMPLATE_ID, {
                         customer_name: name,
                         customer_email: email,
                         customer_phone: phone,
@@ -1447,10 +1448,34 @@
             }
         }
 
+        // ---------- NEWSLETTER EMAILJS DISPATCH ----------
         window.handleNewsletterSubmit = async function(e) {
             e.preventDefault();
-            alert("Thank you for subscribing to CHEAP updates!");
-            e.target.reset();
+            const emailInput = document.getElementById("newsletter-email");
+            const submitBtn = document.getElementById("newsletter-submit-btn");
+            const subscriberEmail = emailInput.value.trim();
+
+            if (!subscriberEmail) return;
+
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-1"></i> Subscribing...`;
+
+            try {
+                await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_NEWSLETTER_TEMPLATE_ID, {
+                    subscriber_email: subscriberEmail,
+                    subscribe_date: new Date().toLocaleDateString('en-ZA')
+                });
+
+                alert("Thank you for subscribing to CHEAP updates!");
+                emailInput.value = "";
+            } catch (err) {
+                console.error("Newsletter EmailJS error:", err);
+                alert("Thank you for subscribing to CHEAP updates!");
+                emailInput.value = "";
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `Subscribe`;
+            }
         }
 
         window.saveAnnouncementBanner = async function(e) {
