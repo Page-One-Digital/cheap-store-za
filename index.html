@@ -76,6 +76,11 @@
         })();
     </script>
 
+    <style>
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+
     <!-- Tailwind Custom Theme Configuration -->
     <script>
         tailwind.config = {
@@ -183,24 +188,21 @@
             </div>
         </section>
 
-        <!-- Category Filter & Sort Bar -->
-        <section class="py-6 bg-zinc-950/60 border-b border-cheap-border sticky top-20 z-30 backdrop-blur-md">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-4">
-                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <!-- Category Pills -->
-                    <div id="sidebar-category-filters" class="flex flex-wrap gap-2.5 flex-1">
-                        <button type="button" onclick="filterProducts('all')" class="cat-btn active bg-cheap-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border border-cheap-blue cursor-pointer">
-                            All Products
-                        </button>
+        <!-- Main Shop Section (Desktop Sidebar Layout / Mobile Dropdown) -->
+        <section id="catalog" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+            
+            <!-- Mobile Filter Controls (Visible only on small screens) -->
+            <div class="md:hidden bg-zinc-900 border border-cheap-border rounded-2xl p-4 mb-8 space-y-3 shadow-lg">
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label for="mobile-category-select" class="block text-[10px] font-bold uppercase tracking-wider text-cheap-green mb-1">Category</label>
+                        <select id="mobile-category-select" onchange="filterProducts(this.value)" class="w-full bg-zinc-950 border border-cheap-border rounded-xl px-3 py-2 text-xs font-bold text-white focus:outline-none focus:border-cheap-yellow cursor-pointer">
+                            <option value="all">All Products</option>
+                        </select>
                     </div>
-
-                    <!-- Interactive Sort Dropdown -->
-                    <div class="flex items-center justify-between md:justify-end space-x-3 shrink-0 pt-2 md:pt-0 border-t md:border-t-0 border-cheap-border">
-                        <label for="sort-select" class="text-xs font-bold uppercase tracking-wider text-zinc-400 flex items-center space-x-1.5">
-                            <i class="fa-solid fa-arrow-down-short-wide text-cheap-yellow"></i>
-                            <span>Sort By:</span>
-                        </label>
-                        <select id="sort-select" onchange="handleSortChange(this.value)" class="bg-zinc-900 border border-cheap-border rounded-xl px-3 py-2 text-xs font-bold text-white focus:outline-none focus:border-cheap-yellow cursor-pointer">
+                    <div>
+                        <label for="sort-select-mobile" class="block text-[10px] font-bold uppercase tracking-wider text-cheap-yellow mb-1">Sort By</label>
+                        <select id="sort-select-mobile" onchange="handleSortChange(this.value)" class="w-full bg-zinc-950 border border-cheap-border rounded-xl px-3 py-2 text-xs font-bold text-white focus:outline-none focus:border-cheap-yellow cursor-pointer">
                             <option value="price-desc">Price: High to Low</option>
                             <option value="price-asc">Price: Low to High</option>
                             <option value="name-asc">Name: A to Z</option>
@@ -208,32 +210,65 @@
                     </div>
                 </div>
             </div>
-        </section>
 
-        <!-- Product Catalog Grid Section -->
-        <section id="catalog" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
-            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-cheap-border pb-6 mb-10 gap-4">
-                <div>
-                    <span class="text-xs font-bold tracking-widest text-cheap-green uppercase mb-1 block">Live Inventory</span>
-                    <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-white uppercase">Featured Watches & Accessories</h2>
-                </div>
-                <div class="text-xs text-zinc-400 font-semibold bg-zinc-900 border border-cheap-border px-3 py-1.5 rounded-lg w-max">
-                    ⚡ Automatic 10% Off on 2+ Items
-                </div>
-            </div>
+            <div class="flex flex-col md:flex-row gap-8 items-start">
+                
+                <!-- Desktop Left Sidebar Navigation (Hidden on mobile) -->
+                <aside class="hidden md:block w-64 shrink-0 sticky top-28 bg-zinc-950 border border-cheap-border rounded-2xl p-5 shadow-xl max-h-[calc(100vh-8rem)] overflow-y-auto no-scrollbar">
+                    <div class="flex items-center justify-between pb-3 mb-4 border-b border-cheap-border">
+                        <span class="text-xs font-black uppercase tracking-widest text-cheap-green">Categories</span>
+                        <i class="fa-solid fa-list-ul text-zinc-500 text-xs"></i>
+                    </div>
+                    <div id="sidebar-category-filters" class="flex flex-col space-y-1">
+                        <button type="button" onclick="filterProducts('all')" class="cat-btn active text-left bg-cheap-blue text-white px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border border-cheap-blue w-full cursor-pointer">
+                            All Products
+                        </button>
+                    </div>
+                </aside>
 
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                <div class="col-span-full text-center py-12 text-zinc-500">
-                    <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cheap-blue"></i>
-                    <p>Loading live catalog from Firebase database...</p>
-                </div>
-            </div>
+                <!-- Main Product Display Column -->
+                <div class="flex-1 w-full">
+                    
+                    <!-- Catalog Header & Desktop Sorting Bar -->
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-cheap-border pb-4 mb-6 gap-4">
+                        <div>
+                            <span class="text-xs font-bold tracking-widest text-cheap-green uppercase block">Live Inventory</span>
+                            <h2 class="text-xl sm:text-2xl font-black tracking-tight text-white uppercase">Featured Catalog</h2>
+                        </div>
+                        
+                        <div class="flex items-center space-x-4">
+                            <div class="text-[11px] text-zinc-400 font-semibold bg-zinc-900 border border-cheap-border px-3 py-1.5 rounded-lg">
+                                ⚡ 10% Off on 2+ Items
+                            </div>
 
-            <!-- Load More Batch Button -->
-            <div id="load-more-container" class="mt-12 text-center hidden">
-                <button type="button" onclick="loadMoreBatch()" class="bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white hover:border-cheap-yellow px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg cursor-pointer">
-                    Load More Products ↓
-                </button>
+                            <!-- Desktop Sort Dropdown -->
+                            <div class="hidden md:flex items-center space-x-2">
+                                <label for="sort-select-desktop" class="text-xs font-bold uppercase tracking-wider text-zinc-400 whitespace-nowrap">Sort:</label>
+                                <select id="sort-select-desktop" onchange="handleSortChange(this.value)" class="bg-zinc-900 border border-cheap-border rounded-xl px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:border-cheap-yellow cursor-pointer">
+                                    <option value="price-desc">Price: High to Low</option>
+                                    <option value="price-asc">Price: Low to High</option>
+                                    <option value="name-asc">Name: A to Z</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Product Grid -->
+                    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="col-span-full text-center py-12 text-zinc-500">
+                            <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cheap-blue"></i>
+                            <p>Loading live catalog from database...</p>
+                        </div>
+                    </div>
+
+                    <!-- Load More Batch Button -->
+                    <div id="load-more-container" class="mt-10 text-center hidden">
+                        <button type="button" onclick="loadMoreBatch()" class="bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white hover:border-cheap-yellow px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg cursor-pointer">
+                            Load More Products ↓
+                        </button>
+                    </div>
+
+                </div>
             </div>
         </section>
 
@@ -1019,6 +1054,12 @@
         window.handleSortChange = function(sortValue) {
             currentSort = sortValue;
             currentPageBatch = 1;
+
+            const desktopSort = document.getElementById("sort-select-desktop");
+            const mobileSort = document.getElementById("sort-select-mobile");
+            if (desktopSort) desktopSort.value = sortValue;
+            if (mobileSort) mobileSort.value = sortValue;
+
             renderProducts();
         }
 
@@ -1106,19 +1147,38 @@
         }
 
         window.renderSidebarCategories = function() {
-            const container = document.getElementById("sidebar-category-filters");
-            if (!container) return;
+            const sidebarContainer = document.getElementById("sidebar-category-filters");
+            const mobileSelect = document.getElementById("mobile-category-select");
+            
+            if (!sidebarContainer) return;
+
             const categoriesSet = new Set();
             products.forEach(p => { if (p.category) categoriesSet.add(p.category.trim()); });
             const categories = Array.from(categoriesSet).sort();
 
-            let html = `<button type="button" onclick="filterProducts('all')" class="cat-btn ${currentFilter === 'all' ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer">All Products</button>`;
+            // 1. Render Desktop Sidebar Vertical List
+            let sidebarHtml = `<button type="button" onclick="filterProducts('all')" class="cat-btn ${currentFilter === 'all' ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-transparent hover:bg-zinc-900 text-zinc-400 hover:text-white border-transparent'} text-left px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border w-full cursor-pointer flex items-center justify-between"><span>All Products</span><span class="text-[10px] opacity-60 ml-2">(${products.length})</span></button>`;
+            
+            // 2. Render Mobile Select Dropdown Options
+            let mobileHtml = `<option value="all" ${currentFilter === 'all' ? 'selected' : ''}>All Products (${products.length})</option>`;
+
             categories.forEach(cat => {
                 const isActive = currentFilter.toLowerCase() === cat.toLowerCase();
                 const safeCat = cat.replace(/'/g, "\\'");
-                html += `<button type="button" onclick="filterProducts('${safeCat}')" class="cat-btn ${isActive ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer">${esc(cat)}</button>`;
+                const count = products.filter(p => (p.category || '').trim().toLowerCase() === cat.toLowerCase()).length;
+                
+                sidebarHtml += `
+                    <button type="button" onclick="filterProducts('${safeCat}')" class="cat-btn ${isActive ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-transparent hover:bg-zinc-900 text-zinc-400 hover:text-white border-transparent'} text-left px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border w-full cursor-pointer truncate flex items-center justify-between">
+                        <span class="truncate">${esc(cat)}</span>
+                        <span class="text-[10px] opacity-60 ml-2">(${count})</span>
+                    </button>
+                `;
+
+                mobileHtml += `<option value="${safeCat}" ${isActive ? 'selected' : ''}>${esc(cat)} (${count})</option>`;
             });
-            container.innerHTML = html;
+
+            sidebarContainer.innerHTML = sidebarHtml;
+            if (mobileSelect) mobileSelect.innerHTML = mobileHtml;
         }
 
         window.renderHeroBestSeller = function() {
