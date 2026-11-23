@@ -3,8 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CHEAP | Quality Every Day, Affordable Always</title>
-    <meta name="description" content="Direct-sourced quality watches and everyday accessories. Enjoy our automatic 10% multi-buy discount on orders of two or more items!">
+    <title>CHEAP | Direct-Sourced Quality Watches & Accessories South Africa</title>
+    <meta name="description" content="Shop direct-sourced quality watches and everyday EDC accessories at CHEAP. Enjoy 10% automatic multi-buy discounts and free nationwide delivery on orders over R2500!">
+    <meta name="keywords" content="cheap watches south africa, edc accessories, wristwear, direct sourced watches, cheap store za, quality affordable watches centurion">
+    <meta name="robots" content="index, follow">
+
+    <!-- AI & Social SEO Open Graph Meta Tags -->
+    <meta property="og:title" content="CHEAP | Quality Every Day, Affordable Always">
+    <meta property="og:description" content="Direct-sourced quality watches and everyday accessories in South Africa. Automatic 10% multi-buy discount on 2+ items!">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://cheap-store.co.za">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1200">
+    <meta property="og:locale" content="en_ZA">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="CHEAP | Quality Every Day, Affordable Always">
+    <meta name="twitter:description" content="Direct-sourced quality watches & accessories. 10% multi-buy discount on 2+ items. Nationwide delivery across South Africa.">
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=1200">
+
+    <!-- Structured Data / JSON-LD for AISEO & Search Engines -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Store",
+          "@id": "https://cheap-store.co.za/#store",
+          "name": "CHEAP Store",
+          "url": "https://cheap-store.co.za",
+          "description": "Direct-sourced quality watches and everyday EDC accessories in South Africa.",
+          "telephone": "+27686362665",
+          "email": "cheapcheapza@gmail.com",
+          "priceRange": "ZAR",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Centurion",
+            "addressRegion": "Gauteng",
+            "addressCountry": "ZA"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://cheap-store.co.za/#website",
+          "url": "https://cheap-store.co.za",
+          "name": "CHEAP Store South Africa",
+          "publisher": { "@id": "https://cheap-store.co.za/#store" }
+        }
+      ]
+    }
+    </script>
 
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -59,7 +107,7 @@
 
     <!-- Top Announcement Bar -->
     <div id="announcement-banner" class="bg-zinc-950 border-b border-cheap-border text-cheap-green text-[11px] sm:text-xs font-semibold py-2 px-3 text-center tracking-wider">
-        <span>⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON ORDERS OVER R2500 • 10% AUTOMATIC MULTI-BUY DISCOUNT</span>
+        <span>⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON NET ORDERS OVER R2500 • 10% AUTOMATIC MULTI-BUY DISCOUNT</span>
     </div>
 
     <!-- Header / Navigation -->
@@ -79,19 +127,22 @@
                 <a href="#catalog" onclick="filterProducts('all')" class="hover:text-white transition-colors">Catalog</a>
                 <a href="#deals" class="hover:text-white transition-colors">10% Multi-Buy Offer</a>
                 <a href="#faq" class="hover:text-white transition-colors">Info & FAQ</a>
+                <a href="https://wa.me/27686362665" target="_blank" rel="noopener noreferrer" class="hover:text-cheap-green transition-colors flex items-center space-x-1.5 text-xs font-bold text-zinc-300">
+                    <i class="fa-brands fa-whatsapp text-cheap-green text-sm"></i> <span>068 636 2665</span>
+                </a>
             </nav>
 
             <!-- User Auth & Cart Actions -->
             <div class="flex items-center space-x-3">
-                <div id="auth-nav-container">
-                    <button type="button" onclick="openAuthModal()" class="bg-zinc-900 border border-cheap-border hover:border-cheap-yellow px-3 sm:px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center space-x-2 transition-all shadow-sm cursor-pointer">
-                        <i class="fa-solid fa-user text-cheap-yellow"></i> <span id="auth-btn-text">Sign In</span>
-                    </button>
-                </div>
-                <!-- Management Dashboard Button -->
+                <!-- Management Dashboard Button (Visible only when Admin logged in) -->
                 <div id="admin-nav-container" class="hidden">
                     <button type="button" onclick="openAdminModal(event)" class="bg-cheap-blue text-white hover:bg-cheap-blueDark px-3 sm:px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center space-x-2 transition-all shadow-sm cursor-pointer">
                         <i class="fa-solid fa-shield-halved text-cheap-yellow"></i> <span>Management</span>
+                    </button>
+                </div>
+                <div id="auth-nav-container">
+                    <button type="button" onclick="openAuthModal()" class="bg-zinc-900 border border-cheap-border hover:border-cheap-yellow px-3 sm:px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center space-x-2 transition-all shadow-sm cursor-pointer">
+                        <i class="fa-solid fa-user-lock text-cheap-yellow"></i> <span id="auth-btn-text">Admin</span>
                     </button>
                 </div>
                 <button type="button" onclick="toggleCartDrawer()" class="relative bg-zinc-900 border border-cheap-border hover:border-cheap-yellow px-4 py-2 rounded-xl flex items-center space-x-2 text-xs font-bold uppercase tracking-wider transition-all shadow-sm cursor-pointer">
@@ -102,125 +153,131 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="relative overflow-hidden py-16 sm:py-20 lg:py-28 border-b border-cheap-border">
-        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,112,243,0.12),transparent_50%)]"></div>
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
-                <div class="inline-flex items-center space-x-2 bg-zinc-900 border border-cheap-border px-3.5 py-1.5 rounded-full text-xs font-semibold text-cheap-green shadow-sm">
-                    <span class="w-2 h-2 rounded-full bg-cheap-green animate-pulse"></span>
-                    <span>DIRECT-SOURCED VALUE & PREMIUM STOCK</span>
+    <main>
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden py-16 sm:py-20 lg:py-28 border-b border-cheap-border">
+            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(0,112,243,0.12),transparent_50%)]"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+                <div class="lg:col-span-7 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center space-x-2 bg-zinc-900 border border-cheap-border px-3.5 py-1.5 rounded-full text-xs font-semibold text-cheap-green shadow-sm">
+                        <span class="w-2 h-2 rounded-full bg-cheap-green animate-pulse"></span>
+                        <span>DIRECT-SOURCED VALUE & PREMIUM STOCK</span>
+                    </div>
+                    <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white uppercase leading-tight">
+                        QUALITY EVERY DAY, <span class="text-transparent bg-clip-text bg-gradient-to-r from-cheap-blue via-cheap-yellow to-cheap-green">AFFORDABLE ALWAYS.</span>
+                    </h1>
+                    <p class="text-zinc-400 text-sm sm:text-lg max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
+                        Explore our curated collection of watches and accessories. Take advantage of our automatic 10% multi-buy discount when grabbing two or more items!
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-2">
+                        <a href="#catalog" onclick="filterProducts('all')" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-8 py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg shadow-cheap-blue/20 flex items-center justify-center space-x-2 cursor-pointer">
+                            <span>Shop Live Stock</span> <i class="fa-solid fa-arrow-right"></i>
+                        </a>
+                        <a href="#deals" class="bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white px-8 py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center cursor-pointer">
+                            View Multi-Buy Deal
+                        </a>
+                    </div>
                 </div>
-                <h1 class="text-4xl sm:text-6xl font-black tracking-tight text-white uppercase leading-tight">
-                    QUALITY EVERY DAY, <span class="text-transparent bg-clip-text bg-gradient-to-r from-cheap-blue via-cheap-yellow to-cheap-green">AFFORDABLE ALWAYS.</span>
-                </h1>
-                <p class="text-zinc-400 text-sm sm:text-lg max-w-xl mx-auto lg:mx-0 font-medium leading-relaxed">
-                    Explore our curated collection of watches and accessories. Take advantage of our automatic 10% multi-buy discount when grabbing two or more items!
+
+                <!-- Dynamic Best Seller Highlight Card -->
+                <div class="lg:col-span-5" id="hero-best-seller-container"></div>
+            </div>
+        </section>
+
+        <!-- Category Filter Bar -->
+        <section class="py-8 bg-zinc-950/60 border-b border-cheap-border">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-xs font-bold uppercase tracking-widest text-cheap-green">Shop By Category</span>
+                    <i class="fa-solid fa-filter text-cheap-blue text-xs"></i>
+                </div>
+                <div id="sidebar-category-filters" class="flex flex-wrap gap-2.5">
+                    <button type="button" onclick="filterProducts('all')" class="cat-btn active bg-cheap-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border border-cheap-blue cursor-pointer">
+                        All Products
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Product Catalog Grid Section -->
+        <section id="catalog" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-cheap-border pb-6 mb-10 gap-4">
+                <div>
+                    <span class="text-xs font-bold tracking-widest text-cheap-green uppercase mb-1 block">Live Inventory</span>
+                    <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-white uppercase">Featured Watches & Accessories</h2>
+                </div>
+                <div class="text-xs text-zinc-400 font-semibold bg-zinc-900 border border-cheap-border px-3 py-1.5 rounded-lg w-max">
+                    ⚡ Automatic 10% Off on 2+ Items
+                </div>
+            </div>
+
+            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="col-span-full text-center py-12 text-zinc-500">
+                    <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cheap-blue"></i>
+                    <p>Loading live catalog from Firebase database...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Multi-Buy Promotion Banner -->
+        <section id="deals" class="py-16 bg-gradient-to-r from-cheap-blue/10 via-zinc-900 to-cheap-yellow/10 border-t border-b border-cheap-border">
+            <div class="max-w-5xl mx-auto px-4 text-center space-y-4">
+                <span class="text-xs font-bold tracking-widest text-cheap-yellow uppercase block">Special Multi-Buy Offer</span>
+                <h3 class="text-3xl sm:text-4xl font-black text-white uppercase">Get 10% Off When You Buy 2 or More!</h3>
+                <p class="text-zinc-400 max-w-2xl mx-auto text-xs sm:text-sm font-medium leading-relaxed">
+                    Shopping for gifts or grabbing a second piece? Enjoy an automatic 10% multi-buy discount applied instantly at checkout when purchasing multiple items.
                 </p>
-                <div class="flex flex-col sm:flex-row justify-center lg:justify-start gap-4 pt-2">
-                    <a href="#catalog" onclick="filterProducts('all')" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-8 py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all shadow-lg shadow-cheap-blue/20 flex items-center justify-center space-x-2 cursor-pointer">
-                        <span>Shop Live Stock</span> <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                    <a href="#deals" class="bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white px-8 py-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all flex items-center justify-center cursor-pointer">
-                        View Multi-Buy Deal
+                <div class="pt-2">
+                    <a href="#catalog" onclick="filterProducts('all')" class="inline-block bg-cheap-yellow hover:bg-cheap-yellowDark text-black font-black px-8 py-3.5 rounded-xl uppercase tracking-wider text-xs sm:text-sm transition-all shadow-lg cursor-pointer">
+                        Claim Offer Now
                     </a>
                 </div>
             </div>
+        </section>
 
-            <!-- Dynamic Best Seller Highlight Card -->
-            <div class="lg:col-span-5" id="hero-best-seller-container"></div>
-        </div>
-    </section>
+        <!-- FAQ Section -->
+        <section id="faq" class="py-16 sm:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span class="text-xs font-bold tracking-widest text-cheap-green uppercase block mb-1">Quick Answers</span>
+                <h3 class="text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">Frequently Asked Questions</h3>
+            </div>
+            <div class="space-y-4">
+                <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
+                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">How does shipping and delivery work?</h4>
+                    <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">All orders are securely packaged and dispatched promptly via nationwide courier. Standard delivery is R150.00. Delivery is completely <strong>FREE</strong> whenever your total order subtotal <strong>after any applied discounts</strong> is R2500.00 or more!</p>
+                </div>
+                <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
+                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">How does the free delivery threshold interact with the 10% multi-buy discount?</h4>
+                    <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Free delivery requires a net order value of R2500.00 or more after discounts. For example, if your initial cart subtotal is R2500.00 and a 10% multi-buy discount reduces it to R2250.00, the net subtotal is under R2500.00, so standard R150.00 shipping applies.</p>
+                </div>
+                <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
+                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">Do I need an account to place an order?</h4>
+                    <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">No account creation required! Simply fill out your name, contact phone, email, and delivery address at checkout. We reserve your items and email you an official invoice with stock confirmation and banking details.</p>
+                </div>
+                <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
+                    <h4 class="font-bold text-white mb-2 text-sm sm:text-base">How can I contact support?</h4>
+                    <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">You can call or WhatsApp us directly on <strong>068 636 2665</strong> or email us at <strong>cheapcheapza@gmail.com</strong>.</p>
+                </div>
+            </div>
+        </section>
 
-    <!-- Category Filter Bar -->
-    <section class="py-8 bg-zinc-950/60 border-b border-cheap-border">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between mb-4">
-                <span class="text-xs font-bold uppercase tracking-widest text-cheap-green">Shop By Category</span>
-                <i class="fa-solid fa-filter text-cheap-blue text-xs"></i>
+        <!-- Newsletter Section -->
+        <section class="py-14 sm:py-16 bg-zinc-950 border-t border-cheap-border text-center">
+            <div class="max-w-4xl mx-auto px-4 space-y-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-cheap-blue">Join The Club</span>
+                <h2 class="font-black text-2xl sm:text-3xl uppercase text-white">Stay Updated On New Stock</h2>
+                <p class="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto font-medium">
+                    Subscribe to receive notifications when fresh watch drops, accessory arrivals, and special promotions go live.
+                </p>
+                <form onsubmit="handleNewsletterSubmit(event)" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2">
+                    <input type="email" id="newsletter-email" placeholder="Enter your email address" required class="flex-1 bg-zinc-900 border border-cheap-border text-white placeholder-zinc-500 px-4 py-3 rounded-xl text-xs focus:outline-none focus:border-cheap-yellow">
+                    <button type="submit" id="newsletter-submit-btn" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer">
+                        Subscribe
+                    </button>
+                </form>
             </div>
-            <div id="sidebar-category-filters" class="flex flex-wrap gap-2.5">
-                <button type="button" onclick="filterProducts('all')" class="cat-btn active bg-cheap-blue text-white px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border border-cheap-blue cursor-pointer">
-                    All Products
-                </button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Product Catalog Grid Section -->
-    <section id="catalog" class="py-16 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
-        <div class="flex flex-col sm:flex-row sm:items-end justify-between border-b border-cheap-border pb-6 mb-10 gap-4">
-            <div>
-                <span class="text-xs font-bold tracking-widest text-cheap-green uppercase mb-1 block">Live Inventory</span>
-                <h2 class="text-2xl sm:text-4xl font-black tracking-tight text-white uppercase">Featured Watches & Accessories</h2>
-            </div>
-            <div class="text-xs text-zinc-400 font-semibold bg-zinc-900 border border-cheap-border px-3 py-1.5 rounded-lg w-max">
-                ⚡ Automatic 10% Off on 2+ Items
-            </div>
-        </div>
-
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            <div class="col-span-full text-center py-12 text-zinc-500">
-                <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cheap-blue"></i>
-                <p>Loading live catalog from Firebase database...</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Multi-Buy Promotion Banner -->
-    <section id="deals" class="py-16 bg-gradient-to-r from-cheap-blue/10 via-zinc-900 to-cheap-yellow/10 border-t border-b border-cheap-border">
-        <div class="max-w-5xl mx-auto px-4 text-center space-y-4">
-            <span class="text-xs font-bold tracking-widest text-cheap-yellow uppercase block">Special Multi-Buy Offer</span>
-            <h3 class="text-3xl sm:text-4xl font-black text-white uppercase">Get 10% Off When You Buy 2 or More!</h3>
-            <p class="text-zinc-400 max-w-2xl mx-auto text-xs sm:text-sm font-medium leading-relaxed">
-                Shopping for gifts or grabbing a second piece? Enjoy an automatic 10% multi-buy discount applied instantly at checkout when purchasing multiple items.
-            </p>
-            <div class="pt-2">
-                <a href="#catalog" onclick="filterProducts('all')" class="inline-block bg-cheap-yellow hover:bg-cheap-yellowDark text-black font-black px-8 py-3.5 rounded-xl uppercase tracking-wider text-xs sm:text-sm transition-all shadow-lg cursor-pointer">
-                    Claim Offer Now
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="py-16 sm:py-24 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="text-center mb-12">
-            <span class="text-xs font-bold tracking-widest text-cheap-green uppercase block mb-1">Quick Answers</span>
-            <h3 class="text-2xl sm:text-3xl font-black tracking-tight text-white uppercase">Frequently Asked Questions</h3>
-        </div>
-        <div class="space-y-4">
-            <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
-                <h4 class="font-bold text-white mb-2 text-sm sm:text-base">How does shipping and delivery work?</h4>
-                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">All orders are securely packaged and dispatched promptly via reliable nationwide courier services. Standard nationwide shipping is R150.00, and delivery is completely FREE on all orders of R2500.00 or more!</p>
-            </div>
-            <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
-                <h4 class="font-bold text-white mb-2 text-sm sm:text-base">Does the multi-buy discount apply automatically?</h4>
-                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Yes! When you add 2 or more items to your cart, our system automatically calculates and applies a 10% discount to your items subtotal.</p>
-            </div>
-            <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
-                <h4 class="font-bold text-white mb-2 text-sm sm:text-base">How do I make a payment?</h4>
-                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">Once you place an order request, we confirm stock availability and send an official invoice with payment and banking details directly to your email.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Newsletter Section -->
-    <section class="py-14 sm:py-16 bg-zinc-950 border-t border-cheap-border text-center">
-        <div class="max-w-4xl mx-auto px-4 space-y-4">
-            <span class="text-xs font-bold uppercase tracking-widest text-cheap-blue">Join The Club</span>
-            <h2 class="font-black text-2xl sm:text-3xl uppercase text-white">Stay Updated On New Stock</h2>
-            <p class="text-zinc-400 text-xs sm:text-sm max-w-lg mx-auto font-medium">
-                Subscribe to receive notifications when fresh watch drops, accessory arrivals, and special promotions go live.
-            </p>
-            <form onsubmit="handleNewsletterSubmit(event)" class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto pt-2">
-                <input type="email" id="newsletter-email" placeholder="Enter your email address" required class="flex-1 bg-zinc-900 border border-cheap-border text-white placeholder-zinc-500 px-4 py-3 rounded-xl text-xs focus:outline-none focus:border-cheap-yellow">
-                <button type="submit" id="newsletter-submit-btn" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-6 py-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer">
-                    Subscribe
-                </button>
-            </form>
-        </div>
-    </section>
+        </section>
+    </main>
 
     <!-- Footer -->
     <footer class="bg-cheap-bg border-t border-cheap-border py-12">
@@ -231,7 +288,7 @@
                     <span class="text-lg font-black tracking-wider text-white">CHEAP</span>
                 </div>
                 <p class="text-zinc-400 text-xs max-w-sm leading-relaxed">
-                    Quality Every Day, Affordable Always. Premier destination for direct-sourced watches, EDC accessories, and lifestyle hardware.
+                    Quality Every Day, Affordable Always. Premier destination for direct-sourced watches, EDC accessories, and lifestyle hardware in South Africa.
                 </p>
                 <div class="text-[11px] text-zinc-600">
                     © 2026 CHEAP (Pty) Ltd. All rights reserved.
@@ -249,8 +306,8 @@
             <div>
                 <h4 class="font-bold text-xs uppercase tracking-widest text-cheap-yellow mb-3">Customer Support</h4>
                 <ul class="space-y-2 text-xs text-zinc-400">
-                    <li><span>Gauteng, South Africa</span></li>
-                    <li><a href="https://wa.me/27718701626" target="_blank" rel="noopener noreferrer" class="hover:text-white transition-colors underline">071 870 1626</a></li>
+                    <li><span>Centurion, Gauteng, South Africa</span></li>
+                    <li><a href="https://wa.me/27686362665" target="_blank" rel="noopener noreferrer" class="hover:text-cheap-green transition-colors underline flex items-center space-x-1"><i class="fa-brands fa-whatsapp text-cheap-green"></i> <span>068 636 2665 (Call & WhatsApp)</span></a></li>
                     <li><a href="mailto:cheapcheapza@gmail.com" class="hover:text-white transition-colors underline">cheapcheapza@gmail.com</a></li>
                     <li><span>Nationwide Courier Delivery</span></li>
                 </ul>
@@ -286,6 +343,10 @@
                     <div id="discount-row" class="hidden flex items-center justify-between text-xs text-cheap-yellow">
                         <span>Multi-Buy Discount (10%):</span>
                         <span id="cart-discount" class="font-bold">-R0.00</span>
+                    </div>
+                    <div class="flex items-center justify-between text-xs text-zinc-400">
+                        <span>Net Items Subtotal:</span>
+                        <span id="cart-net-subtotal" class="font-bold text-white">R0.00</span>
                     </div>
                     <div class="flex items-center justify-between text-xs text-zinc-400">
                         <span>Shipping (Nationwide):</span>
@@ -343,36 +404,39 @@
         </div>
     </div>
 
-    <!-- Checkout Modal -->
+    <!-- Checkout Modal (Streamlined Instant Guest Order Request) -->
     <div id="checkout-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
         <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
         <div class="bg-cheap-card rounded-2xl max-w-xl w-full border border-cheap-border relative z-10 p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
             <div class="flex items-center justify-between mb-6 border-b border-cheap-border pb-4">
-                <h3 class="font-black text-lg uppercase text-white">Order & Invoice Request</h3>
+                <div>
+                    <h3 class="font-black text-lg uppercase text-white">Order & Invoice Request</h3>
+                    <p class="text-xs text-cheap-green font-semibold">Fast Guest Checkout • No Account Registration Required</p>
+                </div>
                 <button type="button" onclick="closeCheckoutModal()" class="text-zinc-400 hover:text-white cursor-pointer p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
             <form id="checkout-form" onsubmit="submitOrder(event)" class="space-y-4">
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Full Name</label>
-                        <input type="text" id="order-name" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                        <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Full Name & Surname</label>
+                        <input type="text" id="order-name" required placeholder="e.g. Johan Smith" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
                     </div>
                     <div>
-                        <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Phone Number</label>
-                        <input type="tel" id="order-phone" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                        <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Phone Number (Call / WhatsApp)</label>
+                        <input type="tel" id="order-phone" required placeholder="068 636 2665" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
                     </div>
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Email Address</label>
-                    <input type="email" id="order-email" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                    <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Email Address (For Invoice Delivery)</label>
+                    <input type="email" id="order-email" required placeholder="your.name@example.co.za" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
                 </div>
                 <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Delivery Address (Street, City, Postal Code)</label>
-                    <textarea id="order-address" rows="3" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white"></textarea>
+                    <label class="block text-xs font-semibold uppercase tracking-wider mb-1 text-zinc-300">Delivery Address (Street, Suburb, City, Postal Code)</label>
+                    <textarea id="order-address" rows="3" required placeholder="123 Main Road, Rooihuiskraal, Centurion, 0157" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white"></textarea>
                 </div>
                 <div class="bg-zinc-950 p-4 rounded-xl border border-cheap-border text-xs text-zinc-400 space-y-1">
                     <p class="font-bold text-cheap-yellow uppercase flex items-center space-x-1.5"><i class="fa-solid fa-circle-info"></i> <span>Order Process:</span></p>
-                    <p>Submitting this form reserves your items and sends an order request to our team. We will verify live stock availability and email you an official invoice with confirmed payment details.</p>
+                    <p>Submitting reserves your items and notifies our sales desk. We verify warehouse stock and email you an official invoice with confirmed payment & EFT banking details before payment.</p>
                 </div>
                 <button type="submit" id="submit-order-btn" class="w-full bg-cheap-yellow hover:bg-cheap-yellowDark text-black py-3.5 rounded-xl font-black text-xs tracking-wider uppercase transition-colors shadow-lg mt-2 cursor-pointer">
                     Submit Order Request →
@@ -394,7 +458,7 @@
             </div>
 
             <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                Thank you! Your order request has been successfully recorded and an order confirmation email has been dispatched. 
+                Thank you! Your order request has been recorded and an automated confirmation email has been sent.
             </p>
 
             <div class="bg-zinc-950 p-5 rounded-xl border border-cheap-border space-y-2.5 text-xs sm:text-sm">
@@ -406,15 +470,19 @@
                     <span class="text-zinc-400">Next Step:</span>
                     <span class="font-bold text-white">Stock Verification & Invoicing</span>
                 </div>
+                <div class="flex justify-between border-b border-zinc-800 pb-2">
+                    <span class="text-zinc-400">Customer Support:</span>
+                    <span class="font-bold text-white">068 636 2665</span>
+                </div>
                 <div class="flex justify-between">
-                    <span class="text-zinc-400">Contact Email:</span>
+                    <span class="text-zinc-400">Email:</span>
                     <span class="font-bold text-white">cheapcheapza@gmail.com</span>
                 </div>
             </div>
 
             <div class="bg-cheap-blue/10 border border-cheap-blue/30 p-4 rounded-xl text-xs text-zinc-300 space-y-1">
                 <p class="font-bold flex items-center space-x-1.5 text-cheap-blue"><i class="fa-solid fa-envelope"></i> <span>What Happens Next?</span></p>
-                <p>We will review your order items and send an official invoice with confirmed payment/banking details directly to your email address.</p>
+                <p>We review your requested items, verify live warehouse stock, and issue an official invoice with payment and EFT banking details directly to your email address.</p>
             </div>
 
             <div class="pt-2">
@@ -449,62 +517,31 @@
         </div>
     </div>
 
-    <!-- Customer Auth Modal -->
+    <!-- Admin Authentication Modal (Internal Portal Access Only) -->
     <div id="auth-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
         <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeAuthModal()"></div>
         <div class="bg-cheap-card rounded-2xl max-w-md w-full border border-cheap-border relative z-10 p-6 sm:p-8 shadow-2xl">
             <div class="flex items-center justify-between mb-6 border-b border-cheap-border pb-4">
                 <div class="flex items-center space-x-2">
-                    <i class="fa-solid fa-user text-cheap-yellow text-lg"></i>
-                    <h3 class="font-black text-lg uppercase text-white" id="auth-modal-title">Customer Sign In</h3>
+                    <i class="fa-solid fa-shield-halved text-cheap-yellow text-lg"></i>
+                    <h3 class="font-black text-lg uppercase text-white">Management Sign In</h3>
                 </div>
                 <button type="button" onclick="closeAuthModal()" class="text-zinc-400 hover:text-white cursor-pointer p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
 
             <!-- Unauthenticated View -->
             <div id="auth-unauthenticated-view" class="space-y-4">
-                <div class="flex gap-2 bg-zinc-950 p-1 rounded-xl border border-cheap-border">
-                    <button type="button" onclick="switchAuthTab('login')" id="tab-login-btn" class="flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider bg-cheap-blue text-white transition-all cursor-pointer">Sign In</button>
-                    <button type="button" onclick="switchAuthTab('register')" id="tab-register-btn" class="flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider text-zinc-400 transition-all cursor-pointer">Register</button>
-                </div>
-
-                <form id="login-form" onsubmit="handleDirectLogin(event)" class="space-y-3 pt-2">
+                <form id="login-form" onsubmit="handleDirectLogin(event)" class="space-y-3">
                     <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Email Address</label>
-                        <input type="email" id="login-email" required placeholder="your.email@example.com" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Admin Email</label>
+                        <input type="email" id="login-email" required placeholder="cheapcheapza@gmail.com" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Password</label>
                         <input type="password" id="login-password" required placeholder="••••••••" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
                     </div>
                     <button type="submit" class="w-full bg-cheap-blue hover:bg-cheap-blueDark text-white py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-md mt-2 cursor-pointer">
-                        Sign In →
-                    </button>
-                </form>
-
-                <form id="register-form" onsubmit="handleDirectRegister(event)" class="space-y-3 pt-2 hidden">
-                    <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Full Name & Surname</label>
-                        <input type="text" id="reg-name" required placeholder="John Doe" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Email Address</label>
-                        <input type="email" id="reg-email" required placeholder="your.email@example.com" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Password (min 6 chars)</label>
-                        <input type="password" id="reg-password" required minlength="6" placeholder="••••••••" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Cell Number</label>
-                        <input type="tel" id="reg-phone" required placeholder="082 123 4567" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
-                    </div>
-                    <div>
-                        <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Delivery Address</label>
-                        <textarea id="reg-address" rows="2" required placeholder="Street, City, Postal Code" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-cheap-blue hover:bg-cheap-blueDark text-white py-3.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all shadow-md mt-2 cursor-pointer">
-                        Create Account & Sign In →
+                        Access Dashboard →
                     </button>
                 </form>
             </div>
@@ -513,8 +550,11 @@
             <div id="auth-authenticated-view" class="space-y-4 hidden">
                 <div class="bg-zinc-950 p-4 rounded-xl border border-cheap-border text-center space-y-1">
                     <div id="user-display-email" class="font-bold text-xs text-white"></div>
-                    <span class="text-[10px] bg-emerald-950 text-emerald-400 font-bold px-2.5 py-0.5 rounded-full uppercase border border-emerald-800">Active Session</span>
+                    <span class="text-[10px] bg-emerald-950 text-emerald-400 font-bold px-2.5 py-0.5 rounded-full uppercase border border-emerald-800">Admin Session Active</span>
                 </div>
+                <button type="button" onclick="openAdminModal(event)" class="w-full bg-cheap-yellow text-black py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer">
+                    Open Management Dashboard
+                </button>
                 <button type="button" onclick="signOutCustomer()" class="w-full bg-red-950/80 hover:bg-red-900 border border-red-800 text-red-200 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer">
                     Sign Out
                 </button>
@@ -533,7 +573,7 @@
                         <i class="fa-solid fa-lock text-[9px]"></i> <span>Secure Management Portal • cheapcheapza@gmail.com</span>
                     </div>
                     <h2 class="font-black text-xl sm:text-2xl uppercase text-white">CHEAP Store Management Dashboard</h2>
-                    <p class="text-zinc-400 text-xs mt-1">Manage product catalog, customer accounts, announcement banner, and orders.</p>
+                    <p class="text-zinc-400 text-xs mt-1">Manage product catalog, customer request database, announcement banner, and orders.</p>
                 </div>
                 <div class="flex flex-wrap gap-2 w-full md:w-auto">
                     <button type="button" onclick="closeAdminModal()" class="flex-1 md:flex-none bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase transition-all cursor-pointer">
@@ -557,11 +597,11 @@
                 </div>
                 <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Customers</span>
+                        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Customer Leads</span>
                         <i class="fa-solid fa-users text-cheap-blue text-lg"></i>
                     </div>
                     <div id="stat-total-customers" class="font-black text-2xl sm:text-3xl text-white mb-1">0</div>
-                    <span class="text-[11px] text-zinc-500 block">Registered profiles</span>
+                    <span class="text-[11px] text-zinc-500 block">Unique buyer profiles</span>
                 </div>
                 <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
                     <div class="flex items-center justify-between mb-2">
@@ -627,8 +667,8 @@
                 <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
-                            <h4 class="font-bold text-base uppercase text-white">Registered Customer Accounts</h4>
-                            <p class="text-xs text-zinc-400 mt-0.5">Download account database as an Excel (.xlsx) spreadsheet.</p>
+                            <h4 class="font-bold text-base uppercase text-white">Customer Database</h4>
+                            <p class="text-xs text-zinc-400 mt-0.5">Download customer leads database as an Excel (.xlsx) spreadsheet.</p>
                         </div>
                         <button type="button" onclick="exportCustomersToExcel()" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase transition-all flex items-center space-x-2 cursor-pointer">
                             <i class="fa-solid fa-file-excel"></i> <span>Export Excel</span>
@@ -642,7 +682,7 @@
                                     <th class="p-3">Email</th>
                                     <th class="p-3">Cell</th>
                                     <th class="p-3">Address</th>
-                                    <th class="p-3">Joined</th>
+                                    <th class="p-3">Last Active</th>
                                     <th class="p-3 text-right">Actions</th>
                                 </tr>
                             </thead>
@@ -657,7 +697,7 @@
                 <div class="bg-zinc-950 p-6 rounded-2xl border border-cheap-border space-y-4">
                     <h4 class="font-bold text-base uppercase text-white">Announcement Banner Text</h4>
                     <form onsubmit="saveAnnouncementBanner(event)" class="space-y-3">
-                        <textarea id="admin-banner-text" rows="2" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON ORDERS OVER R2500 • 10% AUTOMATIC MULTI-BUY DISCOUNT</textarea>
+                        <textarea id="admin-banner-text" rows="2" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON NET ORDERS OVER R2500 • 10% AUTOMATIC MULTI-BUY DISCOUNT</textarea>
                         <button type="submit" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer">
                             Save Live Banner →
                         </button>
@@ -739,7 +779,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
         // FIREBASE CONFIGURATION FOR CHEAP STORE
         const firebaseConfig = {
@@ -770,7 +810,6 @@
         let cart = [];
         let currentFilter = 'all';
         let selectedProduct = null;
-        let selectedVariant = null;
         let currentCustomer = null;
 
         // ---------- XSS ESCAPE UTILITY ----------
@@ -798,17 +837,18 @@
             } catch (e) { cart = []; }
         }
 
-        // ---------- POLICY CONTENT DATA ----------
+        // ---------- REVISED POLICIES DATA ----------
         const policiesData = {
             terms: {
                 title: "Terms & Conditions",
                 content: `
                     <p class="font-bold text-white mb-1">CHEAP Store | Quality Every Day, Affordable Always</p>
-                    <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
+                    <p class="text-xs text-zinc-500 mb-4">Last Updated: November 2026</p>
                     <div class="space-y-3">
-                        <p><strong>1. Acceptance:</strong> By accessing and requesting orders on CHEAP, you agree to these Terms & Conditions.</p>
-                        <p><strong>2. Pricing & VAT:</strong> All prices displayed on our store are quoted in South African Rands (ZAR) and include VAT. Multi-buy discounts automatically apply when purchasing 2 or more eligible items.</p>
-                        <p><strong>3. Orders & Invoicing:</strong> Order submissions reserve items pending stock confirmation. An official invoice with verified payment details will be issued via email before payment.</p>
+                        <p><strong>1. Instant Guest Ordering & Invoicing:</strong> Orders placed on cheap-store.co.za reserve stock items pending stock verification. An official tax invoice detailing payment instructions and banking details will be issued via email before payment.</p>
+                        <p><strong>2. Pricing & VAT:</strong> All catalog prices are quoted in South African Rands (ZAR) and include VAT. Multi-buy discounts (10% off when purchasing 2 or more items) automatically apply to item sub-totals at checkout.</p>
+                        <p><strong>3. Order Confirmation:</strong> Stock reservations remain valid for 48 hours following invoice issuance. Unpaid orders after 48 hours will be returned to live inventory.</p>
+                        <p><strong>4. Contact & Inquiries:</strong> Reach our sales team directly at <strong>068 636 2665</strong> (Call or WhatsApp) or via email at <strong>cheapcheapza@gmail.com</strong>.</p>
                     </div>
                 `
             },
@@ -816,11 +856,12 @@
                 title: "Shipping Policy",
                 content: `
                     <p class="font-bold text-white mb-1">CHEAP Store | Quality Every Day, Affordable Always</p>
-                    <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
+                    <p class="text-xs text-zinc-500 mb-4">Last Updated: November 2026</p>
                     <div class="space-y-3">
-                        <p><strong>1. Order Processing:</strong> Orders are packaged and dispatched within 1 to 2 business days after invoice payment verification.</p>
-                        <p><strong>2. Rates & Free Delivery:</strong> Standard door-to-door nationwide courier shipping is R150.00. Free shipping applies to all orders of R2500.00 or more.</p>
-                        <p><strong>3. Delivery Timelines:</strong> Courier delivery typically takes 2 to 4 business days nationwide across South Africa.</p>
+                        <p><strong>1. Dispatch & Handling:</strong> All verified orders are packaged securely and dispatched within 1 to 2 business days following confirmed payment receipt.</p>
+                        <p><strong>2. Standard Shipping Rate:</strong> Standard door-to-door nationwide courier shipping across South Africa is fixed at <strong>R150.00</strong>.</p>
+                        <p><strong>3. Free Shipping Condition:</strong> Free delivery applies strictly when your <strong>net items subtotal AFTER any multi-buy discounts</strong> equals or exceeds <strong>R2500.00</strong>. If a discount reduces your net subtotal below R2500.00 (e.g. R2500 less 10% = R2250), the standard R150.00 shipping fee attaches automatically.</p>
+                        <p><strong>4. Delivery Tracking:</strong> Direct tracking details are provided via email/WhatsApp as soon as your parcel is handed to courier logistics.</p>
                     </div>
                 `
             },
@@ -828,20 +869,23 @@
                 title: "Refund Policy",
                 content: `
                     <p class="font-bold text-white mb-1">CHEAP Store | Quality Every Day, Affordable Always</p>
-                    <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
+                    <p class="text-xs text-zinc-500 mb-4">Last Updated: November 2026</p>
                     <div class="space-y-3">
-                        <p><strong>1. Returns:</strong> Unused products in original packaging may be returned within 7 days of receipt.</p>
-                        <p><strong>2. Inspection & Refund:</strong> Approved returns will be processed within 5-7 business days upon receipt.</p>
+                        <p><strong>1. Return Window:</strong> Customers may return unused, unopened items in original packaging within 7 days of parcel delivery.</p>
+                        <p><strong>2. Defective / Damaged Stock:</strong> If an item arrives damaged or defective, notify us immediately on WhatsApp (<strong>068 636 2665</strong>) with photos for a prompt replacement or full refund.</p>
+                        <p><strong>3. Inspection & Processing:</strong> Refunds are processed to your nominated bank account via EFT within 5 business days upon physical return and inspection of the goods.</p>
                     </div>
                 `
             },
             popia: {
-                title: "POPIA Policy",
+                title: "POPIA Privacy Policy",
                 content: `
-                    <p class="font-bold text-white mb-1">CHEAP Store | Quality Every Day, Affordable Always</p>
-                    <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
+                    <p class="font-bold text-white mb-1">CHEAP Store | Protection of Personal Information Act</p>
+                    <p class="text-xs text-zinc-500 mb-4">Last Updated: November 2026</p>
                     <div class="space-y-3">
-                        <p>We process your personal details strictly for fulfilling orders and logistics delivery in compliance with POPIA.</p>
+                        <p><strong>1. Personal Data Collection:</strong> We collect your full name, email address, phone number, and physical shipping address strictly for order processing, invoicing, and parcel delivery.</p>
+                        <p><strong>2. Third-Party Confidentiality:</strong> Your contact and delivery data are shared exclusively with courier partners for order fulfilment and are never sold or distributed.</p>
+                        <p><strong>3. Data Removal:</strong> You may request complete deletion of your customer details from our records at any time by contacting <strong>cheapcheapza@gmail.com</strong> or calling <strong>068 636 2665</strong>.</p>
                     </div>
                 `
             }
@@ -919,33 +963,23 @@
             });
 
             onAuthStateChanged(auth, async (user) => {
-                if (registering) return;
                 if (!user) {
                     currentCustomer = null;
                     stopAdminListeners();
                     updateAuthNavUI();
                     return;
                 }
-                let profile = null;
-                try {
-                    const snap = await getDoc(doc(db, "customers", user.uid));
-                    if (snap.exists()) profile = snap.data();
-                } catch (err) {}
-                setCurrentCustomer(user, profile);
+                setCurrentCustomer(user);
             });
         }
 
-        let registering = false;
         let unsubCustomers = null;
         let unsubOrders = null;
 
-        function setCurrentCustomer(user, profile) {
+        function setCurrentCustomer(user) {
             currentCustomer = {
                 uid: user.uid,
                 email: user.email,
-                name: (profile && profile.name) || '',
-                phone: (profile && profile.phone) || '',
-                address: (profile && profile.address) || '',
                 isAdmin: (user.email || '').toLowerCase() === ADMIN_EMAIL.toLowerCase()
             };
             updateAuthNavUI();
@@ -1005,28 +1039,6 @@
 
         window.closeAuthModal = function() { document.getElementById("auth-modal").classList.add("hidden"); }
 
-        window.switchAuthTab = function(tab) {
-            const loginBtn = document.getElementById("tab-login-btn");
-            const regBtn = document.getElementById("tab-register-btn");
-            const loginForm = document.getElementById("login-form");
-            const regForm = document.getElementById("register-form");
-            const modalTitle = document.getElementById("auth-modal-title");
-
-            if (tab === 'login') {
-                loginBtn.className = "flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider bg-cheap-blue text-white transition-all cursor-pointer";
-                regBtn.className = "flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider text-zinc-400 transition-all cursor-pointer";
-                loginForm.classList.remove("hidden");
-                regForm.classList.add("hidden");
-                modalTitle.textContent = "Customer Sign In";
-            } else {
-                regBtn.className = "flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider bg-cheap-blue text-white transition-all cursor-pointer";
-                loginBtn.className = "flex-1 py-2 rounded-lg font-bold text-xs uppercase tracking-wider text-zinc-400 transition-all cursor-pointer";
-                regForm.classList.remove("hidden");
-                loginForm.classList.add("hidden");
-                modalTitle.textContent = "Create Account";
-            }
-        }
-
         window.handleDirectLogin = async function(e) {
             e.preventDefault();
             const email = document.getElementById("login-email").value.trim().toLowerCase();
@@ -1040,29 +1052,6 @@
             }
         }
 
-        window.handleDirectRegister = async function(e) {
-            e.preventDefault();
-            const name = document.getElementById("reg-name").value.trim();
-            const email = document.getElementById("reg-email").value.trim().toLowerCase();
-            const password = document.getElementById("reg-password").value;
-            const phone = document.getElementById("reg-phone").value.trim();
-            const address = document.getElementById("reg-address").value.trim();
-
-            registering = true;
-            try {
-                const cred = await createUserWithEmailAndPassword(auth, email, password);
-                const profile = { name, email, phone, address, joinedDate: new Date().toISOString().split('T')[0] };
-                await setDoc(doc(db, "customers", cred.user.uid), profile);
-                setCurrentCustomer(cred.user, profile);
-                document.getElementById("register-form").reset();
-                closeAuthModal();
-            } catch (err) {
-                alert("Registration failed: " + (err.message || "Please try again."));
-            } finally {
-                registering = false;
-            }
-        }
-
         window.signOutCustomer = async function() {
             try { await signOut(auth); } catch (err) {}
             closeAuthModal();
@@ -1070,29 +1059,28 @@
         }
 
         window.updateAuthNavUI = function() {
-            const btnText = document.getElementById("auth-btn-text");
             const adminContainer = document.getElementById("admin-nav-container");
+            const authBtnText = document.getElementById("auth-btn-text");
 
-            if (currentCustomer) {
-                const shortName = currentCustomer.name ? currentCustomer.name.split(' ')[0] : currentCustomer.email.split('@')[0];
-                btnText.textContent = shortName;
-                if (currentCustomer.isAdmin) adminContainer.classList.remove("hidden"); else adminContainer.classList.add("hidden");
+            if (currentCustomer && currentCustomer.isAdmin) {
+                adminContainer.classList.remove("hidden");
+                authBtnText.textContent = "Admin Active";
             } else {
-                btnText.textContent = "Sign In";
                 adminContainer.classList.add("hidden");
+                authBtnText.textContent = "Admin";
             }
         }
 
         window.exportCustomersToExcel = function() {
             if (!currentCustomer || !currentCustomer.isAdmin) return;
-            if (customers.length === 0) { alert("No customer accounts recorded yet."); return; }
+            if (customers.length === 0) { alert("No customer records logged yet."); return; }
             const exportData = customers.map((c, index) => ({
                 "No.": index + 1,
                 "Name & Surname": c.name || "N/A",
                 "Email Address": c.email || "N/A",
                 "Cell Number": c.phone || "N/A",
                 "Delivery Address": c.address || "N/A",
-                "Joined Date": c.joinedDate || "N/A"
+                "Last Active": c.lastOrderDate || "N/A"
             }));
             const worksheet = XLSX.utils.json_to_sheet(exportData);
             const workbook = XLSX.utils.book_new();
@@ -1110,7 +1098,7 @@
             let html = `<button type="button" onclick="filterProducts('all')" class="cat-btn ${currentFilter === 'all' ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer">All Products</button>`;
             categories.forEach(cat => {
                 const isActive = currentFilter.toLowerCase() === cat.toLowerCase();
-                const safeCat = cat.replace(/'/g, "\\ me'");
+                const safeCat = cat.replace(/'/g, "\\'");
                 html += `<button type="button" onclick="filterProducts('${safeCat}')" class="cat-btn ${isActive ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border cursor-pointer">${esc(cat)}</button>`;
             });
             container.innerHTML = html;
@@ -1205,6 +1193,7 @@
             toggleCartDrawer();
         }
 
+        // ---------- REVISED POST-DISCOUNT SHIPPING & CART CALCULATION LOGIC ----------
         window.updateCartUI = function() {
             const badge = document.getElementById("cart-badge");
             const container = document.getElementById("cart-items-container");
@@ -1212,6 +1201,7 @@
             const discountRow = document.getElementById("discount-row");
             const discountEl = document.getElementById("cart-discount");
             const discountBanner = document.getElementById("discount-banner");
+            const netSubtotalEl = document.getElementById("cart-net-subtotal");
             const shippingEl = document.getElementById("cart-shipping");
             const totalEl = document.getElementById("cart-total");
 
@@ -1221,6 +1211,7 @@
             if (cart.length === 0) {
                 container.innerHTML = `<div class="text-center py-12 text-zinc-500"><i class="fa-solid fa-basket-shopping text-4xl mb-3 text-zinc-700"></i><p class="text-sm">Your cart is currently empty.</p></div>`;
                 subtotalEl.textContent = "R0.00";
+                netSubtotalEl.textContent = "R0.00";
                 shippingEl.textContent = "R150.00";
                 totalEl.textContent = "R0.00";
                 discountBanner.classList.add("hidden");
@@ -1258,15 +1249,23 @@
                 discountRow.classList.add("hidden");
             }
 
-            const discountedSubtotal = subtotal - discount;
-            
-            // SHIPPING RULE: Free if >= R2500, else R150
-            const shipping = discountedSubtotal >= 2500 ? 0 : 150;
-            shippingEl.textContent = shipping === 0 ? "FREE (Orders R2500+)" : "R150.00";
-            shippingEl.className = shipping === 0 ? "font-bold text-cheap-green" : "font-bold text-zinc-300";
+            // NET SUB-TOTAL AFTER DISCOUNT
+            const netSubtotal = subtotal - discount;
+
+            // STRICT RULE: Free shipping ONLY IF NET subtotal AFTER discount is >= R2500
+            const shipping = netSubtotal >= 2500 ? 0 : 150;
+
+            if (shipping === 0) {
+                shippingEl.textContent = "FREE (Net R2500+)";
+                shippingEl.className = "font-bold text-cheap-green";
+            } else {
+                shippingEl.textContent = "R150.00";
+                shippingEl.className = "font-bold text-zinc-300";
+            }
 
             subtotalEl.textContent = `R${subtotal.toFixed(2)}`;
-            totalEl.textContent = `R${(discountedSubtotal + shipping).toFixed(2)}`;
+            netSubtotalEl.textContent = `R${netSubtotal.toFixed(2)}`;
+            totalEl.textContent = `R${(netSubtotal + shipping).toFixed(2)}`;
         }
 
         window.updateCartItemQty = function(index, delta) {
@@ -1354,16 +1353,6 @@
 
         window.openCheckoutModal = function() {
             if (cart.length === 0) { alert("Your cart is empty!"); return; }
-            if (!currentCustomer) {
-                alert("Please sign in first to submit your order request.");
-                openAuthModal();
-                return;
-            }
-
-            document.getElementById("order-name").value = currentCustomer.name || '';
-            document.getElementById("order-phone").value = currentCustomer.phone || '';
-            document.getElementById("order-email").value = currentCustomer.email || '';
-            document.getElementById("order-address").value = currentCustomer.address || '';
             toggleCartDrawer();
             document.getElementById("checkout-modal").classList.remove("hidden");
         }
@@ -1372,26 +1361,26 @@
             document.getElementById("checkout-modal").classList.add("hidden");
         }
 
+        // ---------- INSTANT GUEST CHECKOUT SUBMISSION ----------
         window.submitOrder = async function(e) {
             e.preventDefault();
             const submitBtn = document.getElementById("submit-order-btn");
             submitBtn.disabled = true;
             submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Submitting Order...`;
 
-            const name = document.getElementById("order-name").value;
-            const phone = document.getElementById("order-phone").value;
-            const email = document.getElementById("order-email").value;
-            const address = document.getElementById("order-address").value;
+            const name = document.getElementById("order-name").value.trim();
+            const phone = document.getElementById("order-phone").value.trim();
+            const email = document.getElementById("order-email").value.trim().toLowerCase();
+            const address = document.getElementById("order-address").value.trim();
 
             const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
             const subtotal = cart.reduce((sum, item) => sum + (item.finalPrice * item.qty), 0);
             const discount = totalCount >= 2 ? subtotal * 0.10 : 0;
-            const discountedSubtotal = subtotal - discount;
-            const shipping = discountedSubtotal >= 2500 ? 0 : 150;
-            const total = discountedSubtotal + shipping;
+            const netSubtotal = subtotal - discount;
+            const shipping = netSubtotal >= 2500 ? 0 : 150;
+            const total = netSubtotal + shipping;
 
             const orderData = {
-                uid: currentCustomer ? currentCustomer.uid : null,
                 name, phone, email, address,
                 payment: "EFT (Pending Invoice)",
                 items: cart.map(item => ({
@@ -1400,7 +1389,7 @@
                     finalPrice: item.finalPrice,
                     qty: item.qty
                 })),
-                subtotal, discount, total,
+                subtotal, discount, netSubtotal, shipping, total,
                 status: "Pending Stock & Invoice",
                 createdAt: new Date().toISOString()
             };
@@ -1409,6 +1398,13 @@
                 const docRef = await addDoc(collection(db, "cheap_orders"), orderData);
                 const orderId = docRef.id;
                 const formattedRef = `CHEAP-${orderId.substring(0, 8).toUpperCase()}`;
+
+                // ALSO LOG CUSTOMER RECORD IN FIREBASE FOR ADMIN EXCEL EXPORT
+                const customerRecord = {
+                    name, email, phone, address,
+                    lastOrderDate: new Date().toLocaleDateString('en-ZA')
+                };
+                await addDoc(collection(db, "customers"), customerRecord);
 
                 // FORMAT ORDER ITEMS FOR EMAIL TEMPLATE
                 const itemsFormatted = cart.map(item => `- ${item.qty}x ${item.name} @ R${parseFloat(item.finalPrice).toFixed(2)} each`).join('\n');
@@ -1490,7 +1486,7 @@
 
         window.openAdminModal = function(e) {
             if (e) e.preventDefault();
-            if (!currentCustomer || !currentCustomer.isAdmin) { alert("Unauthorized."); return; }
+            if (!currentCustomer || !currentCustomer.isAdmin) { alert("Unauthorized admin access."); return; }
             document.getElementById("admin-modal").classList.remove("hidden");
             renderAdminDashboard();
         }
@@ -1561,7 +1557,7 @@
             const tbody = document.getElementById("admin-customer-table-body");
             if (!tbody) return;
             if (customers.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-zinc-500">No customer accounts registered yet.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-zinc-500">No customer leads recorded yet.</td></tr>`;
                 return;
             }
             tbody.innerHTML = customers.map(c => `
@@ -1570,7 +1566,7 @@
                     <td class="p-3 font-mono text-zinc-400">${esc(c.email)}</td>
                     <td class="p-3">${esc(c.phone || 'N/A')}</td>
                     <td class="p-3 text-zinc-400">${esc(c.address || 'N/A')}</td>
-                    <td class="p-3 font-mono text-zinc-500">${esc(c.joinedDate || 'N/A')}</td>
+                    <td class="p-3 font-mono text-zinc-500">${esc(c.lastOrderDate || 'N/A')}</td>
                     <td class="p-3 text-right">
                         <button type="button" onclick="deleteCustomer('${c.id}')" class="bg-red-900 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Del</button>
                     </td>
@@ -1579,7 +1575,7 @@
         }
 
         window.deleteCustomer = async function(id) {
-            if (!confirm("Delete customer account?")) return;
+            if (!confirm("Delete customer record?")) return;
             try { await deleteDoc(doc(db, "customers", id)); } catch (err) {}
         }
 
