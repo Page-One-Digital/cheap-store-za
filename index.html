@@ -1175,22 +1175,54 @@
             XLSX.writeFile(workbook, "CHEAP_Store_Customers.xlsx");
         }
 
-        window.renderSidebarCategories = function() {
-            const container = document.getElementById("sidebar-category-filters");
-            if (!container) return;
-            const categoriesSet = new Set();
-            products.forEach(p => { if (p.category) categoriesSet.add(p.category.trim()); });
-            const categories = Array.from(categoriesSet).sort();
+        // FULL MASTER CATEGORY LIST
+const MASTER_CATEGORIES = [
+    "Audio & Sound",
+    "Cables & Adapters",
+    "Cellular & Mobile",
+    "Computer Accessories",
+    "Computing & Peripherals",
+    "Devices",
+    "Education and Learning",
+    "Electronics",
+    "Fashion and Beauty",
+    "Gaming",
+    "Health & Personal Care",
+    "Home & Living",
+    "Luggage & Bags",
+    "Office & Stationery",
+    "Outdoor & Fitness",
+    "Power & Charging",
+    "Smart Gadgets",
+    "Sport & Leisure",
+    "TV & Home Entertainment",
+    "Wristwear & Watches"
+];
 
-            let html = `<button type="button" onclick="filterProducts('all')" class="cat-btn ${currentFilter === 'all' ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border shrink-0 cursor-pointer">All Products</button>`;
-            categories.forEach(cat => {
-                const isActive = currentFilter.toLowerCase() === cat.toLowerCase();
-                const safeCat = cat.replace(/'/g, "\\'");
-                html += `<button type="button" onclick="filterProducts('${safeCat}')" class="cat-btn ${isActive ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border shrink-0 cursor-pointer">${esc(cat)}</button>`;
-            });
-            container.innerHTML = html;
-        }
+window.renderSidebarCategories = function() {
+    const container = document.getElementById("sidebar-category-filters");
+    if (!container) return;
 
+    // Merge master list with dynamic categories found in live data
+    const categoriesSet = new Set(MASTER_CATEGORIES);
+    products.forEach(p => { 
+        if (p.category) {
+            const topCat = p.category.split('/')[0].trim();
+            if (topCat) categoriesSet.add(topCat);
+        } 
+    });
+    const categories = Array.from(categoriesSet).sort();
+
+    let html = `<button type="button" onclick="filterProducts('all')" class="cat-btn ${currentFilter === 'all' ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border shrink-0 cursor-pointer">All Products</button>`;
+    
+    categories.forEach(cat => {
+        const isActive = currentFilter.toLowerCase() === cat.toLowerCase();
+        const safeCat = cat.replace(/'/g, "\\'");
+        html += `<button type="button" onclick="filterProducts('${safeCat}')" class="cat-btn ${isActive ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border-cheap-border'} px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border shrink-0 cursor-pointer">${esc(cat)}</button>`;
+    });
+    
+    container.innerHTML = html;
+}
         window.renderHeroBestSeller = function() {
             const container = document.getElementById("hero-best-seller-container");
             if (!container) return;
