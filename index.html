@@ -32,7 +32,7 @@
           "@id": "https://cheap-store.co.za/#store",
           "name": "CHEAP Store",
           "url": "https://cheap-store.co.za",
-          "description": "Direct-sourced quality watches and everyday EDC accessories in South Africa.",
+          "deion": "Direct-sourced quality watches and everyday EDC accessories in South Africa.",
           "telephone": "+27686362665",
           "email": "cheapcheapza@gmail.com",
           "priceRange": "ZAR",
@@ -52,10 +52,10 @@
         }
       ]
     }
-    </script>
+    </>
 
     <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    < src="https://cdn.tailwindcss.com"></>
 
     <!-- Google Fonts: Plus Jakarta Sans -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -66,7 +66,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <!-- SheetJS for Excel (.xlsx) Export -->
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    < src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></>
 
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -988,7 +988,7 @@
         }
 
         // BATCHED PAGINATION ENGINE (Fetches 24 items at a time)
-        async function loadInitialProductBatch() {
+async function loadInitialProductBatch() {
             products = [];
             lastDocSnapshot = null;
             const loadBtn = document.getElementById("load-more-container");
@@ -996,18 +996,10 @@
 
             try {
                 let q = collection(db, "cheap_products");
-                let constraints = [where("visible", "!=", false)];
+                let constraints = [];
 
                 if (currentFilter !== 'all') {
                     constraints.push(where("category", "==", currentFilter));
-                }
-
-                if (currentSort === 'price-asc') {
-                    constraints.push(orderBy("price", "asc"));
-                } else if (currentSort === 'name-asc') {
-                    constraints.push(orderBy("name", "asc"));
-                } else {
-                    constraints.push(orderBy("price", "desc"));
                 }
 
                 constraints.push(limit(BATCH_SIZE));
@@ -1019,6 +1011,15 @@
                     snapshot.forEach(docSnap => {
                         products.push({ id: docSnap.id, ...docSnap.data() });
                     });
+
+                    // Sort in memory to avoid Firestore index errors
+                    if (currentSort === 'price-asc') {
+                        products.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
+                    } else if (currentSort === 'name-asc') {
+                        products.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+                    } else {
+                        products.sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0));
+                    }
                 }
 
                 if (products.length === 0) products = defaultProducts;
@@ -1047,18 +1048,10 @@
 
             try {
                 let q = collection(db, "cheap_products");
-                let constraints = [where("visible", "!=", false)];
+                let constraints = [];
 
                 if (currentFilter !== 'all') {
                     constraints.push(where("category", "==", currentFilter));
-                }
-
-                if (currentSort === 'price-asc') {
-                    constraints.push(orderBy("price", "asc"));
-                } else if (currentSort === 'name-asc') {
-                    constraints.push(orderBy("name", "asc"));
-                } else {
-                    constraints.push(orderBy("price", "desc"));
                 }
 
                 constraints.push(startAfter(lastDocSnapshot));
@@ -1068,9 +1061,21 @@
                 const snapshot = await getDocs(q);
                 if (!snapshot.empty) {
                     lastDocSnapshot = snapshot.docs[snapshot.docs.length - 1];
+                    let newBatch = [];
                     snapshot.forEach(docSnap => {
-                        products.push({ id: docSnap.id, ...docSnap.data() });
+                        newBatch.push({ id: docSnap.id, ...docSnap.data() });
                     });
+
+                    products = products.concat(newBatch);
+
+                    if (currentSort === 'price-asc') {
+                        products.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
+                    } else if (currentSort === 'name-asc') {
+                        products.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
+                    } else {
+                        products.sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0));
+                    }
+
                     renderProducts();
 
                     if (snapshot.docs.length < BATCH_SIZE) {
