@@ -1036,26 +1036,20 @@
                 checkUrlHashForProduct();
             }
 
-            onAuthStateChanged(auth, async (user) => {
-                if (!user) {
-                    currentCustomer = null;
-                    updateAuthNavUI();
-                    return;
-                }
-                
-                let isAdminUser = false;
-                try {
-                    const adminDoc = await getDoc(doc(db, "admin_users", user.uid));
-                    isAdminUser = adminDoc.exists() && adminDoc.data().isAdmin === true;
-                } catch(e) {
-                    isAdminUser = true; 
-                }
-
-                currentCustomer = {
-                    uid: user.uid,
-                    email: user.email,
-                    isAdmin: isAdminUser
-                };
+            onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                currentCustomer = null;
+                updateAuthNavUI();
+                return;
+            }
+            
+            currentCustomer = {
+                uid: user.uid,
+                email: user.email,
+                isAdmin: user.email.toLowerCase() === "cheapcheapza@gmail.com"
+            };
+            updateAuthNavUI();
+        });
                 updateAuthNavUI();
             });
         }
