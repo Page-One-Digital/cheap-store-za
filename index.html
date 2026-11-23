@@ -1021,35 +1021,29 @@
                     });
                 });
                 if (products.length === 0) products = defaultProducts;
-                
-                renderSidebarCategories();
-                renderProducts();
-                renderHeroBestSeller();
-
-                checkUrlHashForProduct();
             } catch (error) {
-                console.warn("Firestore fetch error, fallback to default products:", error);
+                console.warn("Firestore fetch error/quota reached. Falling back to default products:", error);
                 products = defaultProducts;
-                renderSidebarCategories();
-                renderProducts();
-                renderHeroBestSeller();
-                checkUrlHashForProduct();
             }
+
+            // Always render products and categories regardless of Firestore read success or quota block
+            renderSidebarCategories();
+            renderProducts();
+            renderHeroBestSeller();
+            checkUrlHashForProduct();
 
             onAuthStateChanged(auth, (user) => {
-            if (!user) {
-                currentCustomer = null;
-                updateAuthNavUI();
-                return;
-            }
-            
-            currentCustomer = {
-                uid: user.uid,
-                email: user.email,
-                isAdmin: user.email.toLowerCase() === "cheapcheapza@gmail.com"
-            };
-            updateAuthNavUI();
-        });
+                if (!user) {
+                    currentCustomer = null;
+                    updateAuthNavUI();
+                    return;
+                }
+                
+                currentCustomer = {
+                    uid: user.uid,
+                    email: user.email,
+                    isAdmin: user.email.toLowerCase() === "cheapcheapza@gmail.com"
+                };
                 updateAuthNavUI();
             });
         }
