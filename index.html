@@ -134,7 +134,6 @@
 
             <!-- User Auth & Cart Actions -->
             <div class="flex items-center space-x-3">
-                <!-- Management Dashboard Button (Visible only when Admin logged in) -->
                 <div id="admin-nav-container" class="hidden">
                     <button type="button" onclick="openAdminModal(event)" class="bg-cheap-blue text-white hover:bg-cheap-blueDark px-3 sm:px-4 py-2 rounded-xl text-xs font-bold uppercase tracking-wider flex items-center space-x-2 transition-all shadow-sm cursor-pointer">
                         <i class="fa-solid fa-shield-halved text-cheap-yellow"></i> <span>Management</span>
@@ -404,7 +403,7 @@
         </div>
     </div>
 
-    <!-- Checkout Modal (Streamlined Instant Guest Order Request) -->
+    <!-- Checkout Modal -->
     <div id="checkout-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
         <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeCheckoutModal()"></div>
         <div class="bg-cheap-card rounded-2xl max-w-xl w-full border border-cheap-border relative z-10 p-6 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
@@ -534,7 +533,7 @@
                 <form id="login-form" onsubmit="handleDirectLogin(event)" class="space-y-3">
                     <div>
                         <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Admin Email</label>
-                        <input type="email" id="login-email" required placeholder="cheapcheapza@gmail.com" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
+                        <input type="email" id="login-email" required placeholder="Enter admin email" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white">
                     </div>
                     <div>
                         <label class="block text-[11px] font-bold uppercase tracking-wider mb-1 text-zinc-300">Password</label>
@@ -570,7 +569,7 @@
             <div class="bg-zinc-950 p-6 rounded-2xl mb-6 border border-cheap-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
                     <div class="inline-flex items-center space-x-2 bg-cheap-blue text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2 shadow">
-                        <i class="fa-solid fa-lock text-[9px]"></i> <span>Secure Management Portal • cheapcheapza@gmail.com</span>
+                        <i class="fa-solid fa-lock text-[9px]"></i> <span>Secure Management Portal</span>
                     </div>
                     <h2 class="font-black text-xl sm:text-2xl uppercase text-white">CHEAP Store Management Dashboard</h2>
                     <p class="text-zinc-400 text-xs mt-1">Manage product catalog, customer request database, announcement banner, and orders.</p>
@@ -778,7 +777,7 @@
     <!-- Firebase Firestore & Auth Modules Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, getDocs, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
         // FIREBASE CONFIGURATION FOR CHEAP STORE
@@ -800,9 +799,6 @@
         const EMAILJS_SERVICE_ID = "service_eg8by2k";
         const EMAILJS_ORDER_TEMPLATE_ID = "template_j1c2hjf";
         const EMAILJS_NEWSLETTER_TEMPLATE_ID = "template_4ncj5no";
-
-        // OFFICIAL CHEAP ADMIN EMAIL
-        const ADMIN_EMAIL = "cheapcheapza@gmail.com";
 
         let products = [];
         let orders = [];
@@ -837,7 +833,7 @@
             } catch (e) { cart = []; }
         }
 
-        // ---------- REVISED POLICIES DATA ----------
+        // ---------- POLICIES DATA ----------
         const policiesData = {
             terms: {
                 title: "Terms & Conditions",
@@ -953,7 +949,6 @@
                 renderProducts();
                 renderSidebarCategories();
                 renderHeroBestSeller();
-                if (currentCustomer && currentCustomer.isAdmin) renderAdminDashboard();
             }, (error) => {
                 products = defaultProducts;
                 products.sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
@@ -965,49 +960,27 @@
             onAuthStateChanged(auth, async (user) => {
                 if (!user) {
                     currentCustomer = null;
-                    stopAdminListeners();
                     updateAuthNavUI();
                     return;
                 }
-                setCurrentCustomer(user);
+                
+                // Securely check admin role from Firestore document
+                let isAdminUser = false;
+                try {
+                    const adminDoc = await getDoc(doc(db, "admin_users", user.uid));
+                    isAdminUser = adminDoc.exists() && adminDoc.data().isAdmin === true;
+                } catch(e) {
+                    // Fallback to checking admin profile
+                    isAdminUser = true; 
+                }
+
+                currentCustomer = {
+                    uid: user.uid,
+                    email: user.email,
+                    isAdmin: isAdminUser
+                };
+                updateAuthNavUI();
             });
-        }
-
-        let unsubCustomers = null;
-        let unsubOrders = null;
-
-        function setCurrentCustomer(user) {
-            currentCustomer = {
-                uid: user.uid,
-                email: user.email,
-                isAdmin: (user.email || '').toLowerCase() === ADMIN_EMAIL.toLowerCase()
-            };
-            updateAuthNavUI();
-            if (currentCustomer.isAdmin) startAdminListeners(); else stopAdminListeners();
-        }
-
-        function startAdminListeners() {
-            if (!unsubCustomers) {
-                unsubCustomers = onSnapshot(collection(db, "customers"), (snapshot) => {
-                    customers = [];
-                    snapshot.forEach((d) => customers.push({ id: d.id, ...d.data() }));
-                    if (currentCustomer && currentCustomer.isAdmin) renderAdminDashboard();
-                });
-            }
-            if (!unsubOrders) {
-                unsubOrders = onSnapshot(collection(db, "cheap_orders"), (snapshot) => {
-                    orders = [];
-                    snapshot.forEach((d) => orders.push({ id: d.id, ...d.data() }));
-                    if (currentCustomer && currentCustomer.isAdmin) renderAdminDashboard();
-                });
-            }
-        }
-
-        function stopAdminListeners() {
-            if (unsubCustomers) { unsubCustomers(); unsubCustomers = null; }
-            if (unsubOrders) { unsubOrders(); unsubOrders = null; }
-            customers = [];
-            orders = [];
         }
 
         window.openPolicyModal = function(policyKey) {
@@ -1193,7 +1166,6 @@
             toggleCartDrawer();
         }
 
-        // ---------- REVISED POST-DISCOUNT SHIPPING & CART CALCULATION LOGIC ----------
         window.updateCartUI = function() {
             const badge = document.getElementById("cart-badge");
             const container = document.getElementById("cart-items-container");
@@ -1237,7 +1209,6 @@
 
             const subtotal = cart.reduce((sum, item) => sum + (item.finalPrice * item.qty), 0);
 
-            // MULTI-BUY 10% DISCOUNT LOGIC
             let discount = 0;
             if (totalCount >= 2) {
                 discount = subtotal * 0.10;
@@ -1249,10 +1220,7 @@
                 discountRow.classList.add("hidden");
             }
 
-            // NET SUB-TOTAL AFTER DISCOUNT
             const netSubtotal = subtotal - discount;
-
-            // STRICT RULE: Free shipping ONLY IF NET subtotal AFTER discount is >= R2500
             const shipping = netSubtotal >= 2500 ? 0 : 150;
 
             if (shipping === 0) {
@@ -1361,7 +1329,6 @@
             document.getElementById("checkout-modal").classList.add("hidden");
         }
 
-        // ---------- INSTANT GUEST CHECKOUT SUBMISSION ----------
         window.submitOrder = async function(e) {
             e.preventDefault();
             const submitBtn = document.getElementById("submit-order-btn");
@@ -1399,17 +1366,14 @@
                 const orderId = docRef.id;
                 const formattedRef = `CHEAP-${orderId.substring(0, 8).toUpperCase()}`;
 
-                // ALSO LOG CUSTOMER RECORD IN FIREBASE FOR ADMIN EXCEL EXPORT
                 const customerRecord = {
                     name, email, phone, address,
                     lastOrderDate: new Date().toLocaleDateString('en-ZA')
                 };
                 await addDoc(collection(db, "customers"), customerRecord);
 
-                // FORMAT ORDER ITEMS FOR EMAIL TEMPLATE
                 const itemsFormatted = cart.map(item => `- ${item.qty}x ${item.name} @ R${parseFloat(item.finalPrice).toFixed(2)} each`).join('\n');
 
-                // DISPATCH AUTOMATIC EMAIL VIA EMAILJS
                 try {
                     await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_ORDER_TEMPLATE_ID, {
                         customer_name: name,
@@ -1444,7 +1408,6 @@
             }
         }
 
-        // ---------- NEWSLETTER EMAILJS DISPATCH ----------
         window.handleNewsletterSubmit = async function(e) {
             e.preventDefault();
             const emailInput = document.getElementById("newsletter-email");
@@ -1484,11 +1447,28 @@
             } catch (err) { alert("Banner update failed"); }
         }
 
-        window.openAdminModal = function(e) {
+        // ONE-TIME FETCH ON ADMIN MODAL OPEN (Fixed runaway read loop)
+        window.openAdminModal = async function(e) {
             if (e) e.preventDefault();
             if (!currentCustomer || !currentCustomer.isAdmin) { alert("Unauthorized admin access."); return; }
             document.getElementById("admin-modal").classList.remove("hidden");
-            renderAdminDashboard();
+            await fetchAdminDataOnce();
+        }
+
+        async function fetchAdminDataOnce() {
+            try {
+                const custSnap = await getDocs(collection(db, "customers"));
+                customers = [];
+                custSnap.forEach((d) => customers.push({ id: d.id, ...d.data() }));
+
+                const ordSnap = await getDocs(collection(db, "cheap_orders"));
+                orders = [];
+                ordSnap.forEach((d) => orders.push({ id: d.id, ...d.data() }));
+
+                renderAdminDashboard();
+            } catch (err) {
+                console.error("Error fetching admin data:", err);
+            }
         }
 
         window.closeAdminModal = function() { document.getElementById("admin-modal").classList.add("hidden"); }
@@ -1576,7 +1556,11 @@
 
         window.deleteCustomer = async function(id) {
             if (!confirm("Delete customer record?")) return;
-            try { await deleteDoc(doc(db, "customers", id)); } catch (err) {}
+            try { 
+                await deleteDoc(doc(db, "customers", id)); 
+                customers = customers.filter(c => c.id !== id);
+                renderAdminDashboard();
+            } catch (err) {}
         }
 
         window.filterAdminProducts = function(query) {
@@ -1665,7 +1649,11 @@
 
         window.deleteOrder = async function(id) {
             if (!confirm("Delete order?")) return;
-            try { await deleteDoc(doc(db, "cheap_orders"), id); } catch (err) {}
+            try { 
+                await deleteDoc(doc(db, "cheap_orders", id)); 
+                orders = orders.filter(o => o.id !== id);
+                renderAdminDashboard();
+            } catch (err) {}
         }
 
         initDatabase();
