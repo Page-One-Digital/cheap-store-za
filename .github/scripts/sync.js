@@ -1,12 +1,14 @@
 const admin = require('firebase-admin');
 const axios = require('axios');
 
+// 1. Authenticate with Firebase using encrypted GitHub Secret
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)
 });
 const db = admin.firestore();
 
+// 2. Read SMD Secrets from GitHub Vault
 const SMD_CONFIG = {
   baseURL: 'https://api.smdtechnologies.com/v1',
   headers: {
@@ -78,17 +80,37 @@ async function runSync() {
     const stockInfo = stockMap.get(sku) || {};
     const soh = stockInfo.SOH ?? 0;
 
+    // Wholesale Cost incl. VAT and RRP
+    const costPrice = parseFloat(priceInfo.PriceIncl || priceInfo.PriceExcl || 0);
+    const rrp = parseFloat(priceInfo.PriceRRP || 0);
+
+    // 1. Calculate 25% minimum markup price
+    let calculatedPrice = costPrice * 1.25;
+
+    // 2. If RRP exists and is higher than our 25% markup cost, use RRP; otherwise use 25% markup price
+    let targetPrice = rrp > calculatedPrice ? rrp : calculatedPrice;
+
+    // 3. Round to closest .99 cents
+    let finalRetailPrice = 0;
+    if (targetPrice > 0) {
+      finalRetailPrice = Math.floor(targetPrice) + 0.99;
+      // Ensure rounding down didn't drop us below the strict 25% margin boundary
+      if (finalRetailPrice < calculatedPrice) {
+        finalRetailPrice += 1.00;
+      }
+    }
+
     const productDoc = {
       sku: sku,
       name: prod.Name || prod.ShortDescription || 'SMD Product',
       category: prod.Category ? prod.Category.split('/')[0] : 'Accessories',
       brand: prod.Brand || '',
-      price: parseFloat(priceInfo.PriceRRP || priceInfo.PriceIncl || 0),
+      price: finalRetailPrice,
       priceExcl: parseFloat(priceInfo.PriceExcl || 0),
-      priceIncl: parseFloat(priceInfo.PriceIncl || 0),
-      priceRRP: parseFloat(priceInfo.PriceRRP || 0),
+      priceIncl: costPrice,
+      priceRRP: rrp,
       stock: soh,
-      visible: soh > 0,
+      visible: soh > 0, // Automatically hide items out of stock
       isBestSeller: false,
       image: imageUrls.join(','),
       description: prod.LongDescription || prod.ShortDescription || '',
