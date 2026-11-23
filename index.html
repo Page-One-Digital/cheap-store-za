@@ -184,12 +184,11 @@
             </div>
         </section>
 
-        <!-- Main Shop Section (Desktop Sidebar Layout / Mobile Dropdown) -->
+        <!-- Main Shop Section -->
         <section id="catalog" class="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 scroll-mt-24">
             
-            <!-- Mobile Filter & Search Controls (Visible only on small screens) -->
+            <!-- Mobile Filter & Search Controls -->
             <div class="md:hidden bg-zinc-900 border border-cheap-border rounded-2xl p-4 mb-8 space-y-3 shadow-lg">
-                <!-- Mobile Search Field -->
                 <div>
                     <label for="catalog-search-mobile" class="block text-[10px] font-bold uppercase tracking-wider text-cheap-yellow mb-1">Search Products</label>
                     <div class="relative">
@@ -217,10 +216,8 @@
 
             <div class="flex flex-col md:flex-row gap-8 items-start">
                 
-                <!-- Desktop Left Sidebar Navigation (Hidden on mobile) -->
+                <!-- Desktop Left Sidebar Navigation -->
                 <aside class="hidden md:block w-64 shrink-0 sticky top-28 bg-zinc-950 border border-cheap-border rounded-2xl p-5 shadow-xl max-h-[calc(100vh-8rem)] overflow-y-auto no-scrollbar">
-                    
-                    <!-- Desktop Search Bar -->
                     <div class="mb-5 pb-4 border-b border-cheap-border">
                         <label for="catalog-search-desktop" class="block text-[10px] font-bold uppercase tracking-wider text-cheap-yellow mb-1">Search Products</label>
                         <div class="relative">
@@ -243,7 +240,6 @@
                 <!-- Main Product Display Column -->
                 <div class="flex-1 w-full">
                     
-                    <!-- Catalog Header & Desktop Sorting Bar -->
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between border-b border-cheap-border pb-4 mb-6 gap-4">
                         <div>
                             <span class="text-xs font-bold tracking-widest text-cheap-green uppercase block">Live Inventory</span>
@@ -255,7 +251,6 @@
                                 ⚡ 10% Off on 2+ Items
                             </div>
 
-                            <!-- Desktop Sort Dropdown -->
                             <div class="hidden md:flex items-center space-x-2">
                                 <label for="sort-select-desktop" class="text-xs font-bold uppercase tracking-wider text-zinc-400 whitespace-nowrap">Sort:</label>
                                 <select id="sort-select-desktop" onchange="handleSortChange(this.value)" class="bg-zinc-900 border border-cheap-border rounded-xl px-3 py-1.5 text-xs font-bold text-white focus:outline-none focus:border-cheap-yellow cursor-pointer">
@@ -267,7 +262,6 @@
                         </div>
                     </div>
 
-                    <!-- Product Grid -->
                     <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="col-span-full text-center py-12 text-zinc-500">
                             <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cheap-blue"></i>
@@ -275,7 +269,6 @@
                         </div>
                     </div>
 
-                    <!-- Load More Batch Button -->
                     <div id="load-more-container" class="mt-10 text-center hidden">
                         <button type="button" onclick="loadMoreBatch()" class="bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white hover:border-cheap-yellow px-8 py-3.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all shadow-lg cursor-pointer">
                             Load More Products ↓
@@ -431,7 +424,7 @@
         </div>
     </div>
 
-    <!-- Product Detail Modal -->
+    <!-- Product Detail Modal (With Instant Share Options) -->
     <div id="product-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-3 sm:p-6">
         <div class="fixed inset-0 bg-black/85 backdrop-blur-md" onclick="closeProductModal()"></div>
         <div class="bg-zinc-900 rounded-2xl max-w-5xl w-full border border-cheap-border relative z-10 overflow-hidden shadow-2xl flex flex-col md:flex-row my-auto max-h-[90vh]">
@@ -462,10 +455,21 @@
                         <div id="modal-desc" class="text-zinc-300 text-xs sm:text-sm leading-relaxed max-h-48 overflow-y-auto pr-2 space-y-2 font-sans whitespace-pre-line"></div>
                     </div>
                 </div>
-                <div class="pt-4 border-t border-cheap-border shrink-0">
+
+                <!-- Action Buttons: Add to Cart + Share Direct Link -->
+                <div class="pt-4 border-t border-cheap-border shrink-0 space-y-2">
                     <button type="button" onclick="addModalItemToCart()" class="w-full bg-cheap-blue hover:bg-cheap-blueDark text-white py-3.5 px-6 rounded-xl font-black text-xs sm:text-sm tracking-wider uppercase transition-all shadow-lg flex items-center justify-center space-x-2 cursor-pointer active:scale-95">
                         <i class="fa-solid fa-basket-shopping"></i> <span>Add to Cart</span>
                     </button>
+                    
+                    <div class="grid grid-cols-2 gap-2">
+                        <button type="button" onclick="shareProductLink('copy')" class="bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-cheap-border py-2.5 px-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center space-x-1.5 cursor-pointer">
+                            <i class="fa-solid fa-link text-cheap-yellow"></i> <span id="share-copy-text">Copy Link</span>
+                        </button>
+                        <button type="button" onclick="shareProductLink('whatsapp')" class="bg-emerald-950/80 hover:bg-emerald-900 text-emerald-300 border border-emerald-800 py-2.5 px-3 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center space-x-1.5 cursor-pointer">
+                            <i class="fa-brands fa-whatsapp text-emerald-400 text-sm"></i> <span>WhatsApp</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -584,7 +588,7 @@
         </div>
     </div>
 
-    <!-- Admin Authentication Modal (Internal Portal Access Only) -->
+    <!-- Admin Authentication Modal -->
     <div id="auth-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-4">
         <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeAuthModal()"></div>
         <div class="bg-cheap-card rounded-2xl max-w-md w-full border border-cheap-border relative z-10 p-6 sm:p-8 shadow-2xl">
@@ -596,7 +600,6 @@
                 <button type="button" onclick="closeAuthModal()" class="text-zinc-400 hover:text-white cursor-pointer p-2"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
 
-            <!-- Unauthenticated View -->
             <div id="auth-unauthenticated-view" class="space-y-4">
                 <form id="login-form" onsubmit="handleDirectLogin(event)" class="space-y-3">
                     <div>
@@ -613,7 +616,6 @@
                 </form>
             </div>
 
-            <!-- Authenticated Profile View -->
             <div id="auth-authenticated-view" class="space-y-4 hidden">
                 <div class="bg-zinc-950 p-4 rounded-xl border border-cheap-border text-center space-y-1">
                     <div id="user-display-email" class="font-bold text-xs text-white"></div>
@@ -652,7 +654,6 @@
                 </div>
             </div>
 
-            <!-- Dashboard Stats -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                 <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
                     <div class="flex items-center justify-between mb-2">
@@ -688,7 +689,6 @@
                 </div>
             </div>
 
-            <!-- Admin Tabs -->
             <div class="flex flex-wrap gap-2 mb-6 border-b border-cheap-border pb-4">
                 <button type="button" onclick="switchAdminTab('products')" id="admin-tab-prod" class="bg-cheap-blue text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
                     <i class="fa-solid fa-boxes-stacked"></i> <span>Catalog (<span id="prod-count-badge">0</span>)</span>
@@ -704,7 +704,6 @@
                 </button>
             </div>
 
-            <!-- Products Panel -->
             <div id="admin-panel-products" class="space-y-4">
                 <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
@@ -729,7 +728,6 @@
                 </div>
             </div>
 
-            <!-- Customer Panel -->
             <div id="admin-panel-customers" class="space-y-4 hidden">
                 <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -759,7 +757,6 @@
                 </div>
             </div>
 
-            <!-- Settings Panel -->
             <div id="admin-panel-settings" class="space-y-4 hidden">
                 <div class="bg-zinc-950 p-6 rounded-2xl border border-cheap-border space-y-4">
                     <h4 class="font-bold text-base uppercase text-white">Announcement Banner Text</h4>
@@ -772,7 +769,6 @@
                 </div>
             </div>
 
-            <!-- Orders Panel -->
             <div id="admin-panel-orders" class="space-y-4 hidden">
                 <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border">
                     <h4 class="font-bold text-base uppercase mb-4 text-white">Order Requests</h4>
@@ -799,7 +795,7 @@
         </div>
     </div>
 
-    <!-- Product Form Modal (Add / Edit) -->
+    <!-- Product Form Modal -->
     <div id="product-form-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-3 sm:p-4">
         <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeProductFormModal()"></div>
         <div class="bg-cheap-card rounded-2xl max-w-2xl w-full border border-cheap-border relative z-10 p-5 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
@@ -848,7 +844,6 @@
         import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, getDocs, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-        // FIREBASE CONFIGURATION FOR CHEAP STORE
         const firebaseConfig = {
             apiKey: "AIzaSyBuoszwB4GfOHIM4Zwt7qP_V-V2-Cd2qxY",
             authDomain: "cheap-store-za.firebaseapp.com",
@@ -863,7 +858,6 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
-        // EMAILJS CONFIGURATION
         const EMAILJS_SERVICE_ID = "service_eg8by2k";
         const EMAILJS_ORDER_TEMPLATE_ID = "template_j1c2hjf";
         const EMAILJS_NEWSLETTER_TEMPLATE_ID = "template_4ncj5no";
@@ -880,7 +874,6 @@
         let selectedProduct = null;
         let currentCustomer = null;
 
-        // ---------- XSS ESCAPE UTILITY ----------
         function esc(str) {
             if (str === null || str === undefined) return '';
             return String(str)
@@ -891,7 +884,6 @@
                 .replace(/'/g, '&#039;');
         }
 
-        // ---------- CART PERSISTENCE (localStorage) ----------
         const CART_STORAGE_KEY = 'cheap_cart';
 
         function saveCartToStorage() {
@@ -905,7 +897,6 @@
             } catch (e) { cart = []; }
         }
 
-        // ---------- POLICIES DATA ----------
         const policiesData = {
             terms: {
                 title: "Terms & Conditions",
@@ -1011,7 +1002,6 @@
                 }
             } catch (err) {}
 
-            // Fetch full catalog ONCE from Firestore
             try {
                 const snapshot = await getDocs(collection(db, "cheap_products"));
                 products = [];
@@ -1035,12 +1025,16 @@
                 renderSidebarCategories();
                 renderProducts();
                 renderHeroBestSeller();
+
+                // Check for URL hash direct link on page load
+                checkUrlHashForProduct();
             } catch (error) {
                 console.warn("Firestore fetch error, fallback to default products:", error);
                 products = defaultProducts;
                 renderSidebarCategories();
                 renderProducts();
                 renderHeroBestSeller();
+                checkUrlHashForProduct();
             }
 
             onAuthStateChanged(auth, async (user) => {
@@ -1065,6 +1059,17 @@
                 };
                 updateAuthNavUI();
             });
+        }
+
+        // Check if user navigated via a direct product share URL
+        function checkUrlHashForProduct() {
+            const hash = window.location.hash;
+            if (hash && hash.includes("product=")) {
+                const prodId = hash.split("product=")[1].split("&")[0];
+                if (prodId) {
+                    setTimeout(() => { openProductModal(decodeURIComponent(prodId)); }, 100);
+                }
+            }
         }
 
         window.handleSearchInput = function(val) {
@@ -1184,10 +1189,8 @@
             products.forEach(p => { if (p.category) categoriesSet.add(p.category.trim()); });
             const categories = Array.from(categoriesSet).sort();
 
-            // 1. Render Desktop Sidebar Vertical List
             let sidebarHtml = `<button type="button" onclick="filterProducts('all')" class="cat-btn ${currentFilter === 'all' ? 'active bg-cheap-blue text-white border-cheap-blue' : 'bg-transparent hover:bg-zinc-900 text-zinc-400 hover:text-white border-transparent'} text-left px-3.5 py-2 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border w-full cursor-pointer flex items-center justify-between"><span>All Products</span><span class="text-[10px] opacity-60 ml-2">(${products.length})</span></button>`;
             
-            // 2. Render Mobile Select Dropdown Options
             let mobileHtml = `<option value="all" ${currentFilter === 'all' ? 'selected' : ''}>All Products (${products.length})</option>`;
 
             categories.forEach(cat => {
@@ -1247,7 +1250,6 @@
                 ? visibleProducts 
                 : visibleProducts.filter(p => (p.category || '').toLowerCase() === currentFilter.toLowerCase());
 
-            // Keyword Search Filter
             if (searchQuery !== '') {
                 filtered = filtered.filter(p => {
                     const nameMatch = (p.name || '').toLowerCase().includes(searchQuery);
@@ -1258,7 +1260,6 @@
                 });
             }
 
-            // Sorting logic
             if (currentSort === 'price-asc') {
                 filtered.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
             } else if (currentSort === 'name-asc') {
@@ -1273,7 +1274,6 @@
                 return;
             }
 
-            // Client-side batch pagination slice
             const itemsToShowCount = currentPageBatch * BATCH_SIZE;
             const batchList = filtered.slice(0, itemsToShowCount);
 
@@ -1304,7 +1304,6 @@
                 `;
             }).join('');
 
-            // Toggle Load More Button visibility
             if (filtered.length > itemsToShowCount) {
                 if (loadMoreContainer) loadMoreContainer.classList.remove("hidden");
             } else {
@@ -1424,6 +1423,9 @@
             selectedProduct = products.find(p => p.id === id);
             if (!selectedProduct) return;
 
+            // Set shareable URL hash
+            history.replaceState(null, null, `#product=${encodeURIComponent(selectedProduct.id)}`);
+
             let imgRaw = selectedProduct.image || '';
             let imageList = imgRaw.includes(',') ? imgRaw.split(',').map(s => s.trim()).filter(Boolean) : [imgRaw].filter(Boolean);
 
@@ -1478,6 +1480,28 @@
 
         window.closeProductModal = function() {
             document.getElementById("product-modal").classList.add("hidden");
+            history.replaceState(null, null, '#catalog');
+        }
+
+        // Share product link function
+        window.shareProductLink = function(type) {
+            if (!selectedProduct) return;
+            const fullUrl = `${window.location.origin}${window.location.pathname}#product=${encodeURIComponent(selectedProduct.id)}`;
+            const message = `Check out ${selectedProduct.name} on CHEAP for R${parseFloat(selectedProduct.price).toFixed(2)}: ${fullUrl}`;
+
+            if (type === 'copy') {
+                navigator.clipboard.writeText(fullUrl).then(() => {
+                    const btnText = document.getElementById("share-copy-text");
+                    if (btnText) {
+                        btnText.textContent = "Link Copied!";
+                        setTimeout(() => { btnText.textContent = "Copy Link"; }, 2500);
+                    }
+                }).catch(() => {
+                    prompt("Copy product link:", fullUrl);
+                });
+            } else if (type === 'whatsapp') {
+                window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
+            }
         }
 
         window.addModalItemToCart = function() {
@@ -1816,7 +1840,7 @@
         window.deleteOrder = async function(id) {
             if (!confirm("Delete order?")) return;
             try { 
-                await deleteDoc(doc(db, "cheap_orders", id)); 
+                await deleteDoc(doc(db, "cheap_orders"), id); 
                 orders = orders.filter(o => o.id !== id);
                 renderAdminDashboard();
             } catch (err) {}
