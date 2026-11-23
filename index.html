@@ -24,7 +24,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
         (function() {
-            emailjs.init("f_j9xjJoRgsrmsdda");
+            emailjs.init("Q7ctFvITk3WYaHqkP");
         })();
     </script>
 
@@ -59,7 +59,7 @@
 
     <!-- Top Announcement Bar -->
     <div id="announcement-banner" class="bg-zinc-950 border-b border-cheap-border text-cheap-green text-[11px] sm:text-xs font-semibold py-2 px-3 text-center tracking-wider">
-        <span>⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON ORDERS OVER R600 • 10% AUTOMATIC MULTI-BUY DISCOUNT</span>
+        <span>⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON ORDERS OVER R2500 • 10% AUTOMATIC MULTI-BUY DISCOUNT</span>
     </div>
 
     <!-- Header / Navigation -->
@@ -192,7 +192,7 @@
         <div class="space-y-4">
             <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
                 <h4 class="font-bold text-white mb-2 text-sm sm:text-base">How does shipping and delivery work?</h4>
-                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">All orders are securely packaged and dispatched promptly via reliable nationwide courier services. Tracked delivery details are provided upon dispatch.</p>
+                <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">All orders are securely packaged and dispatched promptly via reliable nationwide courier services. Standard nationwide shipping is R150.00, and delivery is completely FREE on all orders of R2500.00 or more!</p>
             </div>
             <div class="bg-zinc-900/60 border border-cheap-border rounded-2xl p-6 shadow-sm">
                 <h4 class="font-bold text-white mb-2 text-sm sm:text-base">Does the multi-buy discount apply automatically?</h4>
@@ -289,7 +289,7 @@
                     </div>
                     <div class="flex items-center justify-between text-xs text-zinc-400">
                         <span>Shipping (Nationwide):</span>
-                        <span id="cart-shipping" class="font-bold text-cheap-green">R100.00</span>
+                        <span id="cart-shipping" class="font-bold text-cheap-green">R150.00</span>
                     </div>
                     <div class="border-t border-cheap-border pt-3 flex items-center justify-between">
                         <span class="font-bold text-sm text-white">Total:</span>
@@ -303,7 +303,7 @@
         </div>
     </div>
 
-    <!-- Product Detail Modal (Mobile-First & Desktop Split View) -->
+    <!-- Product Detail Modal -->
     <div id="product-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-3 sm:p-6">
         <div class="fixed inset-0 bg-black/85 backdrop-blur-md" onclick="closeProductModal()"></div>
         <div class="bg-zinc-900 rounded-2xl max-w-5xl w-full border border-cheap-border relative z-10 overflow-hidden shadow-2xl flex flex-col md:flex-row my-auto max-h-[90vh]">
@@ -372,9 +372,9 @@
                 </div>
                 <div class="bg-zinc-950 p-4 rounded-xl border border-cheap-border text-xs text-zinc-400 space-y-1">
                     <p class="font-bold text-cheap-yellow uppercase flex items-center space-x-1.5"><i class="fa-solid fa-circle-info"></i> <span>Order Process:</span></p>
-                    <p>Submitting this form reserves your items and sends an order request to our team. We will verify live stock levels and email you an official invoice with payment instructions.</p>
+                    <p>Submitting this form reserves your items and sends an order request to our team. We will verify live stock availability and email you an official invoice with confirmed payment details.</p>
                 </div>
-                <button type="submit" class="w-full bg-cheap-yellow hover:bg-cheap-yellowDark text-black py-3.5 rounded-xl font-black text-xs tracking-wider uppercase transition-colors shadow-lg mt-2 cursor-pointer">
+                <button type="submit" id="submit-order-btn" class="w-full bg-cheap-yellow hover:bg-cheap-yellowDark text-black py-3.5 rounded-xl font-black text-xs tracking-wider uppercase transition-colors shadow-lg mt-2 cursor-pointer">
                     Submit Order Request →
                 </button>
             </form>
@@ -394,7 +394,7 @@
             </div>
 
             <p class="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                Thank you! Your order request has been successfully recorded. 
+                Thank you! Your order request has been successfully recorded and an order confirmation email has been dispatched. 
             </p>
 
             <div class="bg-zinc-950 p-5 rounded-xl border border-cheap-border space-y-2.5 text-xs sm:text-sm">
@@ -657,7 +657,7 @@
                 <div class="bg-zinc-950 p-6 rounded-2xl border border-cheap-border space-y-4">
                     <h4 class="font-bold text-base uppercase text-white">Announcement Banner Text</h4>
                     <form onsubmit="saveAnnouncementBanner(event)" class="space-y-3">
-                        <textarea id="admin-banner-text" rows="2" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON ORDERS OVER R600 • 10% AUTOMATIC MULTI-BUY DISCOUNT</textarea>
+                        <textarea id="admin-banner-text" rows="2" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON ORDERS OVER R2500 • 10% AUTOMATIC MULTI-BUY DISCOUNT</textarea>
                         <button type="submit" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer">
                             Save Live Banner →
                         </button>
@@ -756,6 +756,10 @@
         const db = getFirestore(app);
         const auth = getAuth(app);
 
+        // EMAILJS CONFIGURATION
+        const EMAILJS_SERVICE_ID = "service_eg8by2k";
+        const EMAILJS_TEMPLATE_ID = "template_j1c2hjf";
+
         // OFFICIAL CHEAP ADMIN EMAIL
         const ADMIN_EMAIL = "cheapcheapza@gmail.com";
 
@@ -814,7 +818,7 @@
                     <p class="text-xs text-zinc-500 mb-4">Last Updated: October 2026</p>
                     <div class="space-y-3">
                         <p><strong>1. Order Processing:</strong> Orders are packaged and dispatched within 1 to 2 business days after invoice payment verification.</p>
-                        <p><strong>2. Rates & Free Delivery:</strong> Standard door-to-door nationwide courier shipping is R100.00. Free shipping applies to orders over R600.00.</p>
+                        <p><strong>2. Rates & Free Delivery:</strong> Standard door-to-door nationwide courier shipping is R150.00. Free shipping applies to all orders of R2500.00 or more.</p>
                         <p><strong>3. Delivery Timelines:</strong> Courier delivery typically takes 2 to 4 business days nationwide across South Africa.</p>
                     </div>
                 `
@@ -1216,7 +1220,7 @@
             if (cart.length === 0) {
                 container.innerHTML = `<div class="text-center py-12 text-zinc-500"><i class="fa-solid fa-basket-shopping text-4xl mb-3 text-zinc-700"></i><p class="text-sm">Your cart is currently empty.</p></div>`;
                 subtotalEl.textContent = "R0.00";
-                shippingEl.textContent = "R100.00";
+                shippingEl.textContent = "R150.00";
                 totalEl.textContent = "R0.00";
                 discountBanner.classList.add("hidden");
                 discountRow.classList.add("hidden");
@@ -1254,8 +1258,10 @@
             }
 
             const discountedSubtotal = subtotal - discount;
-            const shipping = discountedSubtotal >= 600 ? 0 : 100;
-            shippingEl.textContent = shipping === 0 ? "FREE (Orders R600+)" : "R100.00";
+            
+            // UPDATED SHIPPING RULE: Free if >= R2500, else R150
+            const shipping = discountedSubtotal >= 2500 ? 0 : 150;
+            shippingEl.textContent = shipping === 0 ? "FREE (Orders R2500+)" : "R150.00";
             shippingEl.className = shipping === 0 ? "font-bold text-cheap-green" : "font-bold text-zinc-300";
 
             subtotalEl.textContent = `R${subtotal.toFixed(2)}`;
@@ -1367,6 +1373,10 @@
 
         window.submitOrder = async function(e) {
             e.preventDefault();
+            const submitBtn = document.getElementById("submit-order-btn");
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Submitting Order...`;
+
             const name = document.getElementById("order-name").value;
             const phone = document.getElementById("order-phone").value;
             const email = document.getElementById("order-email").value;
@@ -1376,7 +1386,7 @@
             const subtotal = cart.reduce((sum, item) => sum + (item.finalPrice * item.qty), 0);
             const discount = totalCount >= 2 ? subtotal * 0.10 : 0;
             const discountedSubtotal = subtotal - discount;
-            const shipping = discountedSubtotal >= 600 ? 0 : 100;
+            const shipping = discountedSubtotal >= 2500 ? 0 : 150;
             const total = discountedSubtotal + shipping;
 
             const orderData = {
@@ -1397,6 +1407,29 @@
             try {
                 const docRef = await addDoc(collection(db, "cheap_orders"), orderData);
                 const orderId = docRef.id;
+                const formattedRef = `CHEAP-${orderId.substring(0, 8).toUpperCase()}`;
+
+                // FORMAT ORDER ITEMS FOR EMAIL TEMPLATE
+                const itemsFormatted = cart.map(item => `- ${item.qty}x ${item.name} @ R${parseFloat(item.finalPrice).toFixed(2)} each`).join('\n');
+
+                // DISPATCH AUTOMATIC EMAIL VIA EMAILJS
+                try {
+                    await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
+                        customer_name: name,
+                        customer_email: email,
+                        customer_phone: phone,
+                        shipping_address: address,
+                        order_id: formattedRef,
+                        order_date: new Date().toLocaleDateString('en-ZA'),
+                        order_items: itemsFormatted,
+                        subtotal: subtotal.toFixed(2),
+                        discount: discount.toFixed(2),
+                        shipping: shipping === 0 ? "0.00 (FREE)" : shipping.toFixed(2),
+                        total_amount: total.toFixed(2)
+                    });
+                } catch (emailErr) {
+                    console.error("EmailJS dispatch warning:", emailErr);
+                }
 
                 cart = [];
                 saveCartToStorage();
@@ -1404,10 +1437,13 @@
                 closeCheckoutModal();
                 document.getElementById("checkout-form").reset();
                 
-                document.getElementById("modal-order-ref").textContent = `#CHEAP-${orderId.substring(0, 8).toUpperCase()}`;
+                document.getElementById("modal-order-ref").textContent = `#${formattedRef}`;
                 openEftModal();
             } catch (err) {
                 alert("Order error: " + (err.message || "Please try again."));
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = `Submit Order Request →`;
             }
         }
 
