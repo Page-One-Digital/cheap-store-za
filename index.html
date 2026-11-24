@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CHEAP | Quality Every Day, Affordable Always</title>
-   <meta name="description" content="Shop quality electronics, tech gadgets, and everyday gear at CHEAP. Get 10% automatic multi-buy discounts on 2+ items and free nationwide delivery over R2500!">
+    <meta name="description" content="Shop quality electronics, tech gadgets, and everyday gear at CHEAP. Get 10% automatic multi-buy discounts on 2+ items and free nationwide delivery over R2500!">
     <meta name="keywords" content="cheap electronics south africa, tech gadgets, electronic accessories, cheap store za, tech deals centurion, online electronics shop za">
     <meta name="robots" content="index, follow">
 
@@ -265,7 +265,7 @@
                     <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         <div class="col-span-full text-center py-12 text-zinc-500">
                             <i class="fa-solid fa-spinner fa-spin text-3xl mb-3 text-cheap-blue"></i>
-                            <p>Loading live catalog from database...</p>
+                            <p>Loading live catalog...</p>
                         </div>
                     </div>
 
@@ -838,7 +838,7 @@
         </div>
     </div>
 
-    <!-- Firebase Firestore & Auth Modules Script -->
+    <!-- Firebase Firestore & Static Catalog Engine Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
         import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, getDocs, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -962,30 +962,6 @@
                 image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800",
                 description: "Sleek daily wear timepiece featuring a durable alloy bezel, comfortable strap, and clean dial layout.",
                 extra1: "• Premium quartz motion core\n• Water resistant daily build\n• Scratch resistant mineral glass"
-            },
-            {
-                id: "cheap-sport-2",
-                name: "Sport Tactical Resin Watch",
-                category: "Wristwear",
-                price: 349.00,
-                stock: 30,
-                visible: true,
-                isBestSeller: false,
-                image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&q=80&w=800",
-                description: "Rugged build, clear digital display, water-resistant construction built for active everyday use.",
-                extra1: "• Backlight LED display\n• Dual timezone & stopwatch\n• Reinforced shock-proof casing"
-            },
-            {
-                id: "cheap-exec-3",
-                name: "Executive Steel Strap Set",
-                category: "Accessories",
-                price: 349.00,
-                stock: 20,
-                visible: true,
-                isBestSeller: false,
-                image: "https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?auto=format&fit=crop&q=80&w=800",
-                description: "Polished stainless steel finish with secure clasp mechanism. Perfect companion accessory.",
-                extra1: "• Solid stainless steel links\n• Quick-release spring pins\n• Universal lug width compatibility"
             }
         ];
 
@@ -1002,31 +978,20 @@
                 }
             } catch (err) {}
 
+            const GITHUB_CATALOG_URL = "https://raw.githubusercontent.com/Page-One-Digital/cheap-store-za/main/products.json";
+
             try {
-                const snapshot = await getDocs(collection(db, "cheap_products"));
-                products = [];
-                snapshot.forEach((docSnap) => {
-                    const data = docSnap.data();
-                    products.push({
-                        id: docSnap.id,
-                        name: data.name || data.title || 'Product Item',
-                        category: data.category || 'General',
-                        price: parseFloat(data.price || data.priceRRP || 0),
-                        stock: data.stock ?? 20,
-                        image: data.image || data.imageUrl || '',
-                        description: data.description || '',
-                        extra1: data.extra1 || '',
-                        brand: data.brand || '',
-                        ...data
-                    });
-                });
-                if (products.length === 0) products = defaultProducts;
-            } catch (error) {
-                console.warn("Firestore fetch error/quota reached. Falling back to default products:", error);
+                const res = await fetch(GITHUB_CATALOG_URL, { cache: 'no-cache' });
+                if (res.ok) {
+                    products = await res.json();
+                } else {
+                    throw new Error("GitHub static catalog fetch failed");
+                }
+            } catch (err) {
+                console.warn("Catalog loading fallback to local defaults:", err);
                 products = defaultProducts;
             }
 
-            // Always render products and categories regardless of Firestore read success or quota block
             renderSidebarCategories();
             renderProducts();
             renderHeroBestSeller();
