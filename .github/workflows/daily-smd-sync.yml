@@ -1,0 +1,33 @@
+name: Daily SMD Catalog Sync
+
+on:
+  schedule:
+    # Runs automatically every day at 02:00 AM UTC
+    - cron: '0 2 * * *'
+  workflow_dispatch: # Allows manual button click from GitHub Actions tab
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Run SMD API Sync Script
+        env:
+          SMD_BEARER_TOKEN: ${{ secrets.SMD_BEARER_TOKEN }}
+          SMD_CLIENT_KEY: ${{ secrets.SMD_CLIENT_KEY }}
+        run: node scripts/sync-smd.js
+
+      - name: Commit and Push Updated products.json
+        run: |
+          git config --global user.name "CHEAP Bot"
+          git config --global user.email "bot@cheap-store.co.za"
+          git add products.json
+          git commit -m "auto: daily SMD catalog sync [skip ci]" || exit 0
+          git push
