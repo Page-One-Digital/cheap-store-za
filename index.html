@@ -1584,7 +1584,7 @@
                 await setDoc(doc(db, "settings", "announcement_cheap"), { text }, { merge: true });
                 document.getElementById("announcement-banner").innerHTML = `<span>${esc(text)}</span>`;
                 alert("Banner updated!");
-            } catch (err) { alert("Banner update failed"); }
+            } catch (err) { alert("Banner update failed: " + (err.message || "Permission denied")); }
         }
 
         window.openAdminModal = async function(e) {
@@ -1738,6 +1738,13 @@
 
         window.handleProductSubmit = async function(e) {
             e.preventDefault();
+
+            // Verification check for active authentication
+            if (!auth.currentUser) {
+                alert("Save Failed: You are not authenticated with Firebase Auth. Please click 'Admin' on the top right, sign in again, and retry.");
+                return;
+            }
+
             const id = document.getElementById("prod-edit-id").value;
             const data = {
                 name: document.getElementById("prod-name").value,
@@ -1765,7 +1772,11 @@
                 renderHeroBestSeller();
                 renderAdminDashboard();
                 closeProductFormModal();
-            } catch (err) { alert("Failed to save product."); }
+                alert("Product saved successfully to Firestore!");
+            } catch (err) { 
+                console.error("Firestore Save Error:", err);
+                alert(`Save Failed: ${err.message || 'Permission denied by Firestore rules.'}`); 
+            }
         }
 
         window.deleteProduct = async function(id) {
@@ -1777,7 +1788,7 @@
                 renderProducts();
                 renderHeroBestSeller();
                 renderAdminDashboard();
-            } catch (err) { alert("Delete failed"); }
+            } catch (err) { alert("Delete failed: " + (err.message || "Permission denied")); }
         }
 
         window.renderAdminOrdersTable = function() {
@@ -1806,7 +1817,7 @@
         window.deleteOrder = async function(id) {
             if (!confirm("Delete order?")) return;
             try { 
-                await deleteDoc(doc(db, "cheap_orders"), id); 
+                await deleteDoc(doc(db, "cheap_orders", id)); 
                 orders = orders.filter(o => o.id !== id);
                 renderAdminDashboard();
             } catch (err) { alert("Delete order failed"); }
