@@ -841,7 +841,7 @@
     <!-- Firebase Firestore & Static Catalog Engine Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, getDoc, getDocs, setDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, updateDoc, setDoc, getDoc, getDocs } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
         import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
         const firebaseConfig = {
@@ -1739,7 +1739,6 @@
         window.handleProductSubmit = async function(e) {
             e.preventDefault();
 
-            // Verification check for active authentication
             if (!auth.currentUser) {
                 alert("Save Failed: You are not authenticated with Firebase Auth. Please click 'Admin' on the top right, sign in again, and retry.");
                 return;
@@ -1760,7 +1759,8 @@
 
             try {
                 if (id) {
-                    await updateDoc(doc(db, "cheap_products", id), data);
+                    // Uses setDoc with merge:true to create document if missing or update if existing
+                    await setDoc(doc(db, "cheap_products", id), data, { merge: true });
                     const idx = products.findIndex(p => p.id === id);
                     if (idx !== -1) products[idx] = { id, ...data };
                 } else {
@@ -1817,7 +1817,7 @@
         window.deleteOrder = async function(id) {
             if (!confirm("Delete order?")) return;
             try { 
-                await deleteDoc(doc(db, "cheap_orders", id)); 
+                await deleteDoc(doc(db, "cheap_orders"), id); 
                 orders = orders.filter(o => o.id !== id);
                 renderAdminDashboard();
             } catch (err) { alert("Delete order failed"); }
