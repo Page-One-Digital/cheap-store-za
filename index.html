@@ -884,6 +884,12 @@
                 .replace(/'/g, '&#039;');
         }
 
+        // Sanitizes IDs for Firestore document references (replaces forward slashes)
+        function sanitizeId(id) {
+            if (!id) return '';
+            return String(id).replace(/\//g, '_');
+        }
+
         const CART_STORAGE_KEY = 'cheap_cart';
 
         function saveCartToStorage() {
@@ -1170,23 +1176,23 @@
             if (!bestSeller) { container.innerHTML = ""; return; }
             let primaryImg = bestSeller.image || '';
             if (primaryImg.includes(',')) primaryImg = primaryImg.split(',')[0].trim();
-            const safeId = bestSeller.id.replace(/'/g, "\\'");
+            const safeId = encodeURIComponent(bestSeller.id);
 
             container.innerHTML = `
                 <div class="bg-zinc-900/90 border border-cheap-border rounded-2xl p-6 sm:p-8 shadow-2xl relative">
                     <div class="absolute -top-3 right-6 bg-cheap-yellow text-black font-black text-[10px] uppercase px-3 py-1 rounded-full shadow">Featured Deal</div>
-                    <div class="rounded-xl overflow-hidden mb-5 h-48 sm:h-56 border border-cheap-border bg-zinc-950 flex items-center justify-center cursor-pointer" onclick="openProductModal('${safeId}')">
+                    <div class="rounded-xl overflow-hidden mb-5 h-48 sm:h-56 border border-cheap-border bg-zinc-950 flex items-center justify-center cursor-pointer" onclick="openProductModal(decodeURIComponent('${safeId}'))">
                         <img src="${esc(primaryImg)}" alt="${esc(bestSeller.name)}" class="w-full h-full object-cover">
                     </div>
                     <span class="text-xs uppercase tracking-widest text-cheap-blue font-bold block mb-1">${esc(bestSeller.category)}</span>
-                    <h3 class="font-black text-xl text-white mb-2 cursor-pointer hover:text-cheap-yellow" onclick="openProductModal('${safeId}')">${esc(bestSeller.name)}</h3>
+                    <h3 class="font-black text-xl text-white mb-2 cursor-pointer hover:text-cheap-yellow" onclick="openProductModal(decodeURIComponent('${safeId}'))">${esc(bestSeller.name)}</h3>
                     <p class="text-zinc-400 text-xs sm:text-sm mb-5 line-clamp-2">${esc(bestSeller.description || '')}</p>
                     <div class="flex items-center justify-between">
                         <div>
                             <span class="text-xs text-zinc-500 line-through block">R${(parseFloat(bestSeller.price) * 1.2).toFixed(2)}</span>
                             <span class="font-black text-2xl text-cheap-yellow">R${parseFloat(bestSeller.price).toFixed(2)}</span>
                         </div>
-                        <button type="button" onclick="addToCart('${safeId}')" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer">Add to Cart</button>
+                        <button type="button" onclick="addToCart(decodeURIComponent('${safeId}'))" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-colors shadow cursor-pointer">Add to Cart</button>
                     </div>
                 </div>
             `;
@@ -1231,15 +1237,15 @@
             grid.innerHTML = batchList.map(p => {
                 let primaryImg = p.image || '';
                 if (primaryImg.includes(',')) primaryImg = primaryImg.split(',')[0].trim();
-                const safeId = p.id.replace(/'/g, "\\'");
+                const safeId = encodeURIComponent(p.id);
                 return `
                     <div class="bg-zinc-900/50 border border-cheap-border rounded-2xl p-6 flex flex-col justify-between hover:border-zinc-700 transition-all group">
                         <div>
-                            <div class="aspect-w-16 aspect-h-9 bg-zinc-950 rounded-xl mb-5 overflow-hidden flex items-center justify-center cursor-pointer relative" onclick="openProductModal('${safeId}')">
+                            <div class="aspect-w-16 aspect-h-9 bg-zinc-950 rounded-xl mb-5 overflow-hidden flex items-center justify-center cursor-pointer relative" onclick="openProductModal(decodeURIComponent('${safeId}'))">
                                 <img src="${esc(primaryImg)}" alt="${esc(p.name)}" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300">
                                 <span class="absolute top-3 left-3 bg-black/80 text-cheap-green text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-md border border-cheap-border">${esc(p.category)}</span>
                             </div>
-                            <h3 class="text-xl font-black text-white mb-2 line-clamp-1 cursor-pointer hover:text-cheap-yellow" onclick="openProductModal('${safeId}')">${esc(p.name)}</h3>
+                            <h3 class="text-xl font-black text-white mb-2 line-clamp-1 cursor-pointer hover:text-cheap-yellow" onclick="openProductModal(decodeURIComponent('${safeId}'))">${esc(p.name)}</h3>
                             <p class="text-sm text-zinc-400 mb-6 line-clamp-2">${esc(p.description)}</p>
                         </div>
                         <div class="flex items-center justify-between pt-4 border-t border-cheap-border mt-auto">
@@ -1247,7 +1253,7 @@
                                 <span class="text-xs text-zinc-500 block">Price</span>
                                 <span class="text-xl font-black text-white">R${parseFloat(p.price).toFixed(2)}</span>
                             </div>
-                            <button type="button" onclick="addToCart('${safeId}')" class="bg-zinc-800 hover:bg-cheap-blue text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors cursor-pointer">
+                            <button type="button" onclick="addToCart(decodeURIComponent('${safeId}'))" class="bg-zinc-800 hover:bg-cheap-blue text-white text-xs font-bold px-4 py-2.5 rounded-xl transition-colors cursor-pointer">
                                 Add to Cart
                             </button>
                         </div>
@@ -1652,7 +1658,7 @@
             tbody.innerHTML = list.map(p => {
                 let primaryImg = p.image || '';
                 if (primaryImg.includes(',')) primaryImg = primaryImg.split(',')[0].trim();
-                const safeId = p.id.replace(/'/g, "\\'");
+                const safeId = encodeURIComponent(p.id);
                 return `
                     <tr class="border-b border-cheap-border/50 hover:bg-zinc-900">
                         <td class="p-3 flex items-center space-x-3">
@@ -1664,8 +1670,8 @@
                         <td class="p-3 font-bold text-white">${p.stock ?? 20}u</td>
                         <td class="p-3"><span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">In Stock</span></td>
                         <td class="p-3 text-right space-x-1">
-                            <button type="button" onclick="openEditProductModal('${safeId}')" class="bg-cheap-blue text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Edit</button>
-                            <button type="button" onclick="deleteProduct('${safeId}')" class="bg-red-900 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Del</button>
+                            <button type="button" onclick="openEditProductModal(decodeURIComponent('${safeId}'))" class="bg-cheap-blue text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Edit</button>
+                            <button type="button" onclick="deleteProduct(decodeURIComponent('${safeId}'))" class="bg-red-900 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Del</button>
                         </td>
                     </tr>
                 `;
@@ -1744,7 +1750,9 @@
                 return;
             }
 
-            const id = document.getElementById("prod-edit-id").value;
+            const rawId = document.getElementById("prod-edit-id").value;
+            const docId = sanitizeId(rawId);
+
             const data = {
                 name: document.getElementById("prod-name").value,
                 price: parseFloat(document.getElementById("prod-price").value),
@@ -1754,15 +1762,14 @@
                 isBestSeller: document.getElementById("prod-bestseller").checked,
                 extra1: document.getElementById("prod-extra-1").value,
                 description: document.getElementById("prod-desc").value,
-                stock: id ? (products.find(p => p.id === id)?.stock ?? 20) : 20
+                stock: rawId ? (products.find(p => p.id === rawId)?.stock ?? 20) : 20
             };
 
             try {
-                if (id) {
-                    // Uses setDoc with merge:true to create document if missing or update if existing
-                    await setDoc(doc(db, "cheap_products", id), data, { merge: true });
-                    const idx = products.findIndex(p => p.id === id);
-                    if (idx !== -1) products[idx] = { id, ...data };
+                if (docId) {
+                    await setDoc(doc(db, "cheap_products", docId), data, { merge: true });
+                    const idx = products.findIndex(p => p.id === rawId);
+                    if (idx !== -1) products[idx] = { id: rawId, ...data };
                 } else {
                     const docRef = await addDoc(collection(db, "cheap_products"), data);
                     products.push({ id: docRef.id, ...data });
@@ -1781,8 +1788,9 @@
 
         window.deleteProduct = async function(id) {
             if (!confirm("Delete product?")) return;
+            const docId = sanitizeId(id);
             try { 
-                await deleteDoc(doc(db, "cheap_products", id));
+                await deleteDoc(doc(db, "cheap_products", docId));
                 products = products.filter(p => p.id !== id);
                 renderSidebarCategories();
                 renderProducts();
