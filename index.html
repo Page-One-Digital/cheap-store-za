@@ -633,133 +633,158 @@
 
     <!-- Management Portal Modal -->
     <div id="admin-modal" class="fixed inset-0 z-50 overflow-y-auto hidden flex items-center justify-center p-3 sm:p-4">
-        <div class="fixed inset-0 bg-black/80 backdrop-blur-sm" onclick="closeAdminModal()"></div>
-        <div class="bg-cheap-card rounded-2xl max-w-6xl w-full border border-cheap-border relative z-10 p-4 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
+        <div class="fixed inset-0 bg-black/85 backdrop-blur-sm" onclick="closeAdminModal()"></div>
+        <div class="bg-[#141417] rounded-2xl max-w-6xl w-full border border-cheap-border relative z-10 p-4 sm:p-8 shadow-2xl max-h-[92vh] overflow-y-auto">
 
-            <div class="bg-zinc-950 p-6 rounded-2xl mb-6 border border-cheap-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <!-- Header -->
+            <div class="bg-gradient-to-r from-zinc-950 via-[#151922] to-zinc-950 p-6 rounded-2xl mb-6 border border-cheap-border flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
                 <div>
-                    <div class="inline-flex items-center space-x-2 bg-cheap-blue text-white px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest mb-2 shadow">
-                        <i class="fa-solid fa-lock text-[9px]"></i> <span>Secure Management Portal</span>
+                    <div class="inline-flex items-center space-x-2 bg-cheap-blue/15 text-cheap-blue border border-cheap-blue/30 px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-widest mb-2.5">
+                        <i class="fa-solid fa-shield-halved text-[10px] text-cheap-yellow"></i>
+                        <span>Secure Management Portal</span>
                     </div>
-                    <h2 class="font-black text-xl sm:text-2xl uppercase text-white">CHEAP Store Management Dashboard</h2>
-                    <p class="text-zinc-400 text-xs mt-1">Manage product catalog, customer request database, announcement banner, and orders.</p>
+                    <h2 class="font-black text-xl sm:text-2xl tracking-tight uppercase text-white">CHEAP Store Management Dashboard</h2>
+                    <p class="text-zinc-400 text-xs mt-1">Manage product catalog, customer leads, announcement banner, and incoming orders.</p>
                 </div>
-                <div class="flex flex-wrap gap-2 w-full md:w-auto">
-                    <button type="button" onclick="closeAdminModal()" class="flex-1 md:flex-none bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase transition-all cursor-pointer">
-                        Return to Store
+                <div class="flex flex-wrap items-center gap-2.5 w-full md:w-auto">
+                    <button type="button" onclick="closeAdminModal()" class="flex-1 md:flex-none bg-zinc-900 hover:bg-zinc-800 border border-cheap-border text-zinc-200 px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer">
+                        <i class="fa-solid fa-store mr-1.5 text-zinc-400"></i>Return to Store
                     </button>
-                    <button type="button" onclick="openNewProductModal()" class="flex-1 md:flex-none bg-cheap-yellow hover:bg-cheap-yellowDark text-black px-4 py-2.5 rounded-xl font-bold text-xs uppercase transition-all shadow cursor-pointer">
-                        + Add Product
+                    <button type="button" onclick="openNewProductModal()" class="flex-1 md:flex-none bg-cheap-yellow hover:bg-cheap-yellowDark text-black px-4 py-2.5 rounded-xl font-extrabold text-xs uppercase tracking-wider transition-all shadow-lg shadow-cheap-yellow/10 cursor-pointer">
+                        <i class="fa-solid fa-plus mr-1"></i>Add Product
                     </button>
                 </div>
             </div>
 
+            <!-- KPI Stat Cards -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-                <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
+                <div class="bg-zinc-950/90 border border-cheap-border border-t-2 border-t-cheap-blue p-5 rounded-2xl transition-colors hover:border-zinc-700">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Total Products</span>
-                        <i class="fa-solid fa-box-open text-cheap-blue text-lg"></i>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Total Products</span>
+                        <span class="w-8 h-8 rounded-lg bg-cheap-blue/10 text-cheap-blue flex items-center justify-center">
+                            <i class="fa-solid fa-box-open text-sm"></i>
+                        </span>
                     </div>
-                    <div id="stat-total-products" class="font-black text-2xl sm:text-3xl text-white mb-1">0</div>
+                    <div id="stat-total-products" class="font-black text-2xl sm:text-3xl text-white tabular-nums mb-1">0</div>
                     <span class="text-[11px] text-zinc-500 block">Active catalog items</span>
                 </div>
-                <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
+
+                <div class="bg-zinc-950/90 border border-cheap-border border-t-2 border-t-emerald-400 p-5 rounded-2xl transition-colors hover:border-zinc-700">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Customer Leads</span>
-                        <i class="fa-solid fa-users text-cheap-blue text-lg"></i>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Customer Leads</span>
+                        <span class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-400 flex items-center justify-center">
+                            <i class="fa-solid fa-users text-sm"></i>
+                        </span>
                     </div>
-                    <div id="stat-total-customers" class="font-black text-2xl sm:text-3xl text-white mb-1">0</div>
+                    <div id="stat-total-customers" class="font-black text-2xl sm:text-3xl text-white tabular-nums mb-1">0</div>
                     <span class="text-[11px] text-zinc-500 block">Unique buyer profiles</span>
                 </div>
-                <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
+
+                <div class="bg-zinc-950/90 border border-cheap-border border-t-2 border-t-sky-400 p-5 rounded-2xl transition-colors hover:border-zinc-700">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Total Orders</span>
-                        <i class="fa-solid fa-receipt text-cheap-blue text-lg"></i>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Total Orders</span>
+                        <span class="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-400 flex items-center justify-center">
+                            <i class="fa-solid fa-receipt text-sm"></i>
+                        </span>
                     </div>
-                    <div id="stat-total-orders" class="font-black text-2xl sm:text-3xl text-white mb-1">0</div>
+                    <div id="stat-total-orders" class="font-black text-2xl sm:text-3xl text-white tabular-nums mb-1">0</div>
                     <span class="text-[11px] text-zinc-500 block">Recorded requests</span>
                 </div>
-                <div class="bg-zinc-950 border border-cheap-border p-5 rounded-2xl">
+
+                <div class="bg-zinc-950/90 border border-cheap-border border-t-2 border-t-cheap-yellow p-5 rounded-2xl transition-colors hover:border-zinc-700">
                     <div class="flex items-center justify-between mb-2">
-                        <span class="text-xs font-bold uppercase tracking-widest text-zinc-400">Gross Revenue</span>
-                        <span class="font-black text-cheap-yellow text-lg">R</span>
+                        <span class="text-[11px] font-bold uppercase tracking-wider text-zinc-400">Gross Revenue</span>
+                        <span class="w-8 h-8 rounded-lg bg-cheap-yellow/10 text-cheap-yellow font-black flex items-center justify-center text-sm">
+                            R
+                        </span>
                     </div>
-                    <div id="stat-total-revenue" class="font-black text-xl sm:text-2xl text-cheap-yellow mb-1">R0.00</div>
+                    <div id="stat-total-revenue" class="font-black text-2xl sm:text-3xl text-cheap-yellow tabular-nums mb-1">R0.00</div>
                     <span class="text-[11px] text-zinc-500 block">Total sales volume</span>
                 </div>
             </div>
 
+            <!-- Navigation Tabs -->
             <div class="flex flex-wrap gap-2 mb-6 border-b border-cheap-border pb-4">
-                <button type="button" onclick="switchAdminTab('products')" id="admin-tab-prod" class="bg-cheap-blue text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
-                    <i class="fa-solid fa-boxes-stacked"></i> <span>Catalog (<span id="prod-count-badge">0</span>)</span>
+                <button type="button" onclick="switchAdminTab('products')" id="admin-tab-prod" class="bg-cheap-blue text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 shadow-sm cursor-pointer">
+                    <i class="fa-solid fa-boxes-stacked"></i> <span>Catalog (<span id="prod-count-badge" class="tabular-nums">0</span>)</span>
                 </button>
-                <button type="button" onclick="switchAdminTab('customers')" id="admin-tab-cust" class="bg-zinc-900 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
-                    <i class="fa-solid fa-users"></i> <span>Customers (<span id="cust-count-badge">0</span>)</span>
+                <button type="button" onclick="switchAdminTab('customers')" id="admin-tab-cust" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
+                    <i class="fa-solid fa-users"></i> <span>Customers (<span id="cust-count-badge" class="tabular-nums">0</span>)</span>
                 </button>
-                <button type="button" onclick="switchAdminTab('settings')" id="admin-tab-set" class="bg-zinc-900 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
-                    <i class="fa-solid fa-gear"></i> <span>Site Banner</span>
+                <button type="button" onclick="switchAdminTab('settings')" id="admin-tab-set" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
+                    <i class="fa-solid fa-bullhorn"></i> <span>Site Banner</span>
                 </button>
-                <button type="button" onclick="switchAdminTab('orders')" id="admin-tab-ord" class="bg-zinc-900 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
-                    <i class="fa-solid fa-clipboard-list"></i> <span>Orders (<span id="ord-count-badge">0</span>)</span>
+                <button type="button" onclick="switchAdminTab('orders')" id="admin-tab-ord" class="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
+                    <i class="fa-solid fa-clipboard-list"></i> <span>Orders (<span id="ord-count-badge" class="tabular-nums">0</span>)</span>
                 </button>
             </div>
 
+            <!-- Catalog Panel -->
             <div id="admin-panel-products" class="space-y-4">
-                <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
-                        <h4 class="font-bold text-base uppercase text-white">Stock Database</h4>
-                        <input type="text" id="admin-search" oninput="filterAdminProducts(this.value)" placeholder="Search products..." class="bg-zinc-900 border border-cheap-border rounded-xl px-4 py-2 text-xs w-full sm:w-64 focus:outline-none focus:border-cheap-yellow text-white">
+                <div class="bg-zinc-950/90 p-4 sm:p-6 rounded-2xl border border-cheap-border">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+                        <div>
+                            <h4 class="font-bold text-base uppercase tracking-wide text-white">Stock Database</h4>
+                            <p class="text-[11px] text-zinc-500 mt-0.5">Search by name or category, edit item details, or remove products.</p>
+                        </div>
+                        <div class="relative w-full sm:w-72">
+                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-xs"></i>
+                            <input type="text" id="admin-search" oninput="filterAdminProducts(this.value)" placeholder="Search products..." class="w-full bg-zinc-900 border border-cheap-border rounded-xl pl-9 pr-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white placeholder-zinc-500 transition-colors">
+                        </div>
                     </div>
+
                     <div class="overflow-x-auto border border-cheap-border rounded-xl">
-                        <table class="w-full text-left border-collapse text-xs min-w-[650px]">
+                        <table class="w-full text-left border-collapse text-xs min-w-[740px]">
                             <thead>
-                                <tr class="bg-zinc-900 border-b border-cheap-border text-[10px] uppercase tracking-wider text-zinc-400">
-                                    <th class="p-3">Product</th>
-                                    <th class="p-3">Category</th>
-                                    <th class="p-3">Price</th>
-                                    <th class="p-3">Stock</th>
-                                    <th class="p-3">Status</th>
-                                    <th class="p-3 text-right">Actions</th>
+                                <tr class="bg-zinc-900/90 border-b border-cheap-border text-[10px] font-extrabold uppercase tracking-wider text-zinc-400">
+                                    <th class="py-3.5 px-4">Product</th>
+                                    <th class="py-3.5 px-4">Category</th>
+                                    <th class="py-3.5 px-4">Price</th>
+                                    <th class="py-3.5 px-4">Stock</th>
+                                    <th class="py-3.5 px-4">Status</th>
+                                    <th class="py-3.5 px-4 text-right">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="admin-product-table-body"></tbody>
+                            <tbody id="admin-product-table-body" class="divide-y divide-cheap-border/60"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
+            <!-- Customers Panel -->
             <div id="admin-panel-customers" class="space-y-4 hidden">
-                <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border space-y-4">
+                <div class="bg-zinc-950/90 p-4 sm:p-6 rounded-2xl border border-cheap-border space-y-4">
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div>
-                            <h4 class="font-bold text-base uppercase text-white">Customer Database</h4>
-                            <p class="text-xs text-zinc-400 mt-0.5">Download customer leads database as an Excel (.xlsx) spreadsheet.</p>
+                            <h4 class="font-bold text-base uppercase tracking-wide text-white">Customer Database</h4>
+                            <p class="text-xs text-zinc-400 mt-0.5">Export buyer leads as an Excel (.xlsx) spreadsheet.</p>
                         </div>
-                        <button type="button" onclick="exportCustomersToExcel()" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase transition-all flex items-center space-x-2 cursor-pointer">
+                        <button type="button" onclick="exportCustomersToExcel()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-5 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer">
                             <i class="fa-solid fa-file-excel"></i> <span>Export Excel</span>
                         </button>
                     </div>
                     <div class="overflow-x-auto border border-cheap-border rounded-xl">
                         <table class="w-full text-left border-collapse text-xs min-w-[650px]">
                             <thead>
-                                <tr class="bg-zinc-900 border-b border-cheap-border text-[10px] uppercase tracking-wider text-zinc-400">
-                                    <th class="p-3">Name</th>
-                                    <th class="p-3">Email</th>
-                                    <th class="p-3">Cell</th>
-                                    <th class="p-3">Address</th>
-                                    <th class="p-3">Last Active</th>
-                                    <th class="p-3 text-right">Actions</th>
+                                <tr class="bg-zinc-900/90 border-b border-cheap-border text-[10px] font-extrabold uppercase tracking-wider text-zinc-400">
+                                    <th class="py-3.5 px-4">Name</th>
+                                    <th class="py-3.5 px-4">Email</th>
+                                    <th class="py-3.5 px-4">Cell</th>
+                                    <th class="py-3.5 px-4">Address</th>
+                                    <th class="py-3.5 px-4">Last Active</th>
+                                    <th class="py-3.5 px-4 text-right">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="admin-customer-table-body"></tbody>
+                            <tbody id="admin-customer-table-body" class="divide-y divide-cheap-border/60"></tbody>
                         </table>
                     </div>
                 </div>
             </div>
 
+            <!-- Banner Settings Panel -->
             <div id="admin-panel-settings" class="space-y-4 hidden">
-                <div class="bg-zinc-950 p-6 rounded-2xl border border-cheap-border space-y-4">
-                    <h4 class="font-bold text-base uppercase text-white">Announcement Banner Text</h4>
+                <div class="bg-zinc-950/90 p-6 rounded-2xl border border-cheap-border space-y-4">
+                    <h4 class="font-bold text-base uppercase tracking-wide text-white">Announcement Banner Text</h4>
                     <form onsubmit="saveAnnouncementBanner(event)" class="space-y-3">
                         <textarea id="admin-banner-text" rows="2" required class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-cheap-yellow">⚡ DIRECT-SOURCED QUALITY STOCK • FREE DELIVERY ON NET ORDERS OVER R2500 • 10% AUTOMATIC MULTI-BUY DISCOUNT</textarea>
                         <button type="submit" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-6 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer">
@@ -769,24 +794,25 @@
                 </div>
             </div>
 
+            <!-- Orders Panel -->
             <div id="admin-panel-orders" class="space-y-4 hidden">
-                <div class="bg-zinc-950 p-4 sm:p-6 rounded-2xl border border-cheap-border">
-                    <h4 class="font-bold text-base uppercase mb-4 text-white">Order Requests</h4>
+                <div class="bg-zinc-950/90 p-4 sm:p-6 rounded-2xl border border-cheap-border">
+                    <h4 class="font-bold text-base uppercase tracking-wide mb-4 text-white">Order Requests</h4>
                     <div class="overflow-x-auto border border-cheap-border rounded-xl">
                         <table class="w-full text-left border-collapse text-xs min-w-[850px]">
                             <thead>
-                                <tr class="bg-zinc-900 border-b border-cheap-border text-[10px] uppercase tracking-wider text-zinc-400">
-                                    <th class="p-3">Order ID</th>
-                                    <th class="p-3">Customer</th>
-                                    <th class="p-3">Contact</th>
-                                    <th class="p-3">Items</th>
-                                    <th class="p-3">Payment</th>
-                                    <th class="p-3">Total</th>
-                                    <th class="p-3">Status</th>
-                                    <th class="p-3 text-right">Actions</th>
+                                <tr class="bg-zinc-900/90 border-b border-cheap-border text-[10px] font-extrabold uppercase tracking-wider text-zinc-400">
+                                    <th class="py-3.5 px-4">Order ID</th>
+                                    <th class="py-3.5 px-4">Customer</th>
+                                    <th class="py-3.5 px-4">Contact</th>
+                                    <th class="py-3.5 px-4">Items</th>
+                                    <th class="py-3.5 px-4">Payment</th>
+                                    <th class="py-3.5 px-4">Total</th>
+                                    <th class="py-3.5 px-4">Status</th>
+                                    <th class="py-3.5 px-4 text-right">Actions</th>
                                 </tr>
                             </thead>
-                            <tbody id="admin-order-table-body"></tbody>
+                            <tbody id="admin-order-table-body" class="divide-y divide-cheap-border/60"></tbody>
                         </table>
                     </div>
                 </div>
@@ -1621,12 +1647,12 @@
         window.switchAdminTab = function(tab) {
             const tabs = ['prod', 'cust', 'set', 'ord'];
             tabs.forEach(t => {
-                document.getElementById(`admin-tab-${t}`).className = "bg-zinc-900 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer";
+                document.getElementById(`admin-tab-${t}`).className = "bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-cheap-border px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 cursor-pointer";
             });
             ['products', 'customers', 'settings', 'orders'].forEach(p => document.getElementById(`admin-panel-${p}`).classList.add("hidden"));
 
             const activeTabMap = { products: 'prod', customers: 'cust', settings: 'set', orders: 'ord' };
-            document.getElementById(`admin-tab-${activeTabMap[tab]}`).className = "bg-cheap-blue text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all cursor-pointer";
+            document.getElementById(`admin-tab-${activeTabMap[tab]}`).className = "bg-cheap-blue text-white px-4 py-2.5 rounded-xl font-bold text-xs uppercase tracking-wider transition-all flex items-center space-x-2 shadow-sm cursor-pointer";
             document.getElementById(`admin-panel-${tab}`).classList.remove("hidden");
         }
 
@@ -1652,26 +1678,42 @@
             const tbody = document.getElementById("admin-product-table-body");
             if (!tbody) return;
             if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-zinc-500">No products found.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-zinc-500">No products match your search.</td></tr>`;
                 return;
             }
             tbody.innerHTML = list.map(p => {
                 let primaryImg = p.image || '';
                 if (primaryImg.includes(',')) primaryImg = primaryImg.split(',')[0].trim();
                 const safeId = encodeURIComponent(p.id);
+                const stockQty = Number(p.stock ?? 0);
+
+                const statusBadge = stockQty > 0
+                    ? `<span class="inline-flex items-center gap-1.5 whitespace-nowrap bg-emerald-950/90 text-emerald-400 border border-emerald-800/80 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>In Stock</span>`
+                    : `<span class="inline-flex items-center gap-1.5 whitespace-nowrap bg-amber-950/90 text-amber-300 border border-amber-800/80 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wide"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>Out of Stock</span>`;
+
                 return `
-                    <tr class="border-b border-cheap-border/50 hover:bg-zinc-900">
-                        <td class="p-3 flex items-center space-x-3">
-                            <img src="${esc(primaryImg)}" class="w-8 h-8 object-cover rounded border">
-                            <span class="font-bold text-white text-xs">${esc(p.name)}</span>
+                    <tr class="hover:bg-zinc-900/70 transition-colors">
+                        <td class="py-3 px-4">
+                            <div class="flex items-center space-x-3">
+                                <img src="${esc(primaryImg)}" alt="${esc(p.name)}" class="w-10 h-10 object-contain bg-zinc-900 p-1 rounded-lg border border-cheap-border shrink-0">
+                                <span class="font-semibold text-zinc-100 text-xs line-clamp-1">${esc(p.name)}</span>
+                            </div>
                         </td>
-                        <td class="p-3 text-cheap-blue font-bold text-xs uppercase">${esc(p.category)}</td>
-                        <td class="p-3 font-bold text-cheap-yellow">R${parseFloat(p.price).toFixed(2)}</td>
-                        <td class="p-3 font-bold text-white">${p.stock ?? 20}u</td>
-                        <td class="p-3"><span class="bg-emerald-950 text-emerald-400 border border-emerald-800 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">In Stock</span></td>
-                        <td class="p-3 text-right space-x-1">
-                            <button type="button" onclick="openEditProductModal(decodeURIComponent('${safeId}'))" class="bg-cheap-blue text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Edit</button>
-                            <button type="button" onclick="deleteProduct(decodeURIComponent('${safeId}'))" class="bg-red-900 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Del</button>
+                        <td class="py-3 px-4">
+                            <span class="inline-block whitespace-nowrap bg-cheap-blue/10 text-sky-400 border border-cheap-blue/25 font-bold text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-md">${esc(p.category)}</span>
+                        </td>
+                        <td class="py-3 px-4 font-bold text-cheap-yellow tabular-nums whitespace-nowrap">R${parseFloat(p.price).toFixed(2)}</td>
+                        <td class="py-3 px-4 font-semibold ${stockQty > 0 ? 'text-zinc-200' : 'text-zinc-500'} tabular-nums whitespace-nowrap">${stockQty}u</td>
+                        <td class="py-3 px-4">${statusBadge}</td>
+                        <td class="py-3 px-4 text-right whitespace-nowrap">
+                            <div class="inline-flex items-center justify-end gap-1.5">
+                                <button type="button" onclick="openEditProductModal(decodeURIComponent('${safeId}'))" class="bg-cheap-blue hover:bg-cheap-blueDark text-white px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors cursor-pointer">
+                                    <i class="fa-solid fa-pen mr-1"></i>Edit
+                                </button>
+                                <button type="button" onclick="deleteProduct(decodeURIComponent('${safeId}'))" class="bg-zinc-900 hover:bg-red-950 text-red-400 hover:text-red-300 border border-zinc-800 hover:border-red-800 px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase tracking-wider transition-colors cursor-pointer">
+                                    <i class="fa-solid fa-trash"></i>
+                                </button>
+                            </div>
                         </td>
                     </tr>
                 `;
@@ -1682,18 +1724,18 @@
             const tbody = document.getElementById("admin-customer-table-body");
             if (!tbody) return;
             if (customers.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-4 text-center text-zinc-500">No customer leads recorded yet.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-zinc-500">No customer leads recorded yet.</td></tr>`;
                 return;
             }
             tbody.innerHTML = customers.map(c => `
-                <tr class="border-b border-cheap-border/50">
-                    <td class="p-3 font-bold text-white">${esc(c.name || 'N/A')}</td>
-                    <td class="p-3 font-mono text-zinc-400">${esc(c.email)}</td>
-                    <td class="p-3">${esc(c.phone || 'N/A')}</td>
-                    <td class="p-3 text-zinc-400">${esc(c.address || 'N/A')}</td>
-                    <td class="p-3 font-mono text-zinc-500">${esc(c.lastOrderDate || 'N/A')}</td>
-                    <td class="p-3 text-right">
-                        <button type="button" onclick="deleteCustomer('${c.id}')" class="bg-red-900 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Del</button>
+                <tr class="hover:bg-zinc-900/70 transition-colors">
+                    <td class="py-3 px-4 font-bold text-white whitespace-nowrap">${esc(c.name || 'N/A')}</td>
+                    <td class="py-3 px-4 font-mono text-zinc-400">${esc(c.email)}</td>
+                    <td class="py-3 px-4 whitespace-nowrap">${esc(c.phone || 'N/A')}</td>
+                    <td class="py-3 px-4 text-zinc-400">${esc(c.address || 'N/A')}</td>
+                    <td class="py-3 px-4 font-mono text-zinc-500 whitespace-nowrap">${esc(c.lastOrderDate || 'N/A')}</td>
+                    <td class="py-3 px-4 text-right">
+                        <button type="button" onclick="deleteCustomer('${c.id}')" class="bg-zinc-900 hover:bg-red-950 text-red-400 hover:text-red-300 border border-zinc-800 hover:border-red-800 px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-colors cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `).join('');
@@ -1803,20 +1845,20 @@
             const tbody = document.getElementById("admin-order-table-body");
             if (!tbody) return;
             if (orders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="p-4 text-center text-zinc-500">No orders recorded yet.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="p-6 text-center text-zinc-500">No orders recorded yet.</td></tr>`;
                 return;
             }
             tbody.innerHTML = orders.map(o => `
-                <tr class="border-b border-cheap-border/50">
-                    <td class="p-3 font-mono font-bold text-white">#${esc(o.id.substring(0, 8))}</td>
-                    <td class="p-3 font-bold text-white">${esc(o.name)}</td>
-                    <td class="p-3 text-zinc-400">${esc(o.phone)}<br>${esc(o.email)}</td>
-                    <td class="p-3 text-zinc-300">${(o.items || []).map(i => `${i.qty}x ${esc(i.name)}`).join(', ')}</td>
-                    <td class="p-3 text-cheap-blue font-bold">${esc(o.payment || 'EFT')}</td>
-                    <td class="p-3 font-bold text-cheap-yellow">R${parseFloat(o.total).toFixed(2)}</td>
-                    <td class="p-3"><span class="bg-amber-950 text-amber-400 border border-amber-800 text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">${esc(o.status || 'Pending')}</span></td>
-                    <td class="p-3 text-right">
-                        <button type="button" onclick="deleteOrder('${o.id}')" class="bg-red-900 text-white px-2 py-1 rounded text-[10px] font-bold uppercase">Del</button>
+                <tr class="hover:bg-zinc-900/70 transition-colors">
+                    <td class="py-3 px-4 font-mono font-bold text-white whitespace-nowrap">#${esc(o.id.substring(0, 8))}</td>
+                    <td class="py-3 px-4 font-bold text-white whitespace-nowrap">${esc(o.name)}</td>
+                    <td class="py-3 px-4 text-zinc-400">${esc(o.phone)}<br>${esc(o.email)}</td>
+                    <td class="py-3 px-4 text-zinc-300">${(o.items || []).map(i => `${i.qty}x ${esc(i.name)}`).join(', ')}</td>
+                    <td class="py-3 px-4 text-cheap-blue font-bold whitespace-nowrap">${esc(o.payment || 'EFT')}</td>
+                    <td class="py-3 px-4 font-bold text-cheap-yellow tabular-nums whitespace-nowrap">R${parseFloat(o.total).toFixed(2)}</td>
+                    <td class="py-3 px-4 whitespace-nowrap"><span class="inline-flex items-center gap-1.5 bg-amber-950/90 text-amber-400 border border-amber-800/80 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>${esc(o.status || 'Pending')}</span></td>
+                    <td class="py-3 px-4 text-right">
+                        <button type="button" onclick="deleteOrder('${o.id}')" class="bg-zinc-900 hover:bg-red-950 text-red-400 hover:text-red-300 border border-zinc-800 hover:border-red-800 px-2.5 py-1.5 rounded-lg text-[10px] font-bold uppercase transition-colors cursor-pointer"><i class="fa-solid fa-trash"></i></button>
                     </td>
                 </tr>
             `).join('');
