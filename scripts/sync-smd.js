@@ -19,6 +19,7 @@ function deduplicateByKey(items, getKeyFn) {
     const key = normalizeKey(getKeyFn(item));
     if (!key) continue;
     if (map.has(key)) {
+      // Merge properties into existing entry without duplicating array length
       map.set(key, { ...map.get(key), ...item });
     } else {
       map.set(key, item);
@@ -53,6 +54,7 @@ async function fetchAllPages(endpoint) {
 async function runSync() {
   console.log('Starting SMD API Sync...');
 
+  // Fetch fresh raw feeds directly from API
   const [productsRaw, mediaRaw, pricesRaw, stockRaw] = await Promise.all([
     fetchAllPages('products'),
     fetchAllPages('media'),
@@ -62,56 +64,58 @@ async function runSync() {
 
   console.log(`Fetched raw: ${productsRaw.length} products, ${mediaRaw.length} media, ${pricesRaw.length} prices, ${stockRaw.length} stock items.`);
 
-  // Deduplicate raw products by SKU (or Name fallback)
-  const uniqueProductsRaw = deduplicateByKey(
-    productsRaw,
-    prod => prod.Sku || prod.ProductCode || prod.Name
-  );
+  // 1. Strict SKU Deduplication on raw products (rejects entries without valid SKUs)
+  const validProductsRaw = productsRaw.filter(p => p.Sku && String(p.Sku).trim() !== '');
+  const uniqueProductsRaw = deduplicateByKey(validProductsRaw, prod => prod.Sku);
 
-  // Map media by SKU (OrderWeight 1 is primary image)
+  // 2. Map media strictly by SKU (OrderWeight 1 is primary image)
   const mediaMap = {};
   mediaRaw.forEach(item => {
     const sku = item.Sku || item.ProductCode;
     if (!sku || !item.Url) return;
-    if (!mediaMap[sku] || Number(item.OrderWeight) === 1) {
-      mediaMap[sku] = item.Url;
+    const cleanSku = normalizeKey(sku);
+    if (!mediaMap[cleanSku] || Number(item.OrderWeight) === 1) {
+      mediaMap[cleanSku] = item.Url;
     }
   });
 
-  // Map prices by SKU
+  // 3. Map prices strictly by SKU
   const priceMap = {};
   pricesRaw.forEach(item => {
     const sku = item.Sku || item.ProductCode;
     if (!sku) return;
+    const cleanSku = normalizeKey(sku);
     const costIncl = parseFloat(item.PriceIncl || 0);
-    priceMap[sku] = {
+    priceMap[cleanSku] = {
       costIncl,
       rrp: parseFloat(item.PriceRRp || 0)
     };
   });
 
-  // Map stock levels (SOH) by SKU
+  // 4. Map stock levels strictly by SKU
   const stockMap = {};
   stockRaw.forEach(item => {
     const sku = item.Sku || item.ProductCode;
-    if (sku) {
-      stockMap[sku] = parseInt(item.SOH || 0, 10);
-    }
+    if (!sku) return;
+    const cleanSku = normalizeKey(sku);
+    stockMap[cleanSku] = parseInt(item.SOH || 0, 10);
   });
 
-  // Combine into CHEAP website catalog schema
+  // 5. Build clean catalog objects
   const compiledProducts = uniqueProductsRaw
     .map(prod => {
-      const sku = prod.Sku || prod.ProductCode;
-      const priceInfo = priceMap[sku] || { costIncl: 0, rrp: 0 };
-      const stockQty = stockMap[sku] ?? 0;
-      const imageUrl = mediaMap[sku] || 'https://via.placeholder.com/400?text=No+Image';
+      const rawSku = String(prod.Sku).trim();
+      const lookupSku = normalizeKey(rawSku);
+
+      const priceInfo = priceMap[lookupSku] || { costIncl: 0, rrp: 0 };
+      const stockQty = stockMap[lookupSku] ?? 0;
+      const imageUrl = mediaMap[lookupSku] || 'https://via.placeholder.com/400?text=No+Image';
 
       // Apply Cost + 25% Markup
       const retailPrice = priceInfo.costIncl > 0 ? (priceInfo.costIncl * 1.25) : 0;
 
       return {
-        id: sku,
+        id: rawSku,
         name: prod.Name || prod.ShortDescription || 'Product',
         category: prod.Category ? prod.Category.split('/')[0] : 'General',
         brand: prod.Brand || '',
@@ -122,19 +126,17 @@ async function runSync() {
         isBestSeller: false,
         image: imageUrl,
         description: prod.LongDescription || prod.ShortDescription || '',
-        extra1: `SKU: ${sku}\nBrand: ${prod.Brand || 'N/A'}`
+        extra1: `SKU: ${rawSku}\nBrand: ${prod.Brand || 'N/A'}`
       };
     })
     .filter(p => p.price > 0);
 
-  // Final deduplication pass by ID/SKU and normalized product name
-  const finalProducts = deduplicateByKey(
-    compiledProducts,
-    p => p.id || p.name
-  );
+  // 6. Final safety deduplication pass on compiled items
+  const finalProducts = deduplicateByKey(compiledProducts, p => p.id);
 
+  // Overwrite products.json directly with fresh unique list
   fs.writeFileSync('products.json', JSON.stringify(finalProducts, null, 2));
-  console.log(`Successfully compiled ${finalProducts.length} unique live products into products.json (filtered from ${productsRaw.length} raw entries).`);
+  console.log(`Successfully compiled ${finalProducts.length} unique live products into products.json.`);
 }
 
 runSync().catch(err => {
