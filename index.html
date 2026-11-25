@@ -916,6 +916,10 @@
             return String(id).replace(/\//g, '_');
         }
 
+        function normalizeProductKey(id) {
+            return sanitizeId(id).trim().toLowerCase();
+        }
+
         const CART_STORAGE_KEY = 'cheap_cart';
 
         function saveCartToStorage() {
@@ -1011,41 +1015,62 @@
             } catch (err) {}
 
             const GITHUB_CATALOG_URL = "https://raw.githubusercontent.com/Page-One-Digital/cheap-store-za/main/products.json";
+            let loadedFromStaticJson = false;
 
             try {
                 const res = await fetch(GITHUB_CATALOG_URL, { cache: 'no-cache' });
                 if (res.ok) {
-                    products = await res.json();
-                } else {
+                    const jsonData = await res.json();
+                    if (Array.isArray(jsonData)) {
+                        products = jsonData;
+                        loadedFromStaticJson = true;
+                    }
+                }
+                if (!loadedFromStaticJson) {
                     throw new Error("GitHub static catalog fetch failed");
                 }
             } catch (err) {
                 console.warn("Catalog loading fallback to local defaults:", err);
-                products = defaultProducts;
+                products = [...defaultProducts];
             }
 
-            // MERGE FIRESTORE OVERRIDES OVER STATIC JSON
+            // Build lookup index of static catalog items by normalized ID
+            const catalogMap = new Map();
+            for (const p of products) {
+                const key = normalizeProductKey(p.id);
+                if (!key) continue;
+                catalogMap.set(key, p);
+            }
+
+            // Apply Firestore overrides only to matching items in the static catalog
+            // (and only add standalone Firestore items if static catalog failed to load)
             try {
                 const fsSnap = await getDocs(collection(db, "cheap_products"));
                 fsSnap.forEach(docSnap => {
                     const fsData = docSnap.data();
                     const docId = docSnap.id;
-                    
-                    const idx = products.findIndex(p => sanitizeId(p.id) === docId || p.id === docId);
-                    
+                    const cleanDocId = normalizeProductKey(docId);
+                    const originalIdKey = normalizeProductKey(fsData.id || docId);
+                    const matchKey = catalogMap.has(cleanDocId)
+                        ? cleanDocId
+                        : (catalogMap.has(originalIdKey) ? originalIdKey : null);
+
                     if (fsData.isBestSeller === true) {
-                        products.forEach(p => p.isBestSeller = false);
+                        catalogMap.forEach(item => { item.isBestSeller = false; });
                     }
 
-                    if (idx !== -1) {
-                        products[idx] = { ...products[idx], ...fsData, id: products[idx].id };
-                    } else {
-                        products.push({ id: docId, ...fsData });
+                    if (matchKey) {
+                        const existing = catalogMap.get(matchKey);
+                        catalogMap.set(matchKey, { ...existing, ...fsData, id: existing.id });
+                    } else if (!loadedFromStaticJson) {
+                        catalogMap.set(cleanDocId || docId, { id: fsData.id || docId, ...fsData });
                     }
                 });
             } catch (fsErr) {
                 console.warn("Could not fetch Firestore catalog overrides:", fsErr);
             }
+
+            products = Array.from(catalogMap.values());
 
             renderSidebarCategories();
             renderProducts();
