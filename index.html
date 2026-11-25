@@ -1024,6 +1024,29 @@
                 products = defaultProducts;
             }
 
+            // MERGE FIRESTORE OVERRIDES OVER STATIC JSON
+            try {
+                const fsSnap = await getDocs(collection(db, "cheap_products"));
+                fsSnap.forEach(docSnap => {
+                    const fsData = docSnap.data();
+                    const docId = docSnap.id;
+                    
+                    const idx = products.findIndex(p => sanitizeId(p.id) === docId || p.id === docId);
+                    
+                    if (fsData.isBestSeller === true) {
+                        products.forEach(p => p.isBestSeller = false);
+                    }
+
+                    if (idx !== -1) {
+                        products[idx] = { ...products[idx], ...fsData, id: products[idx].id };
+                    } else {
+                        products.push({ id: docId, ...fsData });
+                    }
+                });
+            } catch (fsErr) {
+                console.warn("Could not fetch Firestore catalog overrides:", fsErr);
+            }
+
             renderSidebarCategories();
             renderProducts();
             renderHeroBestSeller();
@@ -1795,13 +1818,19 @@
             const rawId = document.getElementById("prod-edit-id").value;
             const docId = sanitizeId(rawId);
 
+            const isBestSellerChecked = document.getElementById("prod-bestseller").checked;
+
+            if (isBestSellerChecked) {
+                products.forEach(p => p.isBestSeller = false);
+            }
+
             const data = {
                 name: document.getElementById("prod-name").value,
                 price: parseFloat(document.getElementById("prod-price").value),
                 category: document.getElementById("prod-cat").value,
                 image: document.getElementById("prod-img").value,
                 visible: document.getElementById("prod-visible").checked,
-                isBestSeller: document.getElementById("prod-bestseller").checked,
+                isBestSeller: isBestSellerChecked,
                 extra1: document.getElementById("prod-extra-1").value,
                 description: document.getElementById("prod-desc").value,
                 stock: rawId ? (products.find(p => p.id === rawId)?.stock ?? 20) : 20
@@ -1810,8 +1839,8 @@
             try {
                 if (docId) {
                     await setDoc(doc(db, "cheap_products", docId), data, { merge: true });
-                    const idx = products.findIndex(p => p.id === rawId);
-                    if (idx !== -1) products[idx] = { id: rawId, ...data };
+                    const idx = products.findIndex(p => p.id === rawId || sanitizeId(p.id) === docId);
+                    if (idx !== -1) products[idx] = { ...products[idx], ...data };
                 } else {
                     const docRef = await addDoc(collection(db, "cheap_products"), data);
                     products.push({ id: docRef.id, ...data });
