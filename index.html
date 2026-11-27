@@ -722,14 +722,46 @@
             <!-- Catalog Panel -->
             <div id="admin-panel-products" class="space-y-4">
                 <div class="bg-zinc-950/90 p-4 sm:p-6 rounded-2xl border border-cheap-border">
-                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
-                        <div>
-                            <h4 class="font-bold text-base uppercase tracking-wide text-white">Stock Database</h4>
-                            <p class="text-[11px] text-zinc-500 mt-0.5">Search by name or category, edit item details, or remove products.</p>
+                    <div class="flex flex-col gap-4 mb-5">
+                        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                            <div>
+                                <h4 class="font-bold text-base uppercase tracking-wide text-white">Stock Database</h4>
+                                <p class="text-[11px] text-zinc-500 mt-0.5">Search, filter by category or stock status, and sort by category, price, or stock.</p>
+                            </div>
+                            <div class="relative w-full sm:w-72">
+                                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-xs"></i>
+                                <input type="text" id="admin-search" oninput="handleAdminFilterChange()" placeholder="Search products..." class="w-full bg-zinc-900 border border-cheap-border rounded-xl pl-9 pr-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white placeholder-zinc-500 transition-colors">
+                            </div>
                         </div>
-                        <div class="relative w-full sm:w-72">
-                            <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-xs"></i>
-                            <input type="text" id="admin-search" oninput="filterAdminProducts(this.value)" placeholder="Search products..." class="w-full bg-zinc-900 border border-cheap-border rounded-xl pl-9 pr-4 py-2.5 text-xs focus:outline-none focus:border-cheap-yellow text-white placeholder-zinc-500 transition-colors">
+
+                        <!-- Category, Status & Sort Controls -->
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1">
+                            <div>
+                                <label for="admin-category-filter" class="block text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Category</label>
+                                <select id="admin-category-filter" onchange="handleAdminFilterChange()" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-3 py-2.5 text-xs font-bold text-white focus:outline-none focus:border-cheap-yellow cursor-pointer">
+                                    <option value="all">All Categories</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="admin-stock-status-filter" class="block text-[10px] font-bold uppercase tracking-wider text-zinc-400 mb-1">Stock Status</label>
+                                <select id="admin-stock-status-filter" onchange="handleAdminFilterChange()" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-3 py-2.5 text-xs font-bold text-white focus:outline-none focus:border-cheap-yellow cursor-pointer">
+                                    <option value="all">All Statuses</option>
+                                    <option value="in-stock">In Stock Only</option>
+                                    <option value="out-of-stock">Out of Stock Only</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="admin-sort-select" class="block text-[10px] font-bold uppercase tracking-wider text-cheap-yellow mb-1">Sort By</label>
+                                <select id="admin-sort-select" onchange="handleAdminFilterChange()" class="w-full bg-zinc-900 border border-cheap-border rounded-xl px-3 py-2.5 text-xs font-bold text-white focus:outline-none focus:border-cheap-yellow cursor-pointer">
+                                    <option value="default">Default Order</option>
+                                    <option value="category-asc">Category: A to Z</option>
+                                    <option value="category-desc">Category: Z to A</option>
+                                    <option value="price-asc">Price: Low to High</option>
+                                    <option value="price-desc">Price: High to Low</option>
+                                    <option value="stock-asc">Stock: Low to High</option>
+                                    <option value="stock-desc">Stock: High to Low</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
@@ -1684,10 +1716,73 @@
                 orders = [];
                 ordSnap.forEach((d) => orders.push({ id: d.id, ...d.data() }));
 
+                populateAdminCategoryFilter();
                 renderAdminDashboard();
             } catch (err) {
                 console.error("Error fetching admin data:", err);
             }
+        }
+
+        function populateAdminCategoryFilter() {
+            const select = document.getElementById("admin-category-filter");
+            if (!select) return;
+            const currentVal = select.value || 'all';
+            const categoriesSet = new Set();
+            products.forEach(p => {
+                if (p.category && String(p.category).trim()) {
+                    categoriesSet.add(String(p.category).trim());
+                }
+            });
+            const categories = Array.from(categoriesSet).sort((a, b) => a.localeCompare(b));
+            let html = `<option value="all">All Categories</option>`;
+            categories.forEach(cat => {
+                const isSelected = currentVal.toLowerCase() === cat.toLowerCase() ? 'selected' : '';
+                html += `<option value="${esc(cat)}" ${isSelected}>${esc(cat)}</option>`;
+            });
+            select.innerHTML = html;
+        }
+
+        window.handleAdminFilterChange = function() {
+            const query = (document.getElementById("admin-search")?.value || "").trim().toLowerCase();
+            const catFilter = document.getElementById("admin-category-filter")?.value || "all";
+            const statusFilter = document.getElementById("admin-stock-status-filter")?.value || "all";
+            const sortBy = document.getElementById("admin-sort-select")?.value || "default";
+
+            let list = [...products];
+
+            if (catFilter !== "all") {
+                list = list.filter(p => (p.category || "").trim().toLowerCase() === catFilter.toLowerCase());
+            }
+
+            if (statusFilter === "in-stock") {
+                list = list.filter(p => Number(p.stock ?? 0) > 0);
+            } else if (statusFilter === "out-of-stock") {
+                list = list.filter(p => Number(p.stock ?? 0) <= 0);
+            }
+
+            if (query !== "") {
+                list = list.filter(p =>
+                    (p.name || "").toLowerCase().includes(query) ||
+                    (p.category || "").toLowerCase().includes(query) ||
+                    String(p.id || "").toLowerCase().includes(query)
+                );
+            }
+
+            if (sortBy === "category-asc") {
+                list.sort((a, b) => (a.category || "").localeCompare(b.category || "") || (a.name || "").localeCompare(b.name || ""));
+            } else if (sortBy === "category-desc") {
+                list.sort((a, b) => (b.category || "").localeCompare(a.category || "") || (a.name || "").localeCompare(b.name || ""));
+            } else if (sortBy === "price-asc") {
+                list.sort((a, b) => (parseFloat(a.price) || 0) - (parseFloat(b.price) || 0));
+            } else if (sortBy === "price-desc") {
+                list.sort((a, b) => (parseFloat(b.price) || 0) - (parseFloat(a.price) || 0));
+            } else if (sortBy === "stock-asc") {
+                list.sort((a, b) => Number(a.stock ?? 0) - Number(b.stock ?? 0));
+            } else if (sortBy === "stock-desc") {
+                list.sort((a, b) => Number(b.stock ?? 0) - Number(a.stock ?? 0));
+            }
+
+            renderAdminProductsTable(list);
         }
 
         window.closeAdminModal = function() { document.getElementById("admin-modal").classList.add("hidden"); }
@@ -1704,8 +1799,10 @@
             document.getElementById(`admin-panel-${tab}`).classList.remove("hidden");
         }
 
-        window.renderAdminDashboard = function(filteredList = products) {
+        window.renderAdminDashboard = function() {
             if (!currentCustomer || !currentCustomer.isAdmin) return;
+            populateAdminCategoryFilter();
+
             document.getElementById("stat-total-products").textContent = products.length;
             document.getElementById("stat-total-customers").textContent = customers.length;
             document.getElementById("stat-total-orders").textContent = orders.length;
@@ -1717,7 +1814,7 @@
             document.getElementById("cust-count-badge").textContent = customers.length;
             document.getElementById("ord-count-badge").textContent = orders.length;
 
-            renderAdminProductsTable(filteredList);
+            handleAdminFilterChange();
             renderAdminCustomersTable();
             renderAdminOrdersTable();
         }
@@ -1726,7 +1823,7 @@
             const tbody = document.getElementById("admin-product-table-body");
             if (!tbody) return;
             if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-zinc-500">No products match your search.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-zinc-500">No products match your search or filter.</td></tr>`;
                 return;
             }
             tbody.innerHTML = list.map(p => {
@@ -1798,10 +1895,8 @@
             } catch (err) {}
         }
 
-        window.filterAdminProducts = function(query) {
-            const q = query.toLowerCase();
-            const filtered = products.filter(p => p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
-            renderAdminProductsTable(filtered);
+        window.filterAdminProducts = function() {
+            handleAdminFilterChange();
         }
 
         window.openNewProductModal = function() {
