@@ -942,7 +942,6 @@
                 .replace(/'/g, '&#039;');
         }
 
-        // Sanitizes IDs for Firestore document references (replaces forward slashes)
         function sanitizeId(id) {
             if (!id) return '';
             return String(id).replace(/\//g, '_');
@@ -1037,15 +1036,6 @@
             loadCartFromStorage();
             updateCartUI();
 
-            try {
-                const bannerDoc = await getDoc(doc(db, "settings", "announcement_cheap"));
-                if (bannerDoc.exists() && bannerDoc.data().text) {
-                    const text = bannerDoc.data().text;
-                    document.getElementById("announcement-banner").innerHTML = `<span>${esc(text)}</span>`;
-                    document.getElementById("admin-banner-text").value = text;
-                }
-            } catch (err) {}
-
             const GITHUB_CATALOG_URL = "https://raw.githubusercontent.com/Page-One-Digital/cheap-store-za/main/products.json";
             let loadedFromStaticJson = false;
 
@@ -1065,44 +1055,6 @@
                 console.warn("Catalog loading fallback to local defaults:", err);
                 products = [...defaultProducts];
             }
-
-            // Build lookup index of static catalog items by normalized ID
-            const catalogMap = new Map();
-            for (const p of products) {
-                const key = normalizeProductKey(p.id);
-                if (!key) continue;
-                catalogMap.set(key, p);
-            }
-
-            // Apply Firestore overrides only to matching items in the static catalog
-            // (and only add standalone Firestore items if static catalog failed to load)
-            try {
-                const fsSnap = await getDocs(collection(db, "cheap_products"));
-                fsSnap.forEach(docSnap => {
-                    const fsData = docSnap.data();
-                    const docId = docSnap.id;
-                    const cleanDocId = normalizeProductKey(docId);
-                    const originalIdKey = normalizeProductKey(fsData.id || docId);
-                    const matchKey = catalogMap.has(cleanDocId)
-                        ? cleanDocId
-                        : (catalogMap.has(originalIdKey) ? originalIdKey : null);
-
-                    if (fsData.isBestSeller === true) {
-                        catalogMap.forEach(item => { item.isBestSeller = false; });
-                    }
-
-                    if (matchKey) {
-                        const existing = catalogMap.get(matchKey);
-                        catalogMap.set(matchKey, { ...existing, ...fsData, id: existing.id });
-                    } else if (!loadedFromStaticJson) {
-                        catalogMap.set(cleanDocId || docId, { id: fsData.id || docId, ...fsData });
-                    }
-                });
-            } catch (fsErr) {
-                console.warn("Could not fetch Firestore catalog overrides:", fsErr);
-            }
-
-            products = Array.from(catalogMap.values());
 
             renderSidebarCategories();
             renderProducts();
@@ -1715,6 +1667,29 @@
                 const ordSnap = await getDocs(collection(db, "cheap_orders"));
                 orders = [];
                 ordSnap.forEach((d) => orders.push({ id: d.id, ...d.data() }));
+
+                // Fetch Firestore overrides ONLY when admin portal is explicitly opened
+                try {
+                    const fsSnap = await getDocs(collection(db, "cheap_products"));
+                    const catalogMap = new Map();
+                    products.forEach(p => catalogMap.set(normalizeProductKey(p.id), p));
+                    
+                    fsSnap.forEach(docSnap => {
+                        const fsData = docSnap.data();
+                        const docId = docSnap.id;
+                        const cleanDocId = normalizeProductKey(docId);
+                        const originalIdKey = normalizeProductKey(fsData.id || docId);
+                        const matchKey = catalogMap.has(cleanDocId) ? cleanDocId : (catalogMap.has(originalIdKey) ? originalIdKey : null);
+                        
+                        if (matchKey) {
+                            const existing = catalogMap.get(matchKey);
+                            catalogMap.set(matchKey, { ...existing, ...fsData, id: existing.id });
+                        }
+                    });
+                    products = Array.from(catalogMap.values());
+                } catch (overridesErr) {
+                    console.warn("Admin Firestore overrides fetch error:", overridesErr);
+                }
 
                 populateAdminCategoryFilter();
                 renderAdminDashboard();
